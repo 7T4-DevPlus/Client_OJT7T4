@@ -52,7 +52,7 @@ const ButtonCommon = ({ buttonType, size = "large", handleOnClick, ...props }) =
                 </Button>
             )}
             {buttonType === "loading" && (
-                <Button size={size} type="primary" loading>
+                <Button size={size} className="loading-button" type="primary" loading>
                     Loading
                 </Button>
             )}
