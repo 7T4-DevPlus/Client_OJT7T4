@@ -211,7 +211,8 @@ const AddEmployeePage = () => {
     const onFinishFailed = (errorInfo) => {
         // handle error here
         console.log('Failed:', errorInfo);
-        console.log(form.getFieldValue("name"))
+        console.log(form.getFieldValue("name"));
+        form.resetFields();
     };
 
     const [loading, setLoading] = useState(false);

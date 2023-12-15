@@ -10,7 +10,7 @@ import { Modal, Form, message } from 'antd';
 
 import Button from '../buttons/ButtonCommon';
 import TextArea from '../inputs/InputTextArea';
-import RangePicker from '../inputs/RangePicker';
+import DatePicker from '../inputs/DateCommon';
 import Select from '../inputs/SelectCommon';
 
 const AssignEmployeeModal = (project) => {
@@ -56,25 +56,21 @@ const AssignEmployeeModal = (project) => {
   const currentDate = format(new Date(), 'yyyy-MM-dd ');
 
   const handleChangeDate = (date, dateString) => {
-    const formattedDates = dateString.map(dateString => moment(dateString, 'YYYY-MM-DDTHH:mm:ss.SSSZ').toISOString());
+    const formattedDate = moment(dateString, 'YYYY-MM-DDTHH:mm:ss.SSSZ').toISOString();
 
-    if ( moment(projectInfo.startDate).isAfter(moment(formattedDates[0])) === true ){
+    if ( moment(projectInfo.startDate).isAfter(moment(formattedDate)) === true ){
       message.error('Join date must not be sooner than project start date');
       return;
     }
 
-    if (currentDate > format(new Date(formattedDates[1]), 'yyyy-MM-dd ')){
-      message.error('Out date must not be sooner than today');
-      return;
-    }
-
-    setDate(formattedDates);
+    setDate(formattedDate);
   }
 
   const [form] = Form.useForm();
 
   const onFinishFailed = (errorInfo) => {
     console.error('Failed:', errorInfo);
+    form.resetFields();
   };
 
   const onFinish = (values) => {
@@ -82,12 +78,12 @@ const AssignEmployeeModal = (project) => {
     formData.append("employeeId", values.employeeId);
     formData.append("projectId", projectId);
     formData.append("role", values.role);
-    formData.append("joinDate", date[0]);
-    formData.append("outDate", date[1]);
+    formData.append("joinDate", date);
     formData.append("description", values.description);
 
     addEmployeeToProject(formData);
     setAddEmployeeModal(false);
+    form.resetFields();
   }
 
   return (
@@ -169,7 +165,7 @@ const AssignEmployeeModal = (project) => {
             }
           ]}
         >
-          <RangePicker onChange={handleChangeDate} />
+          <DatePicker onChange={handleChangeDate} />
         </Form.Item>
 
         <Form.Item
