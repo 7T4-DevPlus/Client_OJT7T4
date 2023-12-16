@@ -1,157 +1,71 @@
-.App {
-  text-align: center;
-  font-weight: bold;
+import './App.css';
+import { Route, Routes, Navigate } from 'react-router-dom';
+
+import AuthContextProvider from './contexts/authContext';
+import EmployeeContextProvider from "./contexts/employeeContext";
+import TechnicalContextProvider from "./contexts/technicalContext";
+import ComponentsContextProvider from "./contexts/componentsContext";
+import LayoutContextProvider from "./contexts/LayoutContext";
+import RecordContextProvider from './contexts/recordlogContext';
+import ProjectContextProvider from './contexts/projectContext';
+import RoleContextProvider from './contexts/roleContext';
+
+import { Layout } from "./components/layout/Layout";
+import { Dashboard } from "./pages/dashboard/Dashboard";
+import Employees from "./pages/employee/employees";
+import EmployeeDetails from "./pages/employee/employeeDetails";
+import LogPage from "./pages/log/logPage";
+import LoginPage from "./pages/login/loginPage";
+import Projects from "./pages/project/projects";
+import ProjectDetails from "./pages/project/projectDetails";
+import AddProject from "./pages/project/addProject";
+import PageNotFound from "./pages/404notfound/PagenotFound";
+
+import { useContext } from 'react';
+import { AuthContext } from './contexts/authContext';
+
+const ProtectedRoute = ({ element }) => {
+const { authState: { isAuthenticated } } = useContext(AuthContext);
+
+return isAuthenticated ? element : <Navigate to="/login" />;
+};
+
+function App() {
+return (
+<AuthContextProvider>
+ <LayoutContextProvider>
+ <ComponentsContextProvider>
+ <EmployeeContextProvider>
+ <TechnicalContextProvider>
+ <RecordContextProvider>
+ <ProjectContextProvider>
+ <RoleContextProvider>
+ <Routes>
+ <Route path="login" element={<LoginPage />} />
+                                              <Route path="/*" element={<PageNotFound />} />
+                                                                                           <Route path="/" element={<ProtectedRoute element={<Layout />} />} >
+                                                                                                                                                             <Route path="/" element={<Dashboard />} />
+                                                                                                                                                                                                      <Route path="/employee" element={<Employees />} />
+                                                                                                                                                                                                                                                       <Route path="/employee/:employeeId" element={<EmployeeDetails />} />
+                                                                                                                                                                                                                                                                                                                          <Route path="/project" element={<Projects />} />
+                                                                                                                                                                                                                                                                                                                                                                         <Route path="/addproject" element={<AddProject />} />
+                                                                                                                                                                                                                                                                                                                                                                                                                             <Route path="/project/:projectId" element={<ProjectDetails />} />
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             <Route path="/log" element={<LogPage />} />
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       </Route>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         </Routes>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           </RoleContextProvider>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             </ProjectContextProvider>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               </RecordContextProvider>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 </TechnicalContextProvider>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   </EmployeeContextProvider>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     <Routes>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     <Route path="/doesnt-exist" element={<PageNotFound/>} />
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </Routes>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              </ComponentsContextProvider>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </LayoutContextProvider>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  </AuthContextProvider>
+);
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-.Nav {
-  display: flex;
-  
-}
-.container-left {
-  margin-top: 5vh;
-}
-
-.sideE {
-  margin-top: 20px;
-}
-.nav-container{
-  display: inline-flex;
-  justify-content: space-between;
-  margin-top: 15px;
-}
-.Avatar {
-  margin-top: 5vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 3vh;
-}
-.AvatarDescription{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.nav-role{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.items {
-  font-weight: 600;
-}
-.ant-menu {
-  font-weight: 600;
-  font-size:initial;
-}
-.zoom-in{
-
-}
-.zoom-out{
-  
-}
-
-.spinner {
-  margin: 20px 0;
-  margin-bottom: 20px;
-  padding: 30px 50px;
-  text-align: center;
-  background: rgba(0, 0, 0, 0.05);
-  border-radius: 4px;
-}
-*{
-  padding: 0%;
-  margin: 0%;
-  box-sizing: border-box;
-}
-.cont-404{
-  height: 100vh;
-  display: flex;
-  flex-direction: column ;
-  align-items: center;
-  justify-content: center;
-}
-.cont-404 img{
-  height: 70vh;
-  width: 50vw;
-}
-.cont-404 button {
-  padding: 12px 15px;
-  background: #7E57C2; /* Fallback */
-  background: linear-gradient(45deg, #7E57C2, #FF6D00);
-  border: none;
-  border-radius: 12px;
-  cursor: pointer;
-  color: #fff;
-  font-size: medium;
-  font-weight: bold;
-  position: relative;
-  overflow: hidden;
-}
-
-.cont-404 button::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  display: block;
-  width: 300%;
-  height: 300%;
-  background: rgba(255, 255, 255, 0.1);
-  transition: all 0.6s ease;
-  border-radius: 50%;
-  z-index: 0;
-  transform: translate(-50%, -50%);
-}
-
-.cont-404 button:hover::before {
-  width: 0;
-  height: 0;
-  opacity: 0;
-}
-
-.cont-404 button span {
-  position: relative;
-  z-index: 1;
-}
-
-/* Hiệu ứng khi di chuột vào */
-.cont-404 button:hover {
-  transform: scale(1.05);
-  /* Tăng kích thước khi di chuột vào */
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-  /* Đổ bóng */
-}
+export default App;
