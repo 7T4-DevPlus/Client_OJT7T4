@@ -1,11 +1,14 @@
 import React from 'react';
-import { DatePicker, Space } from 'antd';
-const onChange = (date, dateString) => {
-  console.log(date, dateString);
-};
-const DateCommon = () => (
-  <Space direction="vertical">
-    <DatePicker onChange={onChange} />
-  </Space>
-);
+import { DatePicker } from 'antd';
+const  { RangePicker } = DatePicker;
+
+const DateCommon = ({ ...props }) =>{
+
+  return(
+    <>
+      <DatePicker {...props} />
+    </>
+  );
+} 
+
 export default DateCommon;

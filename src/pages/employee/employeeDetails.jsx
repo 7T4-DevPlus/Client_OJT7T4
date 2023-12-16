@@ -1,54 +1,75 @@
-import { useContext, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useContext, useEffect, useState } from 'react';
+import { useParams, Link } from 'react-router-dom';
 import { EmployeeContext } from '../../contexts/employeeContext';
 import { ComponentsContext } from '../../contexts/componentsContext';
 
-import { Alert } from 'antd';
+import EmployeeForm from '../../components/employee/employeeForm';
+import EmployeeHistory from '../../components/employee/employeeHistory'
 
-import EmployeeForm from '../../components/employee/employeeForm'
+import Alert from '../../components/alerts/alertCommon';
+import Button from '../../components/buttons/ButtonCommon';
+import { Tabs } from 'antd';
 
 const EmployeeDetails = () => {
   const {
-    employeeState: { employee },
-    getEmployeeById
+    employeeState: { employee, histories },
+    getEmployeeById,
+    getEmployeeHistories
   } = useContext(EmployeeContext);
   const { employeeId } = useParams();
 
   useEffect(() => {
     getEmployeeById(employeeId);
-  }, [employee]);
+    getEmployeeHistories(employeeId);
+  }, []);
+
+  const [content, setContent] = useState('details')
 
   const {
-    alert,
-    setAlert,
-    alertMessage,
-    alertType
+    alert
   } = useContext(ComponentsContext);
 
-  const onCloseAlert = () => {
-    setAlert(false);
+  const onChange = (key) => {
+    setContent(key)
   };
+
+  const items = [
+    {
+      key: 'details',
+      label: 'Information'
+    },
+    {
+      key: 'history',
+      label: 'History'
+    }
+  ];
+
+  let contentItem = null;
+  if (content === 'details') {
+    contentItem = (
+      <>
+        {employee !== null && <EmployeeForm employee={employee} employeeId={employeeId} />}
+      </>
+    )
+  } else {
+    contentItem = (
+      <>
+        {histories !== null && <EmployeeHistory histories={histories} />}
+      </>
+    )
+  }
 
   return (
     <>
-      <div style={{ width: "100%" }}>
-        {employee !== null && <EmployeeForm employee={employee} employeeId={employeeId} />}
+      <div>
+        <Link to="/employee">Back</Link>
       </div>
+      <div style={{width: "100%"}}>
+      <Tabs defaultActiveKey="1" items={items} onChange={onChange} />
+      {contentItem}
+    </div>
       {alert && (
-        <Alert
-          message={alertMessage}
-          type={alertType}
-          showIcon
-          closable
-          onClose={onCloseAlert}
-          style={{
-            position: 'fixed',
-            top: 20,
-            right: 16,
-            width: 300,
-            zIndex: 1000,
-          }}
-        />
+        <Alert />
       )}
     </>
   );

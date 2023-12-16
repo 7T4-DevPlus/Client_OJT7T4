@@ -2,12 +2,13 @@ import { createContext, useReducer, useState, useContext } from "react";
 import { employeeReducer } from "../reducers/employeeReducer"
 import { apiUrl } from "./constants";
 import axios from "axios";
+import unorm from 'unorm';
 
 import { ComponentsContext } from "./componentsContext";
 
 export const EmployeeContext = createContext()
 
-const EmployeeContextProvider = ({children}) => {
+const EmployeeContextProvider = ({ children }) => {
     const [employeeState, dispatch] = useReducer(employeeReducer, {
         employee: null,
         employees: [],
@@ -23,37 +24,45 @@ const EmployeeContextProvider = ({children}) => {
 
     const [showModal, setShowModal] = useState(false);
 
+    const [searchString, setSearchString] = useState("");
+
     const getEmployee = async () => {
         try {
-        const response = await axios.get(`${apiUrl}/employees`)
-        if (response.status === 200) {
-            dispatch({type: 'EMP_LOADED_SUCCESS', payload: response.data.employees});
-        }
+            const response = await axios.get(`${apiUrl}/employees`)
+            if (response.status === 200) {
+                dispatch({ type: 'EMP_LOADED_SUCCESS', payload: response.data.employees });
+            }
         } catch (error) {
             console.log(error);
-            dispatch({type: 'EMP_LOADED_FAIL'});
+            dispatch({ type: 'EMP_LOADED_FAIL' });
         }
     }
 
     const findEmployee = empId => {
-		const emp = employeeState.employees.find(employee => employee._id === empId)
-		dispatch({ type: 'FIND_EMP', payload: emp })
-	}
+        const emp = employeeState.employees.find(employee => employee._id === empId)
+        dispatch({ type: 'FIND_EMP', payload: emp })
+    }
 
     const createEmployee = async newEmployee => {
         try {
             const response = await axios.post(`${apiUrl}/employees/create`, newEmployee, { headers: { "Content-Type": "multipart/form-data" } })
             if (response.data.success) {
-                dispatch({type: 'EMP_CREATED_SUCCESS', payload: response.data.employees});
-                setProcessing(false);
-                setAlertMessage(response.data.message);
-                setAlertType("success");
+                dispatch({ type: 'EMP_CREATED_SUCCESS', payload: response.data.employees });
+                setTimeout(() => {
+                    setProcessing(false);
+                    setAlert(true);
+                    setAlertMessage(response.data.message);
+                    setAlertType("success");
+                }, 2000);
                 return response.data
             }
         } catch (error) {
-            setProcessing(false);
-            setAlertMessage(error.response.data.message);
-            setAlertType("error");
+            setTimeout(() => {
+                setProcessing(false);
+                setAlert(true);
+                setAlertMessage(error.response.data.message);
+                setAlertType("error");
+            }, 2000);
             return error.response.data
                 ? error.response.data
                 : { success: false, message: "Server error" };
@@ -61,42 +70,59 @@ const EmployeeContextProvider = ({children}) => {
     }
 
     const deleteEmployee = async empId => {
-		try {
-			const response = await axios.patch(`${apiUrl}/employees/delete/${empId}`)
-			if (response.data.success)
-				dispatch({ type: 'DELETE_EMP', payload: empId });
+        try {
+            const response = await axios.patch(`${apiUrl}/employees/delete/${empId}`)
+            if (response.data.success) {
+                dispatch({ type: 'DELETE_EMP', payload: empId });
                 setAlert(true);
                 setAlertMessage(response.data.message);
                 setAlertType("success");
-		} catch (error) {
-			console.log(error);
-            setAlert(true);
-            setAlertMessage(error.response.data.message);
-            setAlertType("error");
-		}
-	}
-
-	const updateEmployee = async (updatedEmp, empId) => {
-		try {
-			const response = await axios.patch(`${apiUrl}/employees/update/${empId}`, updatedEmp, { headers: { "Content-Type": "multipart/form-data" } })
-			if (response.data.success) {
-				dispatch({ type: 'UPDATE_EMP', payload: response.data.employee });
+            }
+            setTimeout(() => {
                 setProcessing(false);
                 setAlert(true);
                 setAlertMessage(response.data.message);
-                setAlertType("success");
-				return response.data
-			}
-		} catch (error) {
-            setProcessing(false);
+                setAlertType("error");
+            }, 2000);
+        } catch (error) {
+            console.log(error);
             setAlert(true);
             setAlertMessage(error.response.data.message);
             setAlertType("error");
-			return error.response.data
-				? error.response.data
-				: { success: false, message: 'Server error' }
-		}
-	}
+        }
+    }
+
+    const updateEmployee = async (updatedEmp, empId) => {
+        try {
+            const response = await axios.patch(`${apiUrl}/employees/update/${empId}`, updatedEmp, { headers: { "Content-Type": "multipart/form-data" } })
+            if (response.data.success) {
+                dispatch({ type: 'UPDATE_EMP', payload: response.data.employee });
+                setTimeout(() => {
+                    setProcessing(false);
+                    setAlert(true);
+                    setAlertMessage(response.data.message);
+                    setAlertType("success");
+                }, 2000);
+                return response.data
+            }
+            setTimeout(() => {
+                setProcessing(false);
+                setAlert(true);
+                setAlertMessage(response.data.message);
+                setAlertType("error");
+            }, 2000);
+        } catch (error) {
+            setTimeout(() => {
+                setProcessing(false);
+                setAlert(true);
+                setAlertMessage(error.response.data.message);
+                setAlertType("error");
+            }, 2000);
+            return error.response.data
+                ? error.response.data
+                : { success: false, message: 'Server error' }
+        }
+    }
 
     const getEmployeeById = async (id) => {
         try {
@@ -109,7 +135,28 @@ const EmployeeContextProvider = ({children}) => {
             dispatch({ type: 'EMPDETAILS_LOADED_FAIL' });
         }
     }
-    
+
+    const searchEmployee = (query) => {
+        const normalizedQuery = unorm.nfd(query).toLowerCase();
+        const filteredEmployees = employeeState.employees.filter(employee => {
+            const normalizedEmployeeName = unorm.nfd(employee.name).toLowerCase();
+            return normalizedEmployeeName.includes(normalizedQuery);
+        });
+        dispatch({ type: 'EMP_LOADED_SUCCESS', payload: filteredEmployees });
+    };
+
+    const getEmployeeHistories = async (empId) => {
+        try {
+            const response = await axios.get(`${apiUrl}/employees/history/${empId}`)
+            if (response.status === 200) {
+                dispatch({ type: 'HISTORY_LOADED_SUCCESS', payload: response.data.histories });
+            }
+        } catch (error) {
+            console.log(error);
+            dispatch({ type: 'HISTORY_LOADED_FAIL' });
+        }
+    }
+
     const employeeContextData = {
         employeeState,
         getEmployee,
@@ -118,8 +165,12 @@ const EmployeeContextProvider = ({children}) => {
         deleteEmployee,
         updateEmployee,
         getEmployeeById,
+        searchEmployee,
+        getEmployeeHistories,
         showModal,
-        setShowModal
+        setShowModal,
+        searchString,
+        setSearchString
     }
 
     return (

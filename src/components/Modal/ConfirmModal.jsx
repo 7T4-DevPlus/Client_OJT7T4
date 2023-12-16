@@ -3,22 +3,14 @@ import { Modal } from 'antd';
 import ButtonCommon from '../buttons/ButtonCommon';
 import { ComponentsContext } from '../../contexts/componentsContext';
 
-const Dialog = ({ handleOk, title, message }) => {
-  const {
-    showConfirmModal,
-    setShowConfirmModal
-} = useContext(ComponentsContext);
-
-  const handleCancel = () => {
-    setShowConfirmModal(false);
-  };
+const Dialog = ({ handleOk, handleCancel, title, message, visible }) => {
 
   return (
     <Modal
       title={title}
-      visible={showConfirmModal}
       onCancel={handleCancel} 
       footer={null} 
+      open={visible}
     >
       <p>{message}</p>
       <div style={{ display: 'flex', justifyContent: 'flex-end' }}>

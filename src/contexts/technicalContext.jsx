@@ -47,7 +47,7 @@ const TechnicalContextProvider = ({children}) => {
 		}
 	}
 
-	const findBrand = techId => {
+	const findTechnical = techId => {
 		const technical = technicalState.technicals.find(tech => tech._id === techId)
 		dispatch({ type: 'FIND_TECH', payload: technical })
 	}
@@ -55,7 +55,7 @@ const TechnicalContextProvider = ({children}) => {
     const technicalContextData = {
         technicalState,
         getTechnicals,
-        findBrand,
+        findTechnical,
         addTechnical,
         deleteTechnical
     }

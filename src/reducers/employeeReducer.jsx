@@ -40,6 +40,16 @@ export const employeeReducer = (state, action) => {
                 ...state,
                 payload: []
             }
+        case 'HISTORY_LOADED_SUCCESS':
+            return {
+                ...state,
+                histories: payload
+            }
+        case 'HISTORY_LOADED_FAIL':
+            return {
+                ...state,
+                payload: []
+            }
 
         default:
             return state

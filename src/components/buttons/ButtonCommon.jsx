@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import {
     PlusOutlined,
     ReloadOutlined,
@@ -6,30 +6,27 @@ import {
     DeleteTwoTone
 } from "@ant-design/icons";
 import { Button, Flex } from "antd";
-import { ComponentsContext } from "../../contexts/componentsContext";
+import './ButtonComponent.css';
 
 const ButtonCommon = ({ buttonType, size = "large", handleOnClick, ...props }) => {
-    const {
-        processing
-    } = useContext(ComponentsContext);
     return (
         <Flex gap="small" wrap="wrap" className="site-button-ghost-wrapper">
             {buttonType === "reload" && (
-                <Button shape="circle" icon={<ReloadOutlined />} size={size} onClick={handleOnClick}/>
+                <Button shape="circle" icon={<ReloadOutlined />} size={size} onClick={handleOnClick} />
             )}
             {buttonType === "add" && (
-                <Button shape="circle" icon={<PlusOutlined />} size={size} onClick={handleOnClick}/>
+                <Button shape="circle" icon={<PlusOutlined />} size={size} onClick={handleOnClick} />
             )}
             {buttonType === "edit" && (
                 <Button type="edit"
-                    icon={<FormOutlined style={{ fontSize: '16px', color: '#3F51B5' }} />} 
+                    icon={<FormOutlined style={{ fontSize: '16px', color: '#3F51B5' }} />}
                     onClick={handleOnClick}
                 >
                 </Button>
             )}
             {buttonType === "delete" && (
-                <Button type="delete" 
-                    icon={<DeleteTwoTone twoToneColor=" #eb2f96 " />} 
+                <Button type="delete"
+                    icon={<DeleteTwoTone twoToneColor=" #eb2f96 " />}
                     onClick={handleOnClick}
                 >
                 </Button>
@@ -40,23 +37,32 @@ const ButtonCommon = ({ buttonType, size = "large", handleOnClick, ...props }) =
                 </Button>
             )}
             {buttonType === "edit-text" && (
-                <Button type="primary" ghost size={size} onClick={handleOnClick}>
+                <Button className="edit-button" size={size} onClick={handleOnClick}>
                     Edit
                 </Button>
             )}
             {buttonType === "save" && (
-                <Button type="primary" size={size} onClick={handleOnClick}>
+                <Button size={size} className="save-button" onClick={handleOnClick}>
                     Save
                 </Button>
             )}
             {buttonType === "cancel" && (
-                <Button onClick={handleOnClick}>
+                <Button size={size} onClick={handleOnClick}>
                     Cancel
                 </Button>
             )}
             {buttonType === "loading" && (
-                <Button type="primary" loading>
+                <Button size={size} type="primary" loading>
                     Loading
+                </Button>
+            )}
+            {buttonType === "add-button" && (
+                <Button className="add-button" size={size} onClick={handleOnClick}>
+                </Button>
+            )}
+            {buttonType === "details" && (
+                <Button type="primary" ghost size={size} onClick={handleOnClick}>
+                    Details
                 </Button>
             )}
 

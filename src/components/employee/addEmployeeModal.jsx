@@ -3,12 +3,16 @@ import { EmployeeContext } from '../../contexts/employeeContext'
 import { TechnicalContext } from '../../contexts/technicalContext'
 import { ComponentsContext } from '../../contexts/componentsContext'
 
-import { Form, Upload, message, Modal, Col, Row, Select } from 'antd';
+import { Form, Upload, message, Col, Modal, Row, Tag } from 'antd';
+import { Popover, Button } from 'antd';
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
-import TextInput from '../inputs/InputTextCommon'
-import Checkbox from '../inputs/CheckBoxCommon'
-import RadioButton from '../inputs/RadioCommon'
-import Button from '../buttons/ButtonCommon'
+import TextInput from '../../components/inputs/InputTextCommon';
+import NumberInput from '../inputs/InputNumberCommon';
+import RadioButton from '../../components/inputs/RadioCommon';
+import ButtonCommon from '../../components/buttons/ButtonCommon';
+import Select from '../../components/inputs/SelectCommon';
+
+import countryCode from '../../JsonData/CountryCodes.json';
 
 const AddEmployeePage = () => {
     const {
@@ -23,26 +27,11 @@ const AddEmployeePage = () => {
     } = useContext(EmployeeContext);
 
     const {
-        checkedItems,
-        setCheckedItems,
-        radioItem,
-        setRadioItem,
         processing,
-        setProcessing,
-        setAlert
+        setProcessing
     } = useContext(ComponentsContext);
 
     useEffect(() => { getTechnicals() }, [])
-
-    let techOptions = []
-    technicals.map(tech => (
-        techOptions.push(
-            {
-                label: tech.name,
-                value: tech._id,
-            }
-        )
-    ))
 
     const genderOptions = [
         {
@@ -57,12 +46,17 @@ const AddEmployeePage = () => {
             label: 'Other',
             value: 'other',
         },
-    ]
+    ];
 
-    const phoneOptions = [
-        { value: '+84', label: 'VN' },
-        { value: '+81', label: 'JP' },
-    ]
+    const [checkedGender, setCheckedGender] = useState('');
+    const onGenderChange = (checkedValues) => {
+        setCheckedGender(checkedValues);
+    };
+
+    const phoneOptions = countryCode.map(({ name, dial_code }) => ({
+        label: name,
+        value: dial_code,
+    }));
 
     const [dialCode, setDialCode] = useState("+84");
 
@@ -71,11 +65,89 @@ const AddEmployeePage = () => {
     };
 
     const selectPhone = (
-        <Select onChange={handlePhoneChange} options={phoneOptions} defaultValue="+84"/>
+        <Select onChange={handlePhoneChange} options={phoneOptions} defaultValue={dialCode} />
+    );
+
+    const techOptions = technicals.map(({ _id, name }) => ({
+        label: name,
+        value: _id,
+    }));
+
+    const [employeeTechnicals, setEmployeeTechnicals] = useState([]);
+
+    const [open, setOpen] = useState(false);
+
+    const handleOpenChange = (newOpen) => {
+        setTechnical("Technical");
+        setPoint(0);
+        setOpen(newOpen);
+    };
+
+    const hide = () => {
+        setOpen(false);
+    };
+
+    const isTechnicalExist = (techId) => {
+        return employeeTechnicals.some((tech) => tech.technicalId === techId);
+    };
+
+    const addTech = () => {
+        if (technical === "Technical") {
+            message.error('Please select technical');
+            return;
+        }
+
+        if (isTechnicalExist(technical)) {
+            message.warning('Technical already exists for this employee');
+            return;
+        }
+
+        setEmployeeTechnicals((prevTechnicals) => [
+            ...prevTechnicals,
+            {
+                technicalId: technical,
+                point: point
+            }
+        ]);
+        setOpen(false);
+    };
+
+    const removeTechnical = (removedTechId) => {
+        const updatedTechnicals = employeeTechnicals.filter((tech) => tech.technicalId !== removedTechId);
+        setEmployeeTechnicals(updatedTechnicals);
+    }
+
+    const [technical, setTechnical] = useState("Technical");
+    const handleTechChange = (value) => {
+        setTechnical(value);
+    };
+
+    const [point, setPoint] = useState(0);
+    const handlePointChange = (value) => {
+        setPoint(value);
+    };
+
+    const selectTech = (
+        <Select onChange={handleTechChange} options={techOptions} defaultValue={technical} />
+    );
+
+    const content = (
+        <div>
+            <NumberInput addonBefore={selectTech} min={0} max={10} onChange={handlePointChange} defaultValue={0} />
+            <br />
+            <Row>
+                <Col>
+                    <ButtonCommon buttonType={"cancel"} handleOnClick={() => hide()} />
+                </Col>
+                <Col>
+                    <ButtonCommon buttonType={"save"} handleOnClick={() => addTech()} />
+                </Col>
+            </Row>
+        </div>
     );
 
     const validatePhoneNumber = (phoneNumber) => {
-        const phoneRegex = /^[0-9]{10}$/;
+        const phoneRegex = /^\d{9,12}$/;
         return phoneRegex.test(phoneNumber);
     };
 
@@ -84,12 +156,26 @@ const AddEmployeePage = () => {
         return emailRegex.test(email);
     };
 
+    const validateName = (rule, value) => {
+        const specialCharacterRegex = /[!@#$%^&*(),.?":{}|<>0-9]/;
+        if (specialCharacterRegex.test(value)) {
+            return Promise.reject('Name should not contain special characters or numbers');
+        }
+        return Promise.resolve();
+    };
+
     const onFinish = (values) => {
+        const formData = new FormData();
+
+        if (imgFile) {
+            formData.append("image", imgFile);
+        }
+
         if (!validatePhoneNumber(form.getFieldValue("phone"))) {
             form.setFields([
                 {
                     name: "phone",
-                    errors: ["Please enter a valid phone number (10 digits)"],
+                    errors: ["Please enter a valid phone number (9 - 12 digits)"],
                 },
             ]);
             return;
@@ -105,15 +191,13 @@ const AddEmployeePage = () => {
             return;
         }
 
-        const formData = new FormData()
-        formData.append("image", imgFile);
         formData.append("name", form.getFieldValue("name"));
         formData.append("code", form.getFieldValue("code"));
         formData.append("phone", dialCode + form.getFieldValue("phone"));
         formData.append("email", form.getFieldValue("email"));
         formData.append("identity", form.getFieldValue("identity"));
-        formData.append("gender", radioItem);
-        formData.append("technical", JSON.stringify(checkedItems));
+        formData.append("gender", checkedGender);
+        formData.append("technical", JSON.stringify(employeeTechnicals));
 
         setProcessing(true);
         createEmployee(formData);
@@ -121,14 +205,6 @@ const AddEmployeePage = () => {
         if (processing === false) {
             setShowModal(false);
             form.resetFields();
-            setCheckedItems([]);
-            setRadioItem(null);
-
-            setAlert(true);
-
-            setTimeout(() => {
-                setAlert(false);
-            }, 3000);
         }
     };
 
@@ -196,6 +272,8 @@ const AddEmployeePage = () => {
             footer={null}
             onCancel={handleCancel}
             centered
+            width={1000}
+            closable={false}
         >
             <Form
                 form={form}
@@ -208,33 +286,43 @@ const AddEmployeePage = () => {
                 onFinishFailed={onFinishFailed}
                 autoComplete="off"
             >
-                <Form.Item valuePropName="image" getValueFromEvent={imageUrl}>
-                    <Upload
-                        name="image"
-                        listType="picture-card"
-                        className="avatar-uploader"
-                        showUploadList={false}
-                        action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
-                        beforeUpload={beforeUpload}
-                        onChange={handleChange}
-                    >
-                        {imageUrl ? (
-                            <img
-                                src={imageUrl}
-                                alt="avatar"
-                                style={{
-                                    width: '100%',
-                                }}
-                            />
-                        ) : (
-                            uploadButton
-                        )}
-                    </Upload>
-
-                </Form.Item>
-
                 <Row>
                     <Col span={12}>
+                        <Form.Item valuePropName="image" getValueFromEvent={imageUrl}>
+                            <Upload
+                                name="image"
+                                listType="picture-card"
+                                className="avatar-uploader"
+                                showUploadList={false}
+                                action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
+                                beforeUpload={beforeUpload}
+                                onChange={handleChange}
+                            >
+                                {imageUrl ? (
+                                    <img
+                                        src={imageUrl}
+                                        alt="avatar"
+                                        style={{
+                                            width: '100%',
+                                        }}
+                                    />
+                                ) : (
+                                    uploadButton
+                                )}
+                            </Upload>
+
+                        </Form.Item>
+                    </Col>
+                    <Col span={12}>
+                        <Form.Item label="Gender">
+                            <RadioButton options={genderOptions} onChange={onGenderChange} />
+                        </Form.Item>
+                    </Col>
+                </Row>
+
+
+                <Row>
+                    <Col span={11}>
                         <Form.Item
                             label="Full Name"
                             name="name"
@@ -243,12 +331,16 @@ const AddEmployeePage = () => {
                                     required: true,
                                     message: 'Enter employee name',
                                 },
+                                {
+                                    validator: validateName,
+                                },
                             ]}
                         >
                             <TextInput />
                         </Form.Item>
                     </Col>
-                    <Col span={12}>
+                    <Col span={2}></Col>
+                    <Col span={11}>
                         <Form.Item
                             label="Identity code"
                             name="identity"
@@ -265,21 +357,22 @@ const AddEmployeePage = () => {
                 </Row>
 
                 <Row>
-                    <Col span={12}>
+                    <Col span={11}>
                         <Form.Item
-                            label="Phone number"
-                            name="phone"
+                            label="Employee code"
+                            name="code"
                             rules={[
                                 {
                                     required: true,
-                                    message: 'Enter phone number',
+                                    message: 'Enter employee code',
                                 },
                             ]}
                         >
-                            <TextInput addonBefore={selectPhone} />
+                            <TextInput />
                         </Form.Item>
                     </Col>
-                    <Col span={12}>
+                    <Col span={2}></Col>
+                    <Col span={11}>
                         <Form.Item
                             label="Email"
                             name="email"
@@ -296,45 +389,70 @@ const AddEmployeePage = () => {
                 </Row>
 
                 <Row>
-                    <Col span={12}>
+                    <Col span={14}>
                         <Form.Item
-                            label="Employee code"
-                            name="code"
+                            label="Phone number"
+                            name="phone"
                             rules={[
                                 {
                                     required: true,
-                                    message: 'Enter employee code',
+                                    message: 'Enter phone number',
                                 },
                             ]}
                         >
-                            <TextInput />
-                        </Form.Item>
-                    </Col>
-                    <Col span={3}></Col>
-                    <Col span={9}>
-                        <Form.Item label="Gender">
-                            <RadioButton options={genderOptions} />
+                            <TextInput addonBefore={selectPhone} prefix={dialCode} />
                         </Form.Item>
                     </Col>
                 </Row>
 
+                <Row>
+                    <Col span={12}>
+                        <Form.Item
+                            label="Technicals"
+                            name="technicals"
+                        >
+                            <Popover
+                                content={content}
+                                title="Add technical"
+                                trigger="click"
+                                open={open}
+                                onOpenChange={handleOpenChange}
+                                placement="topLeft"
+                                style={{ width: "100px" }}
+                            >
+                                <Button>Add technical</Button>
+                            </Popover>
+                        </Form.Item>
+                    </Col>
+                    <Col span={12}>
+                        {employeeTechnicals.map((tech) => {
+                            const technical = technicals.find((t) => t._id === tech.technicalId);
+                            return (
+                                <Tag color={'blue'} key={tech.technicalId} closeIcon={true} onClose={() => removeTechnical(tech.technicalId)}>
+                                    {technical ? `${technical.name} - ${tech.point}` : ''}
+                                </Tag>
+                            );
+                        })}
+                    </Col>
+                </Row>
 
-                <Form.Item
-                    label="Technicals"
-                    valuePropName="checked"
-                >
-                    <Checkbox options={techOptions} />
-                </Form.Item>
-
-
-                <Form.Item labelAlign="right" wrapperCol={{ offset: 20 }}>
-                    {processing === true ?
-                        (<Button buttonType={"loading"} />)
-                        :
-                        (<Button buttonType={"save"} handleOnClick={() => form.submit()} />)
-                    }
-
-                </Form.Item>
+                <Row>
+                    <Col span={16}></Col>
+                    <Col span={2}>
+                        <Form.Item labelAlign="right" >
+                            <ButtonCommon buttonType={"cancel"} handleOnClick={() => handleCancel()} />
+                        </Form.Item>
+                    </Col>
+                    <Col span={2}>
+                        <Form.Item labelAlign="right" wrapperCol={{ offset: 20 }}>
+                            {processing === true ?
+                                (<ButtonCommon buttonType={"loading"} />)
+                                :
+                                (<ButtonCommon buttonType={"save"} handleOnClick={() => form.submit()} />)
+                            }
+                        </Form.Item>
+                    </Col>
+                </Row>
 
             </Form>
         </Modal>
