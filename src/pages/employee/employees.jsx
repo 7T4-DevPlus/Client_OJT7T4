@@ -29,7 +29,8 @@ const Employees = () => {
     } = useContext(TechnicalContext);
 
     const {
-        alert
+        alert,
+        setSearchType
     } = useContext(ComponentsContext);
 
     const handleDetails = (record) => {
@@ -38,10 +39,10 @@ const Employees = () => {
     };
 
     useEffect(() => {
+        setSearchType("employee");
         if (searchString === '') {
             getEmployee();
         } else {
-            console.log(searchString);
             searchEmployee(searchString);
         }
     }, [searchString]);

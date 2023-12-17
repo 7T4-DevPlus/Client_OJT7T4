@@ -12,18 +12,26 @@ const Projects = () => {
 
   const {
     getProjects,
-    projectState: { projects, isLoading, allEmployeesInProject },
-    getAllEmployees
+    projectState: { projects, isLoading },
+    getAllEmployees,
+    searchProject,
+    searchProjectByName
   } = useContext(ProjectContext);
 
   const {
-    alert
+    alert,
+    setSearchType
   } = useContext(ComponentsContext);
 
   useEffect(() => {
+    setSearchType("project");
     getAllEmployees();
-    getProjects();
-  }, []);
+    if (searchProject === "") {
+      getProjects();
+    } else {
+      searchProjectByName(searchProject);
+    }
+  }, [searchProject]);
 
   let projectCards = null;
   if (isLoading) {
@@ -34,13 +42,13 @@ const Projects = () => {
     )
   } else {
     projectCards = (
-        <Row gutter={{xs: 8,sm: 16,md: 24,lg: 32,}}>
-          {projects && projects.map(project => (
-            <Col xs={24} sm={12} md={8} lg={6} key={project._id} style={{ marginBottom: "20px" }}>
-              <ProjectCard project={project} />
-            </Col>
-          ))}
-        </Row>
+      <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32, }}>
+        {projects && projects.map(project => (
+          <Col xs={24} sm={12} md={8} lg={6} key={project._id} style={{ marginBottom: "20px" }}>
+            <ProjectCard project={project} />
+          </Col>
+        ))}
+      </Row>
     )
   }
 

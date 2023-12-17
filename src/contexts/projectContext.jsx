@@ -25,6 +25,7 @@ const ProjectContextProvider = ({ children }) => {
 
     const [addEmployeeModal, setAddEmployeeModal] = useState(false);
     const [employeeDetailsModal, setEmployeeDetailsModal] = useState(false);
+    const [searchProject, setSearchProject] = useState("");
 
     const getProjects = async () => {
         try {
@@ -227,6 +228,13 @@ const ProjectContextProvider = ({ children }) => {
 		}
 	}
 
+    const searchProjectByName = (query) => {
+        const filteredProjects = projectState.projects.filter(project =>
+            project.name.toLowerCase().includes(query.toLowerCase())
+        );
+        dispatch({ type: 'PRO_LOADED_SUCCESS', payload: filteredProjects });
+    };
+
     const projectContextData = {
         projectState,
         getProjects,
@@ -243,6 +251,9 @@ const ProjectContextProvider = ({ children }) => {
         setAddEmployeeModal,
         employeeDetailsModal,
         setEmployeeDetailsModal,
+        searchProject,
+        setSearchProject,
+        searchProjectByName
     }
 
    return (

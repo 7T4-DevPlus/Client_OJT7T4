@@ -140,10 +140,17 @@ const EmployeeContextProvider = ({ children }) => {
         const normalizedQuery = unorm.nfd(query).toLowerCase();
         const filteredEmployees = employeeState.employees.filter(employee => {
             const normalizedEmployeeName = unorm.nfd(employee.name).toLowerCase();
-            return normalizedEmployeeName.includes(normalizedQuery);
+            const normalizedEmployeeEmail = unorm.nfd(employee.email).toLowerCase();
+            return (
+                normalizedEmployeeName.includes(normalizedQuery) ||
+                normalizedEmployeeEmail.includes(normalizedQuery) ||
+                normalizedQuery.includes(normalizedEmployeeName) ||
+                normalizedQuery.includes(normalizedEmployeeEmail)
+            );
         });
         dispatch({ type: 'EMP_LOADED_SUCCESS', payload: filteredEmployees });
     };
+
 
     const getEmployeeHistories = async (empId) => {
         try {

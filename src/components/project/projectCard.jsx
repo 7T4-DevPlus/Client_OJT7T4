@@ -25,8 +25,6 @@ const ProjectCard = (project) => {
         navigate(`/project/${proId}`);
     }
 
-    const [projectId, setProjectID] = useState('');
-
     const body = (
         <>
             <div style={{ width: "95%" }}>
@@ -41,6 +39,7 @@ const ProjectCard = (project) => {
                         }>
                             {projectInfo.status}
                         </Tag>
+                        <h4>{projectInfo.name}</h4>
                         <div style={{ marginTop: "10px", display: "flex" }}>
                             {empInPro.length > 0 ? (
                                 empInPro.slice(0, 3).map(emp => (
