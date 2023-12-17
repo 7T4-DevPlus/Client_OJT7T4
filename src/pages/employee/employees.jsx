@@ -88,11 +88,6 @@ const Employees = () => {
             key: 'email',
         },
         {
-            title: 'Employee Code',
-            dataIndex: 'code',
-            key: 'code',
-        },
-        {
             title: 'Phone Number',
             dataIndex: 'phone',
             key: 'phone',
@@ -111,7 +106,7 @@ const Employees = () => {
                     )
                 );
             },
-            width: 335,
+            width: 250,
             render: (_, { technical }) => {
                 const sortedTechnicals = sortTechnicalsByPoint(technical);
                 const top3Technicals = sortedTechnicals.slice(0, 3);
@@ -134,6 +129,7 @@ const Employees = () => {
             title: 'Availability',
             dataIndex: 'isAvailable',
             key: 'isAvailable',
+            width: 120,
             render: (isAvailable) => (
                 <Tag color={isAvailable ? 'green' : 'red'}>
                     {isAvailable ? 'Available' : 'Unavailable'}
@@ -179,7 +175,9 @@ const Employees = () => {
 
     return (
         <>
-            <ButtonCommon buttonType="add-button" handleOnClick={() => setShowModal(true)} />
+            <div style={{ marginBottom: "10px" }}>
+                <ButtonCommon buttonType="add-button" handleOnClick={() => setShowModal(true)} />
+            </div>
             {body}
             <AddModal />
             <ConfirmModal

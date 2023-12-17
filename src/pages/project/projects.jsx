@@ -12,7 +12,8 @@ const Projects = () => {
 
   const {
     getProjects,
-    projectState: { projects, isLoading }
+    projectState: { projects, isLoading, allEmployeesInProject },
+    getAllEmployees
   } = useContext(ProjectContext);
 
   const {
@@ -20,6 +21,7 @@ const Projects = () => {
   } = useContext(ComponentsContext);
 
   useEffect(() => {
+    getAllEmployees();
     getProjects();
   }, []);
 

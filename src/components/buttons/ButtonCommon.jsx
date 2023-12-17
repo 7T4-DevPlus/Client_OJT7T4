@@ -5,7 +5,7 @@ import {
     FormOutlined,
     DeleteTwoTone
 } from "@ant-design/icons";
-import { Button, Flex } from "antd";
+import { Button, Flex, FloatButton  } from "antd";
 import './ButtonComponent.css';
 
 const ButtonCommon = ({ buttonType, size = "large", handleOnClick, ...props }) => {
@@ -57,7 +57,8 @@ const ButtonCommon = ({ buttonType, size = "large", handleOnClick, ...props }) =
                 </Button>
             )}
             {buttonType === "add-button" && (
-                <Button className="add-button" size={size} onClick={handleOnClick}>
+                <Button className="edit-button" size={size} onClick={handleOnClick}>
+                    Add
                 </Button>
             )}
             {buttonType === "details" && (
@@ -65,7 +66,6 @@ const ButtonCommon = ({ buttonType, size = "large", handleOnClick, ...props }) =
                     Details
                 </Button>
             )}
-
         </Flex>
 
 
