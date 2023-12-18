@@ -13,14 +13,25 @@ const LogPage = () => {
     const [value, setValue] = useState('');
     const [date, setDate] = useState(null);
     const [filteredRecords, setFilteredRecords] = useState([]);
+    const [loading, setLoading] = useState(false);
 
     const onChange = (e) => {
         setValue(e.target.value);
+        setLoading(true);
+
+        setTimeout(() => {
+            setLoading(false);
+        }, 2000);
     };
 
     const onDateChange = (date, dateString) => {
         const formattedDates = moment(dateString, 'YYYY-MM-DDTHH:mm:ss.SSSZ').toISOString();
         setDate(formattedDates);
+        setLoading(true);
+
+        setTimeout(() => {
+            setLoading(false);
+        }, 2000);
     };
 
     useEffect(() => {
@@ -60,7 +71,7 @@ const LogPage = () => {
 
     let body = null;
 
-    if (isLoading) {
+    if (isLoading || loading) {
         body = (
             <div className="spinner">
                 <Spin size="large" />

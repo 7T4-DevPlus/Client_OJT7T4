@@ -131,7 +131,7 @@ const AssignEmployeeModal = (project) => {
         </Form.Item>
 
         <Form.Item
-          label="Role"
+          label="Position"
           name="role"
           rules={[
             {
