@@ -51,16 +51,17 @@ function App() {
                                     <Route path="/addproject" element={<AddProject />} />
                                     <Route path="/project/:projectId" element={<ProjectDetails />} />
                                     <Route path="/log" element={<LogPage />} />
+                                    <Route path="/doesnt-exist" element={<PageNotFound/>} />
+
                                  </Route>
+
                               </Routes>
                            </RoleContextProvider>
                         </ProjectContextProvider>
                      </RecordContextProvider>
                   </TechnicalContextProvider>
                </EmployeeContextProvider>
-               <Routes>
-                  <Route path="/doesnt-exist" element={<PageNotFound/>} />
-               </Routes>
+
             </ComponentsContextProvider>
          </LayoutContextProvider>
       </AuthContextProvider>
