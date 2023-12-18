@@ -7,7 +7,6 @@ import EmployeeForm from '../../components/employee/employeeForm';
 import EmployeeHistory from '../../components/employee/employeeHistory'
 
 import Alert from '../../components/alerts/alertCommon';
-import Button from '../../components/buttons/ButtonCommon';
 import { Tabs } from 'antd';
 
 const EmployeeDetails = () => {

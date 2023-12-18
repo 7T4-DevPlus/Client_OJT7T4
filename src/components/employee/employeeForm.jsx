@@ -13,6 +13,8 @@ import ButtonCommon from '../buttons/ButtonCommon';
 
 import countryCode from '../../JsonData/CountryCodes.json';
 
+import ExportDoc from './ExportDoc'
+
 const EmployeeForm = (employee) => {
     const { updateEmployee } = useContext(EmployeeContext);
 
@@ -266,6 +268,7 @@ const EmployeeForm = (employee) => {
                     ) :
                     <ButtonCommon buttonType={"edit-text"} handleOnClick={() => handleEdit()} />
                 )}
+                {employee.employee && <ExportDoc data={employee.employee}/>}
             </div>
             <div style={{ width: "80%", display: "flex", justifyContent: "center" }}>
                 <h1 style={{ textAlign: "center" }}>{employee.employee.name}'s Information</h1>
