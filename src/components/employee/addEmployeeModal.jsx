@@ -49,8 +49,8 @@ const AddEmployeePage = () => {
     ];
 
     const [checkedGender, setCheckedGender] = useState('');
-    const onGenderChange = (checkedValues) => {
-        setCheckedGender(checkedValues);
+    const onGenderChange = (e) => {
+        setCheckedGender(e.target.value);
     };
 
     const phoneOptions = countryCode.map(({ name, dial_code }) => ({
