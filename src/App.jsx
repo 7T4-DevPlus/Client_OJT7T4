@@ -58,6 +58,9 @@ function App() {
                      </RecordContextProvider>
                   </TechnicalContextProvider>
                </EmployeeContextProvider>
+               <Routes>
+                  <Route path="/doesnt-exist" element={<PageNotFound/>} />
+               </Routes>
             </ComponentsContextProvider>
          </LayoutContextProvider>
       </AuthContextProvider>
