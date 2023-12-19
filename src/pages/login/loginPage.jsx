@@ -93,7 +93,7 @@ const LoginPage = () => {
           style={{ padding: "20px" }}
         >
           <div className="d-flex flex-row align-items-center justify-content-center">
-            <p className="sign-in-text">Sign in with</p>
+            <p className="sign-in-text">Login</p>
           </div>
 
           <form onSubmit={handleSubmit(onLogin)}>
