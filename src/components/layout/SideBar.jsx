@@ -32,7 +32,7 @@ export const Sidebar = () => {
        <AppstoreOutlined style={{ fontSize: "22px" }} />,
        [
          getItem("All Project", "project"),
-         getItem("Add Project", "project/addProject"),
+         getItem("Add Project", "project/add"),
        ]
      ),
      getItem(
@@ -45,8 +45,6 @@ export const Sidebar = () => {
 
    const onClick = (e) => {
      const path = e.keyPath[0];
-     console.log(e.keyPath);
-     console.log(path);
      navigate(`/${path}`);
    };
    const Username = (props) => {

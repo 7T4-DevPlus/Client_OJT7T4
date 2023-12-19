@@ -22,7 +22,7 @@ const ProjectCard = (project) => {
         (emp.projectId._id === projectInfo._id)));
 
     const handleDetails = (proId) => {
-        navigate(`/project/${proId}`);
+        navigate(`/project/details/${proId}`);
     }
 
     const body = (

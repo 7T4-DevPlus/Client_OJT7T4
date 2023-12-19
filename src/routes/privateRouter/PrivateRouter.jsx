@@ -6,7 +6,7 @@ import Employees from "../../pages/employee/employees";
 import EmployeeDetails from "../../pages/employee/employeeDetails";
 import { Layout } from "../../components/layout/Layout";
 import { LOCAL_STORAGE_TOKEN_NAME } from "../../contexts/constants";
-import { Dashboard } from "../../pages/dashboard/Dashboard";
+import Dashboard from "../../pages/dashboard/Dashboard";
 import Projects from "../../pages/project/projects";
 import AddProject from "../../pages/project/addProject";
 import ProjectDetails from "../../pages/project/projectDetails";
@@ -50,7 +50,7 @@ const projectRouter = [
     element: <AddProject />,
   },
   {
-    path: "project/:projectId",
+    path: "project/details/:projectId",
     element: <ProjectDetails />,
   },
 ];
