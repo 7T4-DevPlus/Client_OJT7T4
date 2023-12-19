@@ -142,12 +142,6 @@ const LoginPage = () => {
               )}
             />
             <div className="checkbox-login-spacing">
-              <MDBCheckbox
-                name="flexCheck"
-                value=""
-                id="flexCheckDefault"
-                label="Remember me"
-              />
               <MDBBtn
                 className="mb-0 px-5"
                 size="lg"
@@ -173,19 +167,6 @@ const LoginPage = () => {
               </MDBBtn>
             </div>
           </form>
-
-          <div className="d-flex justify-content-between mb-4">
-            <a href="!#">Forgot password?</a>
-          </div>
-
-          <div className="text-center text-md-start mt-4 pt-2">
-            <p className="small fw-bold mt-2 pt-1 mb-2">
-              Don't have an account?{" "}
-              <a href="#!" className="link-danger">
-                Register
-              </a>
-            </p>
-          </div>
         </MDBCol>
       </MDBRow>
     </MDBContainer>
