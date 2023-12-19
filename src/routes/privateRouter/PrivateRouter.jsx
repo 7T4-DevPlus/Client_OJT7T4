@@ -24,7 +24,7 @@ const ProtectedRoute = () => {
 
 const dashboardRouter = [
   {
-    path: "dashboard",
+    path: "",
     element: <Dashboard />,
   },
 ];

@@ -23,7 +23,7 @@ export const Sidebar = () => {
    const items = [
      getItem(
        "Dashboard",
-       "dashboard",
+       "",
        <PieChartOutlined style={{ fontSize: "22px" }} />
      ),
      getItem(

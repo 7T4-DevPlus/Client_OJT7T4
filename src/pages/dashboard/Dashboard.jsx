@@ -103,14 +103,15 @@ const Dashboard = () => {
   };
 
   const barChartData = {
-    labels: Object.keys(projectsByMonth),
+    labels: Object.keys(employeeTechnicalData),
     datasets: [
       {
-        label: 'Projects per Month',
-        data: Object.values(projectsByMonth),
+        label: 'Employees per Technical Skill',
+        data: Object.values(employeeTechnicalData),
         backgroundColor: 'rgba(75,85,192,0.6)',
         borderColor: 'rgba(75,85,192,1)',
         borderWidth: 1,
+        barThickness: 30, // Adjust this value to add space between bars
       },
     ],
   };
@@ -119,30 +120,22 @@ const Dashboard = () => {
     scales: {
       y: {
         beginAtZero: true,
-        max: 5,
-        min: 0,
-        stepSize: 0.2,
+        stepSize: 0.5,
       },
     },
   };
-  
 
   const pieChartData = {
-    labels: Object.keys(employeeTechnicalData),
+    labels: Object.keys(projectsByMonth),
     datasets: [
       {
-        data: Object.values(employeeTechnicalData),
+        data: Object.values(projectsByMonth),
         backgroundColor: [
           'rgba(153, 188, 87, 1)',
           'rgba(237, 153, 91, 1)',
           'rgba(244, 207, 121, 1)',
-          'rgba(115, 164, 202, 1)',
+          'rgba(95, 183, 212, 1)',
           'rgba(232, 226, 214, 1)',
-          'rgba(124, 155, 71, 1)',
-          'rgba(137, 160, 158, 1)',
-          'rgba(203, 79, 80, 1)',
-          'rgba(106, 174, 214, 1)',
-          'rgba(134, 131, 189, 1)',
         ],
         borderColor: 'rgba(255,255,255,1)',
         borderWidth: 1,
@@ -227,7 +220,7 @@ const Dashboard = () => {
       <div style={squareContainerStyle}>
         <div style={chartBlockStyle}>
           <h2 key="bar-chart-title">Projects Per Month</h2>
-          <Bar key={`bar-chart-${totalEmployees}`} data={barChartData} options={barChartOptions} />
+          <Bar key={`bar-chart-${totalEmployees}`} data={barChartData} options={barChartOptions} style={{marginTop: '8vh'}} />
         </div>
 
         <div style={chartBlockStyle}>

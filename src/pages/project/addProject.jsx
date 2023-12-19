@@ -90,9 +90,9 @@ const AddProject = () => {
 
     return (
         <>
-            <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", backgroundColor: "white", width: "80%", margin: "auto", borderRadius: "10px", boxShadow: "5px 10px 20px" }}>
                 <h1>Add new project</h1>
-                <div style={{ width: "80%" }}>
+                <div style={{ width: "85%" }}>
                     <Form
                         form={form}
                         name="Project information"
@@ -145,17 +145,15 @@ const AddProject = () => {
                         >
                             <Checkbox options={techOptions} onChange={onTechChange} />
                         </Form.Item>
-
-                        <Form.Item labelAlign="right" wrapperCol={{ offset: 20 }}>
-                            {disable === true ?
-                                (<Button buttonType={"loading"} />)
-                                :
-                                (<Button buttonType={"save"} handleOnClick={() => form.submit()} />)
-                            }
-                        </Form.Item>
-
                     </Form>
                 </div>
+            </div>
+            <div style={{ display: "flex", width: "80%", justifyContent: "flex-end",  margin: "10px auto" }}>
+                {disable === true ?
+                    (<Button buttonType={"loading"} />)
+                    :
+                    (<Button buttonType={"save"} handleOnClick={() => form.submit()} />)
+                }
             </div>
         </>
     )
