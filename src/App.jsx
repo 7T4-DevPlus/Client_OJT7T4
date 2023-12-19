@@ -1,5 +1,4 @@
 import "./App.css";
-import { Route, Routes, Navigate } from "react-router-dom";
 
 import AuthContextProvider from "./contexts/authContext";
 import EmployeeContextProvider from "./contexts/employeeContext";

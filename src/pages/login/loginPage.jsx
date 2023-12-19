@@ -18,7 +18,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { apiUrl, LOCAL_STORAGE_TOKEN_NAME } from "../../contexts/constants";
 
-import { AuthContext } from "../../contexts/authContext";
 import axios from "axios";
 import setAuthToken from "../../utils/setAuthToken";
 import { UserContext } from "../../contexts/userContext/userProvider";

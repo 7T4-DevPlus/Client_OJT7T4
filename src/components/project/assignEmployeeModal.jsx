@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useEffect, useState } from "react";
 import moment from "moment";
-import { format } from "date-fns";
 
 import { ProjectContext } from "../../contexts/projectContext";
 import { RoleContext } from "../../contexts/roleContext";
