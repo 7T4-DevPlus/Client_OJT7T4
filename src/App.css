@@ -112,3 +112,7 @@
 .ant-popover-inner {
   width: 300px;
 }
+
+.squareBlock {
+  display: inline-flex;
+}
