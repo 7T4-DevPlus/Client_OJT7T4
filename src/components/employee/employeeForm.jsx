@@ -26,7 +26,6 @@ const EmployeeForm = (employee) => {
         setProcessing
     } = useContext(ComponentsContext);
 
-
     useEffect(() => {
         getTechnicals();
     }, []);
@@ -131,9 +130,9 @@ const EmployeeForm = (employee) => {
         },
     ];
 
-    const [checkedGender, setCheckedGender] = useState('');
-    const onGenderChange = (checkedValues) => {
-        setCheckedGender(checkedValues);
+    const [checkedGender, setCheckedGender] = useState(employee.employee.gender);
+    const onGenderChange = (e) => {
+        setCheckedGender(e.target.value);
     };
 
     const phoneOptions = countryCode.map(({ name, dial_code }) => ({
@@ -259,7 +258,14 @@ const EmployeeForm = (employee) => {
     return (
         <>
             <div>
-                <ButtonCommon buttonType={"edit-text"} handleOnClick={() => handleEdit()} />
+                {(isEditing ?
+                    (
+                        processing ?
+                            <ButtonCommon buttonType={"loading"} /> :
+                            <ButtonCommon buttonType={"save"} handleOnClick={() => form.submit()} />
+                    ) :
+                    <ButtonCommon buttonType={"edit-text"} handleOnClick={() => handleEdit()} />
+                )}
             </div>
             <div style={{ width: "80%", display: "flex", justifyContent: "center" }}>
                 <h1 style={{ textAlign: "center" }}>{employee.employee.name}'s Information</h1>
@@ -414,15 +420,7 @@ const EmployeeForm = (employee) => {
                     </Row>
 
                     <Form.Item label="Gender">
-                        <RadioButton options={genderOptions} defaultValue={employee.employee.gender} onChange={onGenderChange} />
-                    </Form.Item>
-
-                    <Form.Item labelAlign="right" wrapperCol={{ offset: 20 }}>
-                        {processing === true ?
-                            (<ButtonCommon buttonType={"loading"} />)
-                            :
-                            (<ButtonCommon buttonType={"save"} handleOnClick={() => form.submit()} />)
-                        }
+                        <RadioButton options={genderOptions} defaultValue={checkedGender} onChange={onGenderChange} />
                     </Form.Item>
                 </Form>
             </div>

@@ -1,12 +1,24 @@
 import { useContext } from "react";
 import { EmployeeContext } from "../../contexts/employeeContext";
+import { ProjectContext } from '../../contexts/projectContext';
+import { ComponentsContext } from "../../contexts/componentsContext";
 import { Input } from 'antd';
 
 const SearchBox = () => {
     const { setSearchString } = useContext(EmployeeContext);
 
+    const { setSearchProject } = useContext(ProjectContext);
+
+    const { searchType } = useContext(ComponentsContext);
+
     return (
-        <Input placeholder="input search text" size="large" onPressEnter={(e) => {setSearchString(e.target.value)}} />
+        <>
+            {searchType === "employee" ? (
+                <Input placeholder="Input employee search text" size="large" onPressEnter={(e) => { setSearchString(e.target.value) }} />
+            ) : (
+                <Input placeholder="Input project search text" size="large" onPressEnter={(e) => { setSearchProject(e.target.value) }} />
+            )}
+        </>
     )
 }
 

@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Table, Space } from 'antd';
 import ButtonCommon from '../buttons/ButtonCommon';
 import ConfirmModal from '../Modal/ConfirmModal';
@@ -11,6 +11,8 @@ const EmployeeInProject = (employeesInProject) => {
         removeEmployeeFromProject,
         setEmployeeDetailsModal,
     } = useContext(ProjectContext);
+
+    useEffect(() => {}, [employeesInProject]);
 
     const empInPro = employeesInProject.employeesInProject;
 

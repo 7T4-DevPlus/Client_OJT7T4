@@ -63,6 +63,16 @@ export const projectReducer = (state, action) => {
                 ...state,
                 employeesInProject: state.employeesInProject.filter(emp => emp._id !== payload)
             }
+        case 'ALLEMPINPRO_LOADED_SUCCESS':
+            return {
+                ...state,
+                allEmployeesInProject: payload,
+            }
+        case 'ALLEMPINPRO_LOADED_FAIL':
+            return {
+                ...state,
+                payload: [],
+            }
 
         default:
             return state
