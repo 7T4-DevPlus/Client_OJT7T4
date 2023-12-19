@@ -1,5 +1,5 @@
 import React from 'react'
-import { Row, Empty } from 'antd';
+import { Row, Col, Empty } from 'antd';
 import HistoryCard from './historyCard'
 
 const EmployeeHistory = (histories) => {
@@ -8,13 +8,13 @@ const EmployeeHistory = (histories) => {
   if (employeeHistories.length != 0) {
     body = (
       <>
-        <div style={{ width: "80%", marginLeft: "10%" }}>
+        <Row gutter={{ xs: 8, sm: 12, md: 24, lg: 32, }}>
           {employeeHistories && employeeHistories.map(history => (
-            <Row gutter={16} key={history._id}>
+            <Col xs={24} sm={12} md={12} lg={8} key={history._id}>
               <HistoryCard history={history} />
-            </Row>
+            </Col>
           ))}
-        </div>
+        </Row>
       </>
     )
   } else {
@@ -26,7 +26,7 @@ const EmployeeHistory = (histories) => {
   }
   return (
     <>
-      { body }
+      {body}
     </>
   )
 }

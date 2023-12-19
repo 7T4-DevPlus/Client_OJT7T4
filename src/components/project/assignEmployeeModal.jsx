@@ -174,11 +174,8 @@ const AssignEmployeeModal = (project) => {
         >
           <TextArea />
         </Form.Item>
-
-        <Form.Item labelAlign="right" wrapperCol={{ offset: 20 }}>
-          <Button buttonType={"save"} handleOnClick={() => form.submit()} />
-        </Form.Item>
       </Form>
+      <Button buttonType={"save"} handleOnClick={() => form.submit()} />
     </Modal>
   )
 }

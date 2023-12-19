@@ -64,10 +64,10 @@ const EmployeeDetails = () => {
       <div>
         <Link to="/employee">Back</Link>
       </div>
-      <div style={{width: "100%"}}>
-      <Tabs defaultActiveKey="1" items={items} onChange={onChange} />
-      {contentItem}
-    </div>
+      <div style={{ width: "100%" }}>
+        <Tabs defaultActiveKey="1" items={items} onChange={onChange} />
+        {contentItem}
+      </div>
       {alert && (
         <Alert />
       )}

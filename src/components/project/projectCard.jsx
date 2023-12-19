@@ -29,7 +29,7 @@ const ProjectCard = (project) => {
         <>
             <div style={{ width: "100%", minWidth: "200px" }}>
                 <Card key={projectInfo._id} style={{ border: '1.25px solid #c7c5c5', height: '300px' }}>
-                    <div style={{ height: "225px" }}>
+                    <div style={{ height: "220px" }}>
                         <Tag color={
                             projectInfo.status === 'Planning' ? 'blue' :
                                 projectInfo.status === 'Completed' ? 'green' :
@@ -39,7 +39,7 @@ const ProjectCard = (project) => {
                         }>
                             {projectInfo.status}
                         </Tag>
-                        <h4>{projectInfo.name}</h4>
+                        <h4 style={{ marginTop: "10px" }}>{projectInfo.name}</h4>
                         <div style={{ marginTop: "10px", display: "flex" }}>
                             {empInPro.length > 0 ? (
                                 empInPro.slice(0, 3).map(emp => (
@@ -60,9 +60,9 @@ const ProjectCard = (project) => {
                                 </div>
                             )}
                         </div>
-                        <p style={{ fontWeight: 500, marginBottom: 6 }}>Start date: {new Date(projectInfo.startDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+                        <p style={{ fontWeight: 500, marginBottom: 6, marginTop: "10px" }}>Start date: {new Date(projectInfo.startDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
                         {projectInfo.endDate ?
-                            <p style={{ fontWeight: 500, marginBottom: 6 }}>Start date: {new Date(projectInfo.startDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p> :
+                            <p style={{ fontWeight: 500, marginBottom: 6 }}>End date: {new Date(projectInfo.endDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p> :
                             <p></p>
                         }
                         <div style={{ display: "flex", flexWrap: "wrap", marginTop: "10px" }}>

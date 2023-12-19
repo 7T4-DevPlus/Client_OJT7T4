@@ -257,7 +257,7 @@ const EmployeeForm = (employee) => {
 
     return (
         <>
-            <div>
+            <div style={{ display: "flex", justifyContent: "flex-end" }}>
                 {(isEditing ?
                     (
                         processing ?
@@ -267,10 +267,17 @@ const EmployeeForm = (employee) => {
                     <ButtonCommon buttonType={"edit-text"} handleOnClick={() => handleEdit()} />
                 )}
             </div>
-            <div style={{ width: "80%", display: "flex", justifyContent: "center" }}>
+            <div style={{ width: "100%", textAlign: "center" }}>
                 <h1 style={{ textAlign: "center" }}>{employee.employee.name}'s Information</h1>
             </div>
-            <div style={{ width: "80%", display: "flex", justifyContent: "center" }}>
+            <div style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    backgroundColor: "white",
+                    padding: "10px",
+                    borderRadius: "10px"
+                }}
+            >
                 <Form
                     form={form}
                     name="add employee"
