@@ -17,8 +17,6 @@ export const Layout = () => {
          <div
            style={{
              height: "100%",
-             // marginRight: spacing / 2,
-             //  background: "#ebebeb",
              width: "70px",
              transition: "width 0.3s ease-in-out",
            }}
@@ -29,9 +27,7 @@ export const Layout = () => {
          <div
            style={{
              height: "100%",
-             // marginRight: spacing / 2,
-             //  background: "#ebebeb",
-             width: 290,
+             width: "275px",
              transition: "width 0.3s ease-in-out",
            }}
          >

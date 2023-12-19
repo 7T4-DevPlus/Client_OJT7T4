@@ -26,12 +26,12 @@ export const Sidebar = () => {
      getItem(
        "Dashboard",
        "",
-       <PieChartOutlined style={{ fontSize: "22px" }} />
+       <PieChartOutlined style={{ fontSize: "18px" }} />
      ),
      getItem(
        "Project Management",
        "projectsManagement",
-       <AppstoreOutlined style={{ fontSize: "22px" }} />,
+       <AppstoreOutlined style={{ fontSize: "18px" }} />,
        [
          getItem("All Project", "project"),
          getItem("Add Project", "project/add"),
@@ -40,7 +40,7 @@ export const Sidebar = () => {
      getItem(
        "Employees Management",
        "Employees",
-       <TeamOutlined style={{ fontSize: "22px" }} />,
+       <TeamOutlined style={{ fontSize: "18px" }} />,
        [getItem("All Employees", "employee")]
      ),
    ];
@@ -49,15 +49,11 @@ export const Sidebar = () => {
      const path = e.keyPath[0];
      navigate(`/${path}`);
    };
-   const Username = (props) => {
-      return <p style={{ fontWeight: "700", fontSize: "x-large" }}>{props.name}</p>;
-   };
-
 
     const navbarBrandStyle = {
         color: '#2c303b',
         fontFamily: 'Roboto',
-        fontSize: '14px',
+        fontSize: '12px',
         gridArea: 'auto',
         lineHeight: '20px',
         margin: '0px 16px 0px 0px',
@@ -67,7 +63,7 @@ export const Sidebar = () => {
     const navbarBrandStyle2 = {
         color: '#2c303b',
         fontFamily: 'Roboto',
-        fontSize: '14px',
+        fontSize: '12px',
         gridArea: 'auto',
         lineHeight: '20px',
         margin: '0px 16px 0px 0px',
@@ -128,7 +124,7 @@ const userPanelStyle={
     const imageStyle = {
         color: '#cccccc',
         display: 'inline',
-        fontSize: '14px',
+        fontSize: '12px',
         gridArea: 'auto',
         lineHeight: '21px',
         width: '75px',
@@ -137,14 +133,14 @@ const userPanelStyle={
     };
     const profileUsertitleStyle = {
         color: '#060606',
-        fontSize: '14px',
+        fontSize: '12px',
         gridArea: 'auto',
         lineHeight: '21px',
         textAlign: 'center',
     };
 
     const profileUsertitleJobStyle = {
-        fontSize: '14px',
+        fontSize: '12px',
         gridArea: 'auto',
         lineHeight: '16.5px',
         textAlign: 'center',

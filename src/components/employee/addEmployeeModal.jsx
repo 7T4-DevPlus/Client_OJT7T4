@@ -442,26 +442,17 @@ const AddEmployeePage = () => {
                         })}
                     </Col>
                 </Row>
-
-                <Row>
-                    <Col span={16}></Col>
-                    <Col span={2}>
-                        <Form.Item labelAlign="right" >
-                            <ButtonCommon buttonType={"cancel"} handleOnClick={() => handleCancel()} />
-                        </Form.Item>
-                    </Col>
-                    <Col span={2}>
-                        <Form.Item labelAlign="right" wrapperCol={{ offset: 20 }}>
-                            {processing === true ?
-                                (<ButtonCommon buttonType={"loading"} />)
-                                :
-                                (<ButtonCommon buttonType={"save"} handleOnClick={() => form.submit()} />)
-                            }
-                        </Form.Item>
-                    </Col>
-                </Row>
-
             </Form>
+            <div style={{ display: "flex", justifyContent: "flex-end" }}>
+                <div style={{marginRight: "10px"}}>
+                    <ButtonCommon buttonType={"cancel"} handleOnClick={() => handleCancel()} />
+                </div>
+                {processing === true ?
+                    (<ButtonCommon buttonType={"loading"} />)
+                    :
+                    (<ButtonCommon buttonType={"save"} handleOnClick={() => form.submit()} />)
+                }
+            </div>
         </Modal>
     )
 }
