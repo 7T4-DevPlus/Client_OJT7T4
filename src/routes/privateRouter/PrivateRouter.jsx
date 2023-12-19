@@ -33,12 +33,10 @@ const employeeRouter = [
   {
     path: "employee",
     element: <Employees />,
-    children: [
-      {
-        path: ":employeeId",
-        element: <EmployeeDetails />,
-      },
-    ],
+  },
+  {
+    path: "employee/:employeeId",
+    element: <EmployeeDetails />,
   },
 ];
 
@@ -46,16 +44,14 @@ const projectRouter = [
   {
     path: "project",
     element: <Projects />,
-    children: [
-      {
-        path: "addproject",
-        element: <AddProject />,
-      },
-      {
-        path: ":projectId",
-        element: <ProjectDetails />,
-      },
-    ],
+  },
+  {
+    path: "project/add",
+    element: <AddProject />,
+  },
+  {
+    path: "project/:projectId",
+    element: <ProjectDetails />,
   },
 ];
 

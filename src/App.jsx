@@ -45,23 +45,26 @@ function App() {
               <RecordContextProvider>
                 <ProjectContextProvider>
                   <RoleContextProvider>
-                    {/* <Routes>
+                    <UserProviderContext>
+                      {/* <Routes>
                                  <Route path="login" element={<LoginPage />} />
                                  <Route path="/*" element={<PageNotFound />} />
                                  <Route path="/" element={<ProtectedRoute element={<Layout />} />} >
                                     <Route path="/" element={<Dashboard />} />
+                                    
                                     <Route path="/employee" element={<Employees />} />
                                     <Route path="/employee/:employeeId" element={<EmployeeDetails />} />
+
                                     <Route path="/project" element={<Projects />} />
                                     <Route path="/addproject" element={<AddProject />} />
                                     <Route path="/project/:projectId" element={<ProjectDetails />} />
+                                    
                                     <Route path="/log" element={<LogPage />} />
                                     <Route path="/doesnt-exist" element={<PageNotFound/>} />
 
                                  </Route>
 
                               </Routes> */}
-                    <UserProviderContext>
                       <Routers />
                     </UserProviderContext>
                   </RoleContextProvider>
