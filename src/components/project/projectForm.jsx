@@ -32,7 +32,6 @@ const ProjectForm = (project) => {
   const {
     processing,
     setProcessing,
-    // setShowConfirmModal
   } = useContext(ComponentsContext);
 
   const {

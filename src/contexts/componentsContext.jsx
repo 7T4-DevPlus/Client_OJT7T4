@@ -7,6 +7,7 @@ const ComponentsContextProvider = ({children}) => {
     const [alert, setAlert] = useState(false);
     const [alertMessage, setAlertMessage] = useState("");
     const [alertType, setAlertType] = useState("");
+    const [searchType, setSearchType] = useState("employee");
     
     const checkContextData = {
         processing,
@@ -16,7 +17,9 @@ const ComponentsContextProvider = ({children}) => {
         alertMessage,
         setAlertMessage,
         alertType,
-        setAlertType
+        setAlertType,
+        searchType,
+        setSearchType
     }
 
     return (

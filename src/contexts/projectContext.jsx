@@ -12,6 +12,7 @@ const ProjectContextProvider = ({ children }) => {
         project: null,
         projects: [],
         employeesInProject: [],
+        allEmployeesInProject: [],
         isLoading: true
     });
 
@@ -24,16 +25,17 @@ const ProjectContextProvider = ({ children }) => {
 
     const [addEmployeeModal, setAddEmployeeModal] = useState(false);
     const [employeeDetailsModal, setEmployeeDetailsModal] = useState(false);
+    const [searchProject, setSearchProject] = useState("");
 
     const getProjects = async () => {
         try {
-        const response = await axios.get(`${apiUrl}/projects`)
-        if (response.status === 200) {
-            dispatch({type: 'PRO_LOADED_SUCCESS', payload: response.data.projects});
-        }
+            const response = await axios.get(`${apiUrl}/projects`)
+            if (response.status === 200) {
+                dispatch({ type: 'PRO_LOADED_SUCCESS', payload: response.data.projects });
+            }
         } catch (error) {
             console.log(error);
-            dispatch({type: 'PRO_LOADED_FAIL'});
+            dispatch({ type: 'PRO_LOADED_FAIL' });
         }
     }
 
@@ -153,6 +155,18 @@ const ProjectContextProvider = ({ children }) => {
         }
     }
 
+    const getAllEmployees = async () => {
+        try {
+            const response = await axios.get(`${apiUrl}/empinpro`)
+            if (response.status === 200) {
+                dispatch({ type: 'ALLEMPINPRO_LOADED_SUCCESS', payload: response.data.employees });
+            }
+        } catch (error) {
+            console.log(error);
+            dispatch({ type: 'ALLEMPINPRO_LOADED_FAIL' });
+        }
+    }
+
     const addEmployeeToProject = async employee => {
         try {
             const response = await axios.post(`${apiUrl}/projects/addemp`, employee);
@@ -214,6 +228,13 @@ const ProjectContextProvider = ({ children }) => {
 		}
 	}
 
+    const searchProjectByName = (query) => {
+        const filteredProjects = projectState.projects.filter(project =>
+            project.name.toLowerCase().includes(query.toLowerCase())
+        );
+        dispatch({ type: 'PRO_LOADED_SUCCESS', payload: filteredProjects });
+    };
+
     const projectContextData = {
         projectState,
         getProjects,
@@ -223,12 +244,16 @@ const ProjectContextProvider = ({ children }) => {
         updateProject,
         getProjectById,
         getEmployeesInProject,
+        getAllEmployees,
         addEmployeeToProject,
         removeEmployeeFromProject,
         addEmployeeModal,
         setAddEmployeeModal,
         employeeDetailsModal,
         setEmployeeDetailsModal,
+        searchProject,
+        setSearchProject,
+        searchProjectByName
     }
 
    return (

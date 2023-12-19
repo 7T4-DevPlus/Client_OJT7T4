@@ -55,3 +55,9 @@
     content: 'Add' !important;
     opacity: 1 !important;
 }
+
+.loading-button {
+    background: white;
+    border-color: #3459eb !important;
+    color: #3459eb !important;
+}
