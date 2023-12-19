@@ -10,6 +10,7 @@ const EmployeeInProject = (employeesInProject) => {
     const {
         removeEmployeeFromProject,
         setEmployeeDetailsModal,
+        setAddEmployeeModal,
     } = useContext(ProjectContext);
 
     useEffect(() => {}, [employeesInProject]);
@@ -66,7 +67,10 @@ const EmployeeInProject = (employeesInProject) => {
 
     return (
         <>
-            <h1>Employees in project</h1>
+            <div style={{ marginBottom: "20px" }}>
+                <h1>Employees in project</h1>
+                <ButtonCommon buttonType="add-button" handleOnClick={() => setAddEmployeeModal(true)} />
+            </div>
             <Table dataSource={filteredEmpInPro} columns={columns} />
             {empDetails && <EmployeeInProjectModal empDetails={empDetails} />}
             <ConfirmModal

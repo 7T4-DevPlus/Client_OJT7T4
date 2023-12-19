@@ -125,7 +125,7 @@ const ProjectForm = (project) => {
     setShowConfirmModal(false);
   };
 
-  return (
+  let btn = (
     <>
       {projectInfo.isActive ?
         (isEditing ?
@@ -134,16 +134,26 @@ const ProjectForm = (project) => {
               <Button buttonType={"loading"} /> :
               <>
                 <Button buttonType={"save"} handleOnClick={() => form.submit()} />
-                <Button buttonType={"delete-text"} handleOnClick={() => closedBtnOnClick()} />
               </>
           ) :
           <>
-            <Button buttonType={"edit-text"} handleOnClick={() => handleEdit()} />
-            <Button buttonType={"delete-text"} handleOnClick={() => closedBtnOnClick()} />
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
+              <Button buttonType={"edit-text"} handleOnClick={() => handleEdit()} />
+              <Button buttonType={"delete-text"} handleOnClick={() => closedBtnOnClick()} />
+            </div>
           </>
         ) :
         <p>This project is closed</p>
       }
+    </>
+  )
+
+  return (
+    <>
+      <div>
+        <h1>Project details</h1>
+        {btn}
+      </div>
       <Form
         form={form}
         name="Project information"

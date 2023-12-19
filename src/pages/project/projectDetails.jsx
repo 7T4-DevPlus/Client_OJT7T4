@@ -1,11 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { Spin } from 'antd';
+import { Spin, Row, Col } from 'antd';
 
 import { ProjectContext } from '../../contexts/projectContext';
 import { ComponentsContext } from '../../contexts/componentsContext';
 
-import ButtonCommon from '../../components/buttons/ButtonCommon';
 import Alert from '../../components/alerts/alertCommon';
 
 import EmployeeInProject from '../../components/project/employeeInProject';
@@ -19,7 +18,6 @@ const ProjectDetails = () => {
   const {
     projectState: { employeesInProject, isLoading, project },
     getEmployeesInProject,
-    setAddEmployeeModal,
     findProject
   } = useContext(ProjectContext);
 
@@ -50,15 +48,14 @@ const ProjectDetails = () => {
     body = (
       <>
         <div style={{ display: "flex", width: "100%", justifyContent: "space-between" }}>
-          <div style={{ width: "45%" }}>
-            {project && <ProjectForm project={project} />}
-          </div>
-          <div style={{ width: "45%" }}>
-            <ButtonCommon buttonType="add" handleOnClick={() => setAddEmployeeModal(true)}>
-              Add Employee
-            </ButtonCommon>
-            {employeesInProject !== null && isLoading ? <p>Đang tải...</p> : <EmployeeInProject employeesInProject={employeesInProject} />}
-          </div>
+          <Row gutter={{ xs: 8, sm: 12, md: 24, lg: 32, }}>
+            <Col xs={24} sm={24} md={12} lg={12}>
+                {project && <ProjectForm project={project} />}
+            </Col>
+            <Col xs={24} sm={24} md={12} lg={12}>
+                {employeesInProject !== null && isLoading ? <p>Đang tải...</p> : <EmployeeInProject employeesInProject={employeesInProject} />}
+            </Col>
+          </Row>
         </div>
         <div>
           {employeesInProject !== null && isLoading ? <p>Đang tải...</p> : <ProjectTimeline employeesInProject={employeesInProject} />}
