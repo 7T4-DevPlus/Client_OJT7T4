@@ -21,29 +21,31 @@ export const Sidebar = () => {
 
 
    const items = [
-
-      getItem(
-         "Dashboard",
-         "dashboard",
-         <PieChartOutlined style={{ fontSize: "22px" }} />
-      ),
-      getItem(
-         "Project Management",
-         "Projects",
-         <AppstoreOutlined style={{ fontSize: "22px" }} />,
-         [getItem("All Project", "project"), getItem("Add Project", "addProject")]
-      ),
-      getItem(
-         "Employees Management",
-         "Employees",
-         <TeamOutlined style={{ fontSize: "22px" }} />,
-         [getItem("All Employees", "employee"), getItem("Add Employees", "addEmployee")]
-      ),
+     getItem(
+       "Dashboard",
+       "dashboard",
+       <PieChartOutlined style={{ fontSize: "22px" }} />
+     ),
+     getItem(
+       "Project Management",
+       "projectsManagement",
+       <AppstoreOutlined style={{ fontSize: "22px" }} />,
+       [
+         getItem("All Project", "project"),
+         getItem("Add Project", "project/add"),
+       ]
+     ),
+     getItem(
+       "Employees Management",
+       "Employees",
+       <TeamOutlined style={{ fontSize: "22px" }} />,
+       [getItem("All Employees", "employee")]
+     ),
    ];
 
    const onClick = (e) => {
-      const path = e.keyPath[0];
-      navigate(`/${path}`);
+     const path = e.keyPath[0];
+     navigate(`/${path}`);
    };
    const Username = (props) => {
       return <p style={{ fontWeight: "700", fontSize: "x-large" }}>{props.name}</p>;

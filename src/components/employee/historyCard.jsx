@@ -9,7 +9,7 @@ const HistoryCard = (history) => {
     const employeeHistory = history.history;
 
     const handleDetails = (projectId) => {
-        navigate(`/project/${projectId}`);
+        navigate(`/project/details/${projectId}`);
     };
 
   return (
