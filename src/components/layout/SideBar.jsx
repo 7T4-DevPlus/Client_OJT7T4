@@ -3,11 +3,13 @@ import { AppstoreOutlined, PieChartOutlined, TeamOutlined } from "@ant-design/ic
 import { Menu } from "antd";
 import { useNavigate } from 'react-router-dom';
 import { LayoutContext } from "../../contexts/LayoutContext";
+import { AuthContext } from "../../contexts/authContext";
 
 
 export const Sidebar = () => {
    const navigate = useNavigate();
    const { layout } = useContext(LayoutContext);
+   const { authState: {user} } = useContext(AuthContext);
 
    function getItem(label, key, icon, children, type) {
       return {
@@ -124,9 +126,6 @@ const userPanelStyle={
 
     }
     const imageStyle = {
-        backgroundColor: '#ffffff',
-        borderRadius: '15%',
-        boxShadow: '0px 10px 13px 0px #4e4e4e',
         color: '#cccccc',
         display: 'inline',
         fontSize: '14px',
@@ -155,12 +154,12 @@ const userPanelStyle={
         <div>
         <div>
             { !layout ?
-                <a className="navbar-brand" href="/dashboard" style={navbarBrandStyle}>
+                <a className="navbar-brand" href="/" style={navbarBrandStyle}>
 
                 <img src="https://res.cloudinary.com/do0ououdk/image/upload/v1702892473/bfngqqrk96hhao6fbfnv.png" alt="Logo" style={logoStyle} />
                     <span className="logo_name" style={logoNameStyle}>7T4</span>
                 </a> :
-                <a className="navbar-brand" href="/dashboard" style={navbarBrandStyle2}>
+                <a className="navbar-brand" href="/" style={navbarBrandStyle2}>
                <img  src="https://res.cloudinary.com/do0ououdk/image/upload/v1702892473/bfngqqrk96hhao6fbfnv.png"
                      alt="Logo" style={logoStyle2} />
                 </a>
@@ -176,13 +175,13 @@ const userPanelStyle={
                                     alt="User Image"
                                     className="img-circle user-img-circle"
                                     style={imageStyle}
-                                    src="https://res.cloudinary.com/dfz0xsh2d/image/upload/v1702260661/c7qizzx5bcgelc4s9fud.png"
+                                    src="https://res.cloudinary.com/dfz0xsh2d/image/upload/v1702981453/Image_OJT7T4_Project1/35493994-36e2c50e-04d9-11e8-8b38-890caea01850_mayhtv.png"
                                 />
                             </div>
                         </div>
                         <div className="profile-usertitle">
                             <div className="sidebar-userpic-name" style={profileUsertitleStyle}>7T4</div>
-                            <div className="profile-usertitle-job" style={profileUsertitleJobStyle}>Admin</div>
+                            {user && <div className="profile-usertitle-job" style={profileUsertitleJobStyle}>{user.username}</div>}
                         </div>
                     </div>
                 )

@@ -20,7 +20,7 @@ import { LOCAL_STORAGE_TOKEN_NAME } from "../../contexts/constants";
 export const NavBar = () => {
   const navigate = useNavigate();
   const { layout, setLayout } = useContext(LayoutContext);
-  const { logoutUser } = useContext(AuthContext);
+  const { authState: {user} } = useContext(AuthContext);
 
   const [isShowSearch, setIsShowSearch] = useState(false);
   const location = useLocation();
@@ -114,37 +114,16 @@ export const NavBar = () => {
           }}
         >
           <div style={{ display: "flex", alignItems: "center" }}>
-            <Username name="Admin" />
+            {user && <Username name={user.username} />}
             <Avatar
               size={{
                 xs: 15,
                 md: 15,
               }}
-              src="https://res.cloudinary.com/dfz0xsh2d/image/upload/v1702260661/c7qizzx5bcgelc4s9fud.png"
+              src="https://res.cloudinary.com/dfz0xsh2d/image/upload/v1702981453/Image_OJT7T4_Project1/35493994-36e2c50e-04d9-11e8-8b38-890caea01850_mayhtv.png"
               style={{ marginLeft: "10px" }}
             />
           </div>
-          {/* <a onClick={onClick}>
-             <div className="Nav" style={{ right: 0 }}>
-               <span className="nav-role">
-                 <Username name="Admin" />
-               </span>
-               <Space>
-                 <Avatar
-                   size={{
-                     xs: 26,
-                     sm: 30,
-                     md: 37,
-                     lg: 46,
-                     xl: 50,
-                     xxl: 60,
-                   }}
-                   src="https://res.cloudinary.com/dfz0xsh2d/image/upload/v1702260661/c7qizzx5bcgelc4s9fud.png"
-                   style={{ marginLeft: "10px" }}
-                 />
-               </Space>
-             </div>
-           </a> */}
         </Dropdown>
       </div>
     </div>

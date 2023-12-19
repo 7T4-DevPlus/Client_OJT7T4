@@ -50,16 +50,12 @@ const Dashboard = () => {
 
       const currentDate = moment().format('YYYY-MM-DD');
 
-      // Tính toán ngày 5 tháng trước
       let fiveMonthsAgo = moment().subtract(5, 'months');
 
-      // Lọc các dự án trong khoảng thời gian từ fiveMonthsAgo đến ngày hiện tại
       let filteredProjects = projects.filter((project) => {
         let projectStartDate = moment(project.startDate);
         return projectStartDate.isBetween(fiveMonthsAgo, currentDate, null, '[]');
       });
-
-      console.log(filteredProjects);
 
       const projectsByMonthData = countProjectsByMonth(filteredProjects);
       setProjectsByMonth(projectsByMonthData);
