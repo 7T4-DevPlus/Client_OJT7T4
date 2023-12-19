@@ -87,16 +87,19 @@ const Employees = () => {
             title: 'Email',
             dataIndex: 'email',
             key: 'email',
+            responsive: ['md'],
         },
         {
             title: 'Phone Number',
             dataIndex: 'phone',
             key: 'phone',
+            responsive: ['md'],
         },
         {
             title: 'Technical',
             key: 'technical',
             dataIndex: 'technical',
+            responsive: ['lg'],
             filters: techFilters,
             onFilter: (value, record) => {
                 const selectedTechs = Array.isArray(value) ? value : [value];
@@ -170,7 +173,13 @@ const Employees = () => {
         )
     } else {
         body = (
-            <Table columns={columns} dataSource={employees} pagination={{ pageSize: 6 }} rowKey="_id" />
+            <Table 
+            columns={columns} 
+            dataSource={employees} 
+            pagination={{ pageSize: 6 }} 
+            rowKey="_id" 
+            responsive={{ xs: 'false', sm: 'false', md: 'false', lg: 1200, xl: 1600 }}
+            />
         )
     }
 

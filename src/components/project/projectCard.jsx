@@ -27,9 +27,9 @@ const ProjectCard = (project) => {
 
     const body = (
         <>
-            <div style={{ width: "95%" }}>
+            <div style={{ width: "100%", minWidth: "200px" }}>
                 <Card key={projectInfo._id} style={{ border: '1.25px solid #c7c5c5', height: '300px' }}>
-                    <div style={{ height: "200px" }}>
+                    <div style={{ height: "225px" }}>
                         <Tag color={
                             projectInfo.status === 'Planning' ? 'blue' :
                                 projectInfo.status === 'Completed' ? 'green' :
@@ -43,7 +43,7 @@ const ProjectCard = (project) => {
                         <div style={{ marginTop: "10px", display: "flex" }}>
                             {empInPro.length > 0 ? (
                                 empInPro.slice(0, 3).map(emp => (
-                                    <div key={emp.employeeId._id} style={{ borderRadius: "50%", width: "30px", overflow: "hidden", marginRight: "5px" }}>
+                                    <div key={emp.employeeId._id} style={{ borderRadius: "50%", width: "30px", overflow: "hidden", marginRight: "2px" }}>
                                         <img
                                             src={emp.employeeId.image}
                                             alt={`Image of ${emp.employeeId.name}`}
@@ -55,8 +55,8 @@ const ProjectCard = (project) => {
                                 <div style={{ width: "30px", height: "30px" }}></div>
                             )}
                             {empInPro.length > 3 && (
-                                <div style={{ display: "flex", textAlign: "center" ,alignItems: "center", borderRadius: "50%", width: "30px", overflow: "hidden", backgroundColor: "#e3e3e3", fontSize: "9px" }}>
-                                    {empInPro.length - 3} more
+                                <div style={{ display: "flex", justifyContent: "center" ,alignItems: "center", borderRadius: "50%", width: "30px", overflow: "hidden", backgroundColor: "#e3e3e3", fontSize: "9px" }}>
+                                    <b>+{empInPro.length - 3}</b>
                                 </div>
                             )}
                         </div>

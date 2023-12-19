@@ -42,9 +42,9 @@ const Projects = () => {
     )
   } else {
     projectCards = (
-      <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32, }}>
+      <Row gutter={{ xs: 8, sm: 12, md: 24, lg: 32, }}>
         {projects && projects.map(project => (
-          <Col xs={24} sm={12} md={8} lg={6} key={project._id} style={{ marginBottom: "20px" }}>
+          <Col xs={24} sm={12} md={12} lg={8} key={project._id} style={{ marginBottom: "20px", paddingRight: 0 }}>
             <ProjectCard project={project} />
           </Col>
         ))}
