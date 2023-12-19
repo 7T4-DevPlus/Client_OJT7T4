@@ -49,8 +49,8 @@ const AddEmployeePage = () => {
     ];
 
     const [checkedGender, setCheckedGender] = useState('');
-    const onGenderChange = (checkedValues) => {
-        setCheckedGender(checkedValues);
+    const onGenderChange = (e) => {
+        setCheckedGender(e.target.value);
     };
 
     const phoneOptions = countryCode.map(({ name, dial_code }) => ({
@@ -205,14 +205,17 @@ const AddEmployeePage = () => {
         if (processing === false) {
             setShowModal(false);
             form.resetFields();
+            form.resetFields(['gender']);
+            setEmployeeTechnicals([]);
         }
     };
 
     const onFinishFailed = (errorInfo) => {
         // handle error here
         console.log('Failed:', errorInfo);
-        console.log(form.getFieldValue("name"));
         form.resetFields();
+        form.resetFields(['gender']);
+        setEmployeeTechnicals([]);
     };
 
     const [loading, setLoading] = useState(false);
@@ -262,6 +265,9 @@ const AddEmployeePage = () => {
 
     const handleCancel = () => {
         setShowModal(false);
+        form.resetFields();
+        form.resetFields(['gender']);
+        setEmployeeTechnicals([]);
     };
 
     const [form] = Form.useForm();
@@ -315,7 +321,7 @@ const AddEmployeePage = () => {
                         </Form.Item>
                     </Col>
                     <Col span={12}>
-                        <Form.Item label="Gender">
+                        <Form.Item label="Gender" name="gender">
                             <RadioButton options={genderOptions} onChange={onGenderChange} />
                         </Form.Item>
                     </Col>

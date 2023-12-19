@@ -1,0 +1,67 @@
+*{
+    padding: 0%;
+    margin: 0%;
+    box-sizing: border-box;
+}
+.cont-404{
+    height: 100vh;
+    display: flex;
+    flex-direction: column ;
+    align-items: center;
+    justify-content: center;
+    background-color: #f4f4f4;
+}
+.cont-404 img{
+    margin-top: 1px;
+    height: 70vh;
+    width: 50vw;
+}
+.cont-404 button {
+    margin-top: 50px;
+    padding: 12px 15px;
+    background: #7E57C2; /* Fallback */
+    background: linear-gradient(45deg, #7E57C2, #FF6D00);
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    color: black;
+    font-size: medium;
+    font-weight: bold;
+    position: relative;
+    overflow: hidden;
+}
+
+.cont-404 button::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: block;
+    width: 300%;
+    height: 300%;
+    background: rgba(255, 204, 217, 0.5);
+    transition: all 0.6s ease;
+    border-radius: 50%;
+    z-index: 0;
+    transform: translate(-50%, -50%);
+}
+
+
+.cont-404 button:hover::before {
+    width: 0;
+    height: 0;
+    opacity: 0;
+}
+
+.cont-404 button span {
+    position: relative;
+    z-index: 1;
+}
+
+/* Hiệu ứng khi di chuột vào */
+.cont-404 button:hover {
+    transform: scale(1.05);
+    /* Tăng kích thước khi di chuột vào */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    /* Đổ bóng */
+}

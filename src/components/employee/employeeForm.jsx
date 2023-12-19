@@ -133,9 +133,9 @@ const EmployeeForm = (employee) => {
         },
     ];
 
-    const [checkedGender, setCheckedGender] = useState('');
-    const onGenderChange = (checkedValues) => {
-        setCheckedGender(checkedValues);
+    const [checkedGender, setCheckedGender] = useState(employee.employee.gender);
+    const onGenderChange = (e) => {
+        setCheckedGender(e.target.value);
     };
 
     const phoneOptions = countryCode.map(({ name, dial_code }) => ({
@@ -428,7 +428,7 @@ const EmployeeForm = (employee) => {
                     </Row>
 
                     <Form.Item label="Gender">
-                        <RadioButton options={genderOptions} defaultValue={employee.employee.gender} onChange={onGenderChange} />
+                        <RadioButton options={genderOptions} defaultValue={checkedGender} onChange={onGenderChange} />
                     </Form.Item>
                 </Form>
             </div>
