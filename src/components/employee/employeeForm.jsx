@@ -1,5 +1,6 @@
 import { useContext, useState, useEffect } from 'react';
 import { Form, Upload, message, Row, Col, Tag, Popover, Button } from 'antd';
+import { apiUrl } from "../../contexts/constants";
 
 import { EmployeeContext } from '../../contexts/employeeContext';
 import { TechnicalContext } from '../../contexts/technicalContext';
@@ -13,10 +14,10 @@ import ButtonCommon from '../buttons/ButtonCommon';
 
 import countryCode from '../../JsonData/CountryCodes.json';
 
-import ExportDoc from './ExportDoc'
-
 const EmployeeForm = (employee) => {
-    const { updateEmployee } = useContext(EmployeeContext);
+    const { 
+        updateEmployee
+    } = useContext(EmployeeContext);
 
     const {
         technicalState: { technicals },
@@ -257,8 +258,13 @@ const EmployeeForm = (employee) => {
         }
     };
 
+    const exportEmployee = (empId) => {
+        window.location.href = `${apiUrl}/employees/export/${empId}`;
+    }
+
     return (
         <>
+            <ButtonCommon buttonType={"export"} handleOnClick={() => exportEmployee(employee.employee._id)} />
             <div>
                 {(isEditing ?
                     (
@@ -268,7 +274,6 @@ const EmployeeForm = (employee) => {
                     ) :
                     <ButtonCommon buttonType={"edit-text"} handleOnClick={() => handleEdit()} />
                 )}
-                {employee.employee && <ExportDoc data={employee.employee}/>}
             </div>
             <div style={{ width: "80%", display: "flex", justifyContent: "center" }}>
                 <h1 style={{ textAlign: "center" }}>{employee.employee.name}'s Information</h1>

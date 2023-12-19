@@ -66,6 +66,11 @@ const ButtonCommon = ({ buttonType, size = "large", handleOnClick, ...props }) =
                     Details
                 </Button>
             )}
+            {buttonType === "export" && (
+                <Button className="edit-button" size={size} onClick={handleOnClick}>
+                    Export
+                </Button>
+            )}
         </Flex>
 
 
