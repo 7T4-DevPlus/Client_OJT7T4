@@ -1,21 +1,23 @@
-import React, { useState, useContext, useEffect } from 'react'
-import moment from 'moment';
-import dayjs from 'dayjs';
+/* eslint-disable array-callback-return */
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useState, useContext, useEffect } from "react";
+import moment from "moment";
+import dayjs from "dayjs";
 
-import { ProjectContext } from '../../contexts/projectContext';
-import { TechnicalContext } from '../../contexts/technicalContext';
-import { ComponentsContext } from '../../contexts/componentsContext';
+import { ProjectContext } from "../../contexts/projectContext";
+import { TechnicalContext } from "../../contexts/technicalContext";
+import { ComponentsContext } from "../../contexts/componentsContext";
 
-import { Form } from 'antd';
+import { Form } from "antd";
 
-import TextInput from '../inputs/InputTextCommon';
-import Button from '../buttons/ButtonCommon';
-import DatePicker from '../inputs/DateCommon';
-import Select from '../inputs/SelectCommon';
-import Checkbox from '../inputs/CheckBoxCommon';
-import TextArea from '../inputs/InputTextArea';
+import TextInput from "../inputs/InputTextCommon";
+import Button from "../buttons/ButtonCommon";
+import DatePicker from "../inputs/DateCommon";
+import Select from "../inputs/SelectCommon";
+import Checkbox from "../inputs/CheckBoxCommon";
+import TextArea from "../inputs/InputTextArea";
 
-import ConfirmModal from '../../components/Modal/ConfirmModal';
+import ConfirmModal from "../../components/Modal/ConfirmModal";
 
 const ProjectForm = (project) => {
   const projectInfo = project.project;
@@ -27,16 +29,15 @@ const ProjectForm = (project) => {
     removeEmployeeFromProject,
   } = useContext(ProjectContext);
 
-  const filteredEmpInPro = employeesInProject.filter(emp => ((emp.isWorking === true) && (emp.employeeId.isDelete === false)));
+  const filteredEmpInPro = employeesInProject.filter(
+    (emp) => emp.isWorking === true && emp.employeeId.isDelete === false
+  );
 
-  const {
-    processing,
-    setProcessing,
-  } = useContext(ComponentsContext);
+  const { processing, setProcessing } = useContext(ComponentsContext);
 
   const {
     technicalState: { technicals },
-    getTechnicals
+    getTechnicals,
   } = useContext(TechnicalContext);
 
   useEffect(() => {
@@ -50,7 +51,7 @@ const ProjectForm = (project) => {
 
   const defaultCheckedList = projectInfo.technical.map(({ _id }) => _id);
 
-  const [checkedTech, setCheckedTech] = useState(defaultCheckedList)
+  const [checkedTech, setCheckedTech] = useState(defaultCheckedList);
   const onTechChange = (checkedValues) => {
     setCheckedTech(checkedValues);
   };
@@ -61,10 +62,10 @@ const ProjectForm = (project) => {
   const [status, setStatus] = useState(projectInfo.status);
 
   const statusOprions = [
-    { value: 'Planning', label: 'Planning' },
-    { value: 'Running', label: 'Running' },
-    { value: 'Completed', label: 'Completed' },
-    { value: 'Closed', label: 'Closed' }
+    { value: "Planning", label: "Planning" },
+    { value: "Running", label: "Running" },
+    { value: "Completed", label: "Completed" },
+    { value: "Closed", label: "Closed" },
   ];
 
   const handleStatusChange = (value) => {
@@ -72,11 +73,14 @@ const ProjectForm = (project) => {
   };
 
   const [date, setDate] = useState(projectInfo.startDate);
-  const dateFormat = moment(date).format('DD/MM/YYYY').toString();
+  const dateFormat = moment(date).format("DD/MM/YYYY").toString();
   const handleChangeDate = (date, dateString) => {
-    const formattedDates = moment(dateString, 'YYYY-MM-DDTHH:mm:ss.SSSZ').toISOString();
+    const formattedDates = moment(
+      dateString,
+      "YYYY-MM-DDTHH:mm:ss.SSSZ"
+    ).toISOString();
     setDate(formattedDates);
-  }
+  };
 
   const handleEdit = () => {
     setIsEditing(!isEditing);
@@ -84,7 +88,7 @@ const ProjectForm = (project) => {
 
   const onFinish = async (values) => {
     console.log(values);
-    const formData = new FormData()
+    const formData = new FormData();
     formData.append("name", values.name);
     formData.append("description", values.description);
     formData.append("startDate", date);
@@ -100,22 +104,21 @@ const ProjectForm = (project) => {
   };
 
   const onFinishFailed = (errorInfo) => {
-    console.error('Failed:', errorInfo);
+    console.error("Failed:", errorInfo);
   };
 
   const [showConfirmModal, setShowConfirmModal] = useState(false);
 
   const closedBtnOnClick = () => {
     setShowConfirmModal(true);
-  }
+  };
 
   const handleCancel = () => {
     setShowConfirmModal(false);
-  }
+  };
 
   const handleClose = (projectId) => {
-
-    if(filteredEmpInPro.length > 0){
+    if (filteredEmpInPro.length > 0) {
       filteredEmpInPro.map((emp) => {
         removeEmployeeFromProject(emp._id);
       });
@@ -127,23 +130,34 @@ const ProjectForm = (project) => {
 
   return (
     <>
-      {projectInfo.isActive ?
-        (isEditing ?
-          (
-            processing ?
-              <Button buttonType={"loading"} /> :
-              <>
-                <Button buttonType={"save"} handleOnClick={() => form.submit()} />
-                <Button buttonType={"delete-text"} handleOnClick={() => closedBtnOnClick()} />
-              </>
-          ) :
+      {projectInfo.isActive ? (
+        isEditing ? (
+          processing ? (
+            <Button buttonType={"loading"} />
+          ) : (
+            <>
+              <Button buttonType={"save"} handleOnClick={() => form.submit()} />
+              <Button
+                buttonType={"delete-text"}
+                handleOnClick={() => closedBtnOnClick()}
+              />
+            </>
+          )
+        ) : (
           <>
-            <Button buttonType={"edit-text"} handleOnClick={() => handleEdit()} />
-            <Button buttonType={"delete-text"} handleOnClick={() => closedBtnOnClick()} />
+            <Button
+              buttonType={"edit-text"}
+              handleOnClick={() => handleEdit()}
+            />
+            <Button
+              buttonType={"delete-text"}
+              handleOnClick={() => closedBtnOnClick()}
+            />
           </>
-        ) :
+        )
+      ) : (
         <p>This project is closed</p>
-      }
+      )}
       <Form
         form={form}
         name="Project information"
@@ -154,7 +168,7 @@ const ProjectForm = (project) => {
           description: projectInfo.description,
           status: projectInfo.status,
           technicals: defaultCheckedList,
-          startDate: dayjs(dateFormat, 'DD/MM/YYYY')
+          startDate: dayjs(dateFormat, "DD/MM/YYYY"),
         }}
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
@@ -167,52 +181,46 @@ const ProjectForm = (project) => {
           rules={[
             {
               required: true,
-              message: 'Enter project name',
+              message: "Enter project name",
             },
           ]}
         >
           <TextInput />
         </Form.Item>
 
-        <Form.Item
-          label="Description"
-          name="description"
-        >
+        <Form.Item label="Description" name="description">
           <TextArea />
         </Form.Item>
 
-        <Form.Item
-          label="Start date"
-          name="startDate"
-        >
-          <DatePicker defaultValue={dayjs(dateFormat, 'DD/MM/YYYY')} format={"YYYY-MM-DD"} onChange={handleChangeDate} />
+        <Form.Item label="Start date" name="startDate">
+          <DatePicker
+            defaultValue={dayjs(dateFormat, "DD/MM/YYYY")}
+            format={"YYYY-MM-DD"}
+            onChange={handleChangeDate}
+          />
         </Form.Item>
 
-        <Form.Item
-          label="Project's status"
-          name="status"
-        >
+        <Form.Item label="Project's status" name="status">
           <Select options={statusOprions} onChange={handleStatusChange} />
         </Form.Item>
 
-        <Form.Item
-          label="Technicals"
-          name="technicals"
-          valuePropName="checked"
-        >
-          <Checkbox options={techOptions} defaultValue={checkedTech} onChange={onTechChange} />
+        <Form.Item label="Technicals" name="technicals" valuePropName="checked">
+          <Checkbox
+            options={techOptions}
+            defaultValue={checkedTech}
+            onChange={onTechChange}
+          />
         </Form.Item>
-
       </Form>
       <ConfirmModal
         visible={showConfirmModal}
         handleOk={() => handleClose(projectInfo._id)}
         handleCancel={() => handleCancel()}
-        title={'Confirm close project'}
-        message={'Do you want to close this project?'}
+        title={"Confirm close project"}
+        message={"Do you want to close this project?"}
       />
     </>
-  )
-}
+  );
+};
 
-export default ProjectForm
+export default ProjectForm;

@@ -1,17 +1,18 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
-import { Spin } from 'antd';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useContext, useEffect, useState } from "react";
+import { useParams, Link } from "react-router-dom";
+import { Spin } from "antd";
 
-import { ProjectContext } from '../../contexts/projectContext';
-import { ComponentsContext } from '../../contexts/componentsContext';
+import { ProjectContext } from "../../contexts/projectContext";
+import { ComponentsContext } from "../../contexts/componentsContext";
 
-import ButtonCommon from '../../components/buttons/ButtonCommon';
-import Alert from '../../components/alerts/alertCommon';
+import ButtonCommon from "../../components/buttons/ButtonCommon";
+import Alert from "../../components/alerts/alertCommon";
 
-import EmployeeInProject from '../../components/project/employeeInProject';
-import AssignEmployeeModal from '../../components/project/assignEmployeeModal';
-import ProjectForm from '../../components/project/projectForm';
-import ProjectTimeline from '../../components/project/projectTimeline';
+import EmployeeInProject from "../../components/project/employeeInProject";
+import AssignEmployeeModal from "../../components/project/assignEmployeeModal";
+import ProjectForm from "../../components/project/projectForm";
+import ProjectTimeline from "../../components/project/projectTimeline";
 
 const ProjectDetails = () => {
   const { projectId } = useParams();
@@ -20,12 +21,10 @@ const ProjectDetails = () => {
     projectState: { employeesInProject, isLoading, project },
     getEmployeesInProject,
     setAddEmployeeModal,
-    findProject
+    findProject,
   } = useContext(ProjectContext);
 
-  const {
-    alert
-  } = useContext(ComponentsContext);
+  const { alert } = useContext(ComponentsContext);
 
   const [loading, setLoading] = useState(true);
 
@@ -49,22 +48,39 @@ const ProjectDetails = () => {
   } else {
     body = (
       <>
-        <div style={{ display: "flex", width: "100%", justifyContent: "space-between" }}>
+        <div
+          style={{
+            display: "flex",
+            width: "100%",
+            justifyContent: "space-between",
+          }}
+        >
           <div style={{ width: "45%" }}>
             {project && <ProjectForm project={project} />}
           </div>
           <div style={{ width: "45%" }}>
-            <ButtonCommon buttonType="add" handleOnClick={() => setAddEmployeeModal(true)}>
+            <ButtonCommon
+              buttonType="add"
+              handleOnClick={() => setAddEmployeeModal(true)}
+            >
               Add Employee
             </ButtonCommon>
-            {employeesInProject !== null && isLoading ? <p>Đang tải...</p> : <EmployeeInProject employeesInProject={employeesInProject} />}
+            {employeesInProject !== null && isLoading ? (
+              <p>Đang tải...</p>
+            ) : (
+              <EmployeeInProject employeesInProject={employeesInProject} />
+            )}
           </div>
         </div>
         <div>
-          {employeesInProject !== null && isLoading ? <p>Đang tải...</p> : <ProjectTimeline employeesInProject={employeesInProject} />}
+          {employeesInProject !== null && isLoading ? (
+            <p>Đang tải...</p>
+          ) : (
+            <ProjectTimeline employeesInProject={employeesInProject} />
+          )}
         </div>
       </>
-    )
+    );
   }
 
   return (
@@ -72,11 +88,9 @@ const ProjectDetails = () => {
       <Link to="/project">Back</Link>
       {body}
       {project && <AssignEmployeeModal project={project} />}
-      {alert && (
-        <Alert />
-      )}
+      {alert && <Alert />}
     </>
   );
-}
+};
 
 export default ProjectDetails;

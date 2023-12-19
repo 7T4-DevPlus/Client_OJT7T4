@@ -1,18 +1,15 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Avatar } from "antd";
 import {
-  AntDesignOutlined,
-  DownOutlined,
   LogoutOutlined,
   HistoryOutlined,
-  BellOutlined,
   MenuOutlined,
 } from "@ant-design/icons";
-import { Dropdown, Space } from "antd";
+import { Dropdown } from "antd";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import { LayoutContext } from "../../contexts/LayoutContext";
-import { AuthContext } from "../../contexts/authContext";
+// import { AuthContext } from "../../contexts/authContext";
 
 import SearchBox from "./searchBox";
 import { LOCAL_STORAGE_TOKEN_NAME } from "../../contexts/constants";
@@ -20,7 +17,7 @@ import { LOCAL_STORAGE_TOKEN_NAME } from "../../contexts/constants";
 export const NavBar = () => {
   const navigate = useNavigate();
   const { layout, setLayout } = useContext(LayoutContext);
-  const { logoutUser } = useContext(AuthContext);
+  // const { logoutUser } = useContext(AuthContext);
 
   const [isShowSearch, setIsShowSearch] = useState(false);
   const location = useLocation();
@@ -68,9 +65,9 @@ export const NavBar = () => {
       ),
     },
   ];
-  const onClick = (e) => {
-    console.log("click ", e);
-  };
+  // const onClick = (e) => {
+  //   console.log("click ", e);
+  // };
   return (
     <div
       //  className="nav-container"

@@ -5,7 +5,7 @@ import {
     FormOutlined,
     DeleteTwoTone
 } from "@ant-design/icons";
-import { Button, Flex, FloatButton  } from "antd";
+import { Button, Flex } from "antd";
 import './ButtonComponent.css';
 
 const ButtonCommon = ({ buttonType, size = "large", handleOnClick, ...props }) => {

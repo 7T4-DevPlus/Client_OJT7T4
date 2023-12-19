@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/img-redundant-alt */
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useEffect, useState } from "react";
 import "mdbreact/dist/css/mdb.css";
 import { useNavigate } from "react-router-dom";
@@ -18,13 +20,12 @@ import { apiUrl, LOCAL_STORAGE_TOKEN_NAME } from "../../contexts/constants";
 
 import { AuthContext } from "../../contexts/authContext";
 import axios from "axios";
-import ButtonCommon from "../../components/buttons/ButtonCommon";
 import setAuthToken from "../../utils/setAuthToken";
 import { UserContext } from "../../contexts/userContext/userProvider";
 
 const LoginPage = () => {
   const navigate = useNavigate();
-  const { store, dispatch } = useContext(UserContext);
+  const { dispatch } = useContext(UserContext);
   const [loading, setLoading] = useState(false);
 
   const schema = yup
@@ -43,10 +44,10 @@ const LoginPage = () => {
     mode: "onChange",
   });
 
-  const {
-    authState: { isAuthenticated },
-    loginUser,
-  } = useContext(AuthContext);
+  // const {
+  //   authState: { isAuthenticated },
+  //   loginUser,
+  // } = useContext(AuthContext);
 
   const HandleLoginUser = async (userForm) => {
     try {

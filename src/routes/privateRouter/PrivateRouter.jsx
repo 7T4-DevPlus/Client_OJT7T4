@@ -1,7 +1,7 @@
-import { Navigate, Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 
-import { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../../contexts/authContext";
+import { useEffect } from "react";
+
 import Employees from "../../pages/employee/employees";
 import EmployeeDetails from "../../pages/employee/employeeDetails";
 import { Layout } from "../../components/layout/Layout";

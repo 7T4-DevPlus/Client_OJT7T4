@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useContext, useState, useEffect } from 'react';
 import { Form, Upload, message, Row, Col, Tag, Popover, Button } from 'antd';
 
@@ -14,418 +15,450 @@ import ButtonCommon from '../buttons/ButtonCommon';
 import countryCode from '../../JsonData/CountryCodes.json';
 
 const EmployeeForm = (employee) => {
-    const { updateEmployee } = useContext(EmployeeContext);
+  const { updateEmployee } = useContext(EmployeeContext);
 
-    const {
-        technicalState: { technicals },
-        getTechnicals
-    } = useContext(TechnicalContext);
+  const {
+    technicalState: { technicals },
+    getTechnicals,
+  } = useContext(TechnicalContext);
 
-    const {
-        processing,
-        setProcessing
-    } = useContext(ComponentsContext);
+  const { processing, setProcessing } = useContext(ComponentsContext);
+  
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => {
+    getTechnicals();
+  }, []);
 
-    useEffect(() => {
-        getTechnicals();
-    }, []);
+  const [form] = Form.useForm();
+  const [isEditing, setIsEditing] = useState(false);
 
-    const [form] = Form.useForm();
-    const [isEditing, setIsEditing] = useState(false);
+  const handleEdit = () => {
+    setIsEditing(!isEditing);
+  };
 
-    const handleEdit = () => {
-        setIsEditing(!isEditing);
-    };
+  const techOptions = technicals.map(({ _id, name }) => ({
+    label: name,
+    value: _id,
+  }));
 
-    const techOptions = technicals.map(({ _id, name }) => ({
-        label: name,
-        value: _id,
-    }));
+  const [employeeTechnicals, setEmployeeTechnicals] = useState(
+    employee.employee.technical
+  );
 
-    const [employeeTechnicals, setEmployeeTechnicals] = useState(employee.employee.technical);
+  const [open, setOpen] = useState(false);
 
-    const [open, setOpen] = useState(false);
+  const handleOpenChange = (newOpen) => {
+    setTechnical("Technical");
+    setPoint(0);
+    setOpen(newOpen);
+  };
 
-    const handleOpenChange = (newOpen) => {
-        setTechnical("Technical");
-        setPoint(0);
-        setOpen(newOpen);
-    };
+  const hide = () => {
+    setOpen(false);
+  };
 
-    const hide = () => {
-        setOpen(false);
-    };
+  const isTechnicalExist = (techId) => {
+    return employeeTechnicals.some((tech) => tech.technicalId === techId);
+  };
 
-    const isTechnicalExist = (techId) => {
-        return employeeTechnicals.some((tech) => tech.technicalId === techId);
-    };
-
-    const addTech = () => {
-        if (technical === "Technical") {
-            message.error('Please select technical');
-            return;
-        }
-
-        if (isTechnicalExist(technical)) {
-            message.warning('Technical already exists for this employee');
-            return;
-        }
-
-        setEmployeeTechnicals((prevTechnicals) => [
-            ...prevTechnicals,
-            {
-                technicalId: technical,
-                point: point
-            }
-        ]);
-        setOpen(false);
-    };
-
-    const removeTechnical = (removedTechId) => {
-        const updatedTechnicals = employeeTechnicals.filter((tech) => tech.technicalId !== removedTechId);
-        setEmployeeTechnicals(updatedTechnicals);
+  const addTech = () => {
+    if (technical === "Technical") {
+      message.error("Please select technical");
+      return;
     }
 
-    const [technical, setTechnical] = useState("Technical");
-    const handleTechChange = (value) => {
-        setTechnical(value);
-    };
+    if (isTechnicalExist(technical)) {
+      message.warning("Technical already exists for this employee");
+      return;
+    }
 
-    const [point, setPoint] = useState(0);
-    const handlePointChange = (value) => {
-        setPoint(value);
-    };
+    setEmployeeTechnicals((prevTechnicals) => [
+      ...prevTechnicals,
+      {
+        technicalId: technical,
+        point: point,
+      },
+    ]);
+    setOpen(false);
+  };
 
-    const selectTech = (
-        <Select onChange={handleTechChange} options={techOptions} defaultValue={technical} />
+  const removeTechnical = (removedTechId) => {
+    const updatedTechnicals = employeeTechnicals.filter(
+      (tech) => tech.technicalId !== removedTechId
     );
+    setEmployeeTechnicals(updatedTechnicals);
+  };
 
-    const content = (
-        <div>
-            <NumberInput addonBefore={selectTech} min={0} max={10} onChange={handlePointChange} defaultValue={0} />
-            <br />
-            <Row>
-                <Col>
-                    <ButtonCommon buttonType={"cancel"} handleOnClick={() => hide()} />
-                </Col>
-                <Col>
-                    <ButtonCommon buttonType={"save"} handleOnClick={() => addTech()} />
-                </Col>
-            </Row>
-        </div>
-    );
+  const [technical, setTechnical] = useState("Technical");
+  const handleTechChange = (value) => {
+    setTechnical(value);
+  };
 
-    const genderOptions = [
-        {
-            label: 'Male',
-            value: 'male',
-        },
-        {
-            label: 'Female',
-            value: 'female',
-        },
-        {
-            label: 'Other',
-            value: 'other',
-        },
-    ];
+  const [point, setPoint] = useState(0);
+  const handlePointChange = (value) => {
+    setPoint(value);
+  };
 
-    const [checkedGender, setCheckedGender] = useState(employee.employee.gender);
-    const onGenderChange = (e) => {
-        setCheckedGender(e.target.value);
-    };
+  const selectTech = (
+    <Select
+      onChange={handleTechChange}
+      options={techOptions}
+      defaultValue={technical}
+    />
+  );
 
-    const phoneOptions = countryCode.map(({ name, dial_code }) => ({
-        label: name,
-        value: dial_code,
-    }));
+  const content = (
+    <div>
+      <NumberInput
+        addonBefore={selectTech}
+        min={0}
+        max={10}
+        onChange={handlePointChange}
+        defaultValue={0}
+      />
+      <br />
+      <Row>
+        <Col>
+          <ButtonCommon buttonType={"cancel"} handleOnClick={() => hide()} />
+        </Col>
+        <Col>
+          <ButtonCommon buttonType={"save"} handleOnClick={() => addTech()} />
+        </Col>
+      </Row>
+    </div>
+  );
 
-    const phoneNumber = employee.employee.phone;
+  const genderOptions = [
+    {
+      label: "Male",
+      value: "male",
+    },
+    {
+      label: "Female",
+      value: "female",
+    },
+    {
+      label: "Other",
+      value: "other",
+    },
+  ];
 
-    const defaultDialCode = phoneNumber.slice(0, 3);
-    const actualNumber = phoneNumber.slice(3);
+  const [checkedGender, setCheckedGender] = useState(employee.employee.gender);
+  const onGenderChange = (e) => {
+    setCheckedGender(e.target.value);
+  };
 
-    const [dialCode, setDialCode] = useState(defaultDialCode);
+  const phoneOptions = countryCode.map(({ name, dial_code }) => ({
+    label: name,
+    value: dial_code,
+  }));
 
-    const handlePhoneChange = (value) => {
-        setDialCode(value);
-    };
+  const phoneNumber = employee.employee.phone;
 
-    const selectPhone = (
-        <Select onChange={handlePhoneChange} options={phoneOptions} defaultValue={dialCode} />
-    );
+  const defaultDialCode = phoneNumber.slice(0, 3);
+  const actualNumber = phoneNumber.slice(3);
 
-    const validateName = (rule, value) => {
-        const specialCharacterRegex = /[!@#$%^&*(),.?":{}|<>0-9]/;
-        if (specialCharacterRegex.test(value)) {
-            return Promise.reject('Name should not contain special characters or numbers');
-        }
-        return Promise.resolve();
-    };
+  const [dialCode, setDialCode] = useState(defaultDialCode);
 
-    const validatePhoneNumber = (phoneNumber) => {
-        const phoneRegex = /^\d{9,12}$/;
-        return phoneRegex.test(phoneNumber);
-    };
+  const handlePhoneChange = (value) => {
+    setDialCode(value);
+  };
 
-    const validateEmail = (email) => {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return emailRegex.test(email);
-    };
+  const selectPhone = (
+    <Select
+      onChange={handlePhoneChange}
+      options={phoneOptions}
+      defaultValue={dialCode}
+    />
+  );
 
-    const onFinish = async () => {
-        try {
-            const formData = new FormData();
+  const validateName = (rule, value) => {
+    const specialCharacterRegex = /[!@#$%^&*(),.?":{}|<>0-9]/;
+    if (specialCharacterRegex.test(value)) {
+      return Promise.reject(
+        "Name should not contain special characters or numbers"
+      );
+    }
+    return Promise.resolve();
+  };
 
-            if (imgFile) {
-                formData.append("image", imgFile);
-            }
+  const validatePhoneNumber = (phoneNumber) => {
+    const phoneRegex = /^\d{9,12}$/;
+    return phoneRegex.test(phoneNumber);
+  };
 
-            if (!validatePhoneNumber(form.getFieldValue("phone"))) {
-                form.setFields([
-                    {
-                        name: "phone",
-                        errors: ["Please enter a valid phone number (10 digits)"],
-                    },
-                ]);
-                return;
-            }
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
 
-            if (!validateEmail(form.getFieldValue("email"))) {
-                form.setFields([
-                    {
-                        name: "email",
-                        errors: ["Please enter a valid email address"],
-                    },
-                ]);
-                return;
-            }
+  const onFinish = async () => {
+    try {
+      const formData = new FormData();
 
-            formData.append("name", form.getFieldValue("name"));
-            formData.append("code", form.getFieldValue("code"));
-            formData.append("phone", dialCode + form.getFieldValue("phone"));
-            formData.append("email", form.getFieldValue("email"));
-            formData.append("identity", form.getFieldValue("identity"));
-            formData.append("gender", checkedGender);
-            formData.append("technical", JSON.stringify(employeeTechnicals));
+      if (imgFile) {
+        formData.append("image", imgFile);
+      }
 
-            updateEmployee(formData, employee.employeeId);
-            setProcessing(true);
+      if (!validatePhoneNumber(form.getFieldValue("phone"))) {
+        form.setFields([
+          {
+            name: "phone",
+            errors: ["Please enter a valid phone number (10 digits)"],
+          },
+        ]);
+        return;
+      }
 
-            setTimeout(() => {
-                setIsEditing(!isEditing);
-            }, 2000);
+      if (!validateEmail(form.getFieldValue("email"))) {
+        form.setFields([
+          {
+            name: "email",
+            errors: ["Please enter a valid email address"],
+          },
+        ]);
+        return;
+      }
 
-        } catch (error) {
-            console.error('Validation failed:', error);
-        }
-    };
+      formData.append("name", form.getFieldValue("name"));
+      formData.append("code", form.getFieldValue("code"));
+      formData.append("phone", dialCode + form.getFieldValue("phone"));
+      formData.append("email", form.getFieldValue("email"));
+      formData.append("identity", form.getFieldValue("identity"));
+      formData.append("gender", checkedGender);
+      formData.append("technical", JSON.stringify(employeeTechnicals));
 
-    const onFinishFailed = (errorInfo) => {
-        console.error('Failed:', errorInfo);
-    };
+      updateEmployee(formData, employee.employeeId);
+      setProcessing(true);
 
-    const [imageUrl, setImageUrl] = useState();
-    const [imgFile, setImgFile] = useState();
+      setTimeout(() => {
+        setIsEditing(!isEditing);
+      }, 2000);
+    } catch (error) {
+      console.error("Validation failed:", error);
+    }
+  };
 
-    const getBase64 = (img, callback) => {
-        const reader = new FileReader();
-        reader.addEventListener('load', () => callback(reader.result));
-        reader.readAsDataURL(img);
-    };
+  const onFinishFailed = (errorInfo) => {
+    console.error("Failed:", errorInfo);
+  };
 
-    const beforeUpload = (file) => {
-        const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
-        if (!isJpgOrPng) {
-            return message.error('You can only upload JPG/PNG file!');
-        }
-        const isLt2M = file.size / 1024 / 1024 < 2;
-        if (!isLt2M) {
-            return message.error('Image must smaller than 2MB!');
-        }
-        return isJpgOrPng && isLt2M;
-    };
+  const [imageUrl, setImageUrl] = useState();
+  const [imgFile, setImgFile] = useState();
 
-    const handleChange = (info) => {
-        if (info.file.status === 'done') {
-            getBase64(info.file.originFileObj, (url) => {
-                setImageUrl(url);
-            });
-            setImgFile(info.file.originFileObj)
-        }
-    };
+  const getBase64 = (img, callback) => {
+    const reader = new FileReader();
+    reader.addEventListener("load", () => callback(reader.result));
+    reader.readAsDataURL(img);
+  };
 
-    return (
-        <>
-            <div>
-                {(isEditing ?
-                    (
-                        processing ?
-                            <ButtonCommon buttonType={"loading"} /> :
-                            <ButtonCommon buttonType={"save"} handleOnClick={() => form.submit()} />
-                    ) :
-                    <ButtonCommon buttonType={"edit-text"} handleOnClick={() => handleEdit()} />
-                )}
-            </div>
-            <div style={{ width: "80%", display: "flex", justifyContent: "center" }}>
-                <h1 style={{ textAlign: "center" }}>{employee.employee.name}'s Information</h1>
-            </div>
-            <div style={{ width: "80%", display: "flex", justifyContent: "center" }}>
-                <Form
-                    form={form}
-                    name="add employee"
-                    layout="vertical"
-                    initialValues={{
-                        remember: true,
-                        name: employee.employee.name,
-                        code: employee.employee.code,
-                        phone: actualNumber,
-                        email: employee.employee.email,
-                        identity: employee.employee.identity,
-                    }}
-                    onFinish={onFinish}
-                    onFinishFailed={onFinishFailed}
-                    autoComplete="off"
-                    disabled={!isEditing}
+  const beforeUpload = (file) => {
+    const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
+    if (!isJpgOrPng) {
+      return message.error("You can only upload JPG/PNG file!");
+    }
+    const isLt2M = file.size / 1024 / 1024 < 2;
+    if (!isLt2M) {
+      return message.error("Image must smaller than 2MB!");
+    }
+    return isJpgOrPng && isLt2M;
+  };
+
+  const handleChange = (info) => {
+    if (info.file.status === "done") {
+      getBase64(info.file.originFileObj, (url) => {
+        setImageUrl(url);
+      });
+      setImgFile(info.file.originFileObj);
+    }
+  };
+
+  return (
+    <>
+      <div>
+        {isEditing ? (
+          processing ? (
+            <ButtonCommon buttonType={"loading"} />
+          ) : (
+            <ButtonCommon
+              buttonType={"save"}
+              handleOnClick={() => form.submit()}
+            />
+          )
+        ) : (
+          <ButtonCommon
+            buttonType={"edit-text"}
+            handleOnClick={() => handleEdit()}
+          />
+        )}
+      </div>
+      <div style={{ width: "80%", display: "flex", justifyContent: "center" }}>
+        <h1 style={{ textAlign: "center" }}>
+          {employee.employee.name}'s Information
+        </h1>
+      </div>
+      <div style={{ width: "80%", display: "flex", justifyContent: "center" }}>
+        <Form
+          form={form}
+          name="add employee"
+          layout="vertical"
+          initialValues={{
+            remember: true,
+            name: employee.employee.name,
+            code: employee.employee.code,
+            phone: actualNumber,
+            email: employee.employee.email,
+            identity: employee.employee.identity,
+          }}
+          onFinish={onFinish}
+          onFinishFailed={onFinishFailed}
+          autoComplete="off"
+          disabled={!isEditing}
+        >
+          <Form.Item valuePropName="image" getValueFromEvent={imageUrl}>
+            <Upload
+              name="image"
+              listType="picture-card"
+              className="avatar-uploader"
+              showUploadList={false}
+              action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
+              beforeUpload={beforeUpload}
+              onChange={handleChange}
+            >
+              {imageUrl ? (
+                <img
+                  src={imageUrl}
+                  alt="avatar"
+                  style={{
+                    width: "100%",
+                  }}
+                />
+              ) : (
+                <img
+                  src={employee.employee.image}
+                  alt="avatar"
+                  style={{
+                    width: "100%",
+                  }}
+                />
+              )}
+            </Upload>
+          </Form.Item>
+
+          <Form.Item
+            label="Full Name"
+            name="name"
+            rules={[
+              {
+                required: true,
+                message: "Enter employee name",
+              },
+              {
+                validator: validateName,
+              },
+            ]}
+          >
+            <TextInput />
+          </Form.Item>
+
+          <Form.Item
+            label="Employee code"
+            name="code"
+            rules={[
+              {
+                required: true,
+                message: "Enter employee code",
+              },
+            ]}
+          >
+            <TextInput />
+          </Form.Item>
+
+          <Form.Item
+            label="Phone number"
+            name="phone"
+            rules={[
+              {
+                required: true,
+                message: "Enter phone number",
+              },
+            ]}
+          >
+            <TextInput addonBefore={selectPhone} prefix={dialCode} />
+          </Form.Item>
+
+          <Form.Item
+            label="Email"
+            name="email"
+            rules={[
+              {
+                required: true,
+                message: "Enter email",
+              },
+            ]}
+          >
+            <TextInput />
+          </Form.Item>
+
+          <Form.Item
+            label="Identity code"
+            name="identity"
+            rules={[
+              {
+                required: true,
+                message: "Enter identity code",
+              },
+            ]}
+          >
+            <TextInput />
+          </Form.Item>
+
+          <Row>
+            <Col span={12}>
+              <Form.Item label="Technicals" name="technicals">
+                <Popover
+                  content={content}
+                  title="Add technical"
+                  trigger="click"
+                  open={open}
+                  onOpenChange={handleOpenChange}
+                  placement="topLeft"
+                  style={{ width: "100px" }}
                 >
-                    <Form.Item valuePropName="image" getValueFromEvent={imageUrl}>
-                        <Upload
-                            name="image"
-                            listType="picture-card"
-                            className="avatar-uploader"
-                            showUploadList={false}
-                            action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
-                            beforeUpload={beforeUpload}
-                            onChange={handleChange}
+                  <Button>Add technical</Button>
+                </Popover>
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              {employeeTechnicals.map((tech) => {
+                const technical = technicals.find(
+                  (t) => t._id === tech.technicalId._id
+                );
+                return (
+                  <Tag
+                    color={"blue"}
+                    key={tech.technicalId._id}
+                    closeIcon={isEditing}
+                    onClose={() => removeTechnical(tech.technicalId)}
+                  >
+                    {technical ? `${technical.name} - ${tech.point}` : ""}
+                  </Tag>
+                );
+              })}
+            </Col>
+          </Row>
 
-                        >
-                            {imageUrl ? (
-                                <img
-                                    src={imageUrl}
-                                    alt="avatar"
-                                    style={{
-                                        width: '100%',
-                                    }}
-                                />
-                            ) : (
-                                <img
-                                    src={employee.employee.image}
-                                    alt="avatar"
-                                    style={{
-                                        width: '100%',
-                                    }}
-                                />
-                            )}
-                        </Upload>
-
-                    </Form.Item>
-
-                    <Form.Item
-                        label="Full Name"
-                        name="name"
-                        rules={[
-                            {
-                                required: true,
-                                message: 'Enter employee name',
-                            },
-                            {
-                                validator: validateName,
-                            },
-                        ]}
-                    >
-                        <TextInput />
-                    </Form.Item>
-
-                    <Form.Item
-                        label="Employee code"
-                        name="code"
-                        rules={[
-                            {
-                                required: true,
-                                message: 'Enter employee code',
-                            },
-                        ]}
-                    >
-                        <TextInput />
-                    </Form.Item>
-
-                    <Form.Item
-                        label="Phone number"
-                        name="phone"
-                        rules={[
-                            {
-                                required: true,
-                                message: 'Enter phone number',
-                            },
-                        ]}
-                    >
-                        <TextInput addonBefore={selectPhone} prefix={dialCode} />
-                    </Form.Item>
-
-                    <Form.Item
-                        label="Email"
-                        name="email"
-                        rules={[
-                            {
-                                required: true,
-                                message: 'Enter email',
-                            },
-                        ]}
-                    >
-                        <TextInput />
-                    </Form.Item>
-
-                    <Form.Item
-                        label="Identity code"
-                        name="identity"
-                        rules={[
-                            {
-                                required: true,
-                                message: 'Enter identity code',
-                            },
-                        ]}
-                    >
-                        <TextInput />
-                    </Form.Item>
-
-                    <Row>
-                        <Col span={12}>
-                            <Form.Item
-                                label="Technicals"
-                                name="technicals"
-                            >
-                                <Popover
-                                    content={content}
-                                    title="Add technical"
-                                    trigger="click"
-                                    open={open}
-                                    onOpenChange={handleOpenChange}
-                                    placement="topLeft"
-                                    style={{ width: "100px" }}
-                                >
-                                    <Button>Add technical</Button>
-                                </Popover>
-                            </Form.Item>
-                        </Col>
-                        <Col span={12}>
-                            {employeeTechnicals.map((tech) => {
-                                const technical = technicals.find((t) => t._id === tech.technicalId._id);
-                                return (
-                                    <Tag color={'blue'} key={tech.technicalId._id} closeIcon={isEditing} onClose={() => removeTechnical(tech.technicalId)}>
-                                        {technical ? `${technical.name} - ${tech.point}` : ''}
-                                    </Tag>
-                                );
-                            })}
-                        </Col>
-                    </Row>
-
-                    <Form.Item label="Gender">
-                        <RadioButton options={genderOptions} defaultValue={checkedGender} onChange={onGenderChange} />
-                    </Form.Item>
-                </Form>
-            </div>
-        </>
-    );
+          <Form.Item label="Gender">
+            <RadioButton
+              options={genderOptions}
+              defaultValue={checkedGender}
+              onChange={onGenderChange}
+            />
+          </Form.Item>
+        </Form>
+      </div>
+    </>
+  );
 }
 
 export default EmployeeForm
