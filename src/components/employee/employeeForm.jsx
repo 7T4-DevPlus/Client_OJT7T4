@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useContext, useState, useEffect } from "react";
 import { Form, Upload, message, Row, Col, Tag, Popover, Button } from "antd";
+import { apiUrl } from "../../contexts/constants";
 
 import { EmployeeContext } from "../../contexts/employeeContext";
 import { TechnicalContext } from "../../contexts/technicalContext";
@@ -272,197 +273,210 @@ const EmployeeForm = (employee) => {
     }
   };
 
+  const exportEmployee = async (empId) => {
+    window.location.href = `${apiUrl}/employees/export/${empId}`;
+  }
+
   return (
     <>
       <div style={{ display: "flex", justifyContent: "flex-end" }}>
-        {isEditing ? (
-          processing ? (
-            <ButtonCommon buttonType={"loading"} />
-          ) : (
-            <ButtonCommon
-              buttonType={"save"}
-              handleOnClick={() => form.submit()}
-            />
-          )
-        ) : (
-          <ButtonCommon
-            buttonType={"edit-text"}
-            handleOnClick={() => handleEdit()}
-          />
+        {(isEditing ?
+          (
+            processing ?
+              <ButtonCommon buttonType={"loading"} /> :
+              <ButtonCommon buttonType={"save"} handleOnClick={() => form.submit()} />
+          ) :
+          <div style={{ width: "210px", display: "flex", justifyContent: "space-between" }}>
+            <ButtonCommon buttonType={"edit-text"} handleOnClick={() => handleEdit()} />
+            <ButtonCommon buttonType={"export"} handleOnClick={() => exportEmployee(employee.employee._id)} />
+          </div>
         )}
       </div>
       <div style={{ width: "100%", textAlign: "center" }}>
-        <h1 style={{ textAlign: "center" }}>
-          {employee.employee.name}'s Information
-        </h1>
+        <h1 style={{ textAlign: "center" }}>{employee.employee.name}'s Information</h1>
       </div>
-      <div
-        style={{
+      <div style={{ display: "flex", justifyContent: "center" }}>
+        <div style={{
           display: "flex",
           justifyContent: "center",
           backgroundColor: "white",
           padding: "10px",
           borderRadius: "10px",
-        }}
-      >
-        <Form
-          form={form}
-          name="add employee"
-          layout="vertical"
-          initialValues={{
-            remember: true,
-            name: employee.employee.name,
-            code: employee.employee.code,
-            phone: actualNumber,
-            email: employee.employee.email,
-            identity: employee.employee.identity,
-          }}
-          onFinish={onFinish}
-          onFinishFailed={onFinishFailed}
-          autoComplete="off"
-          disabled={!isEditing}
-        >
-          <Form.Item valuePropName="image" getValueFromEvent={imageUrl}>
-            <Upload
-              name="image"
-              listType="picture-card"
-              className="avatar-uploader"
-              showUploadList={false}
-              action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
-              beforeUpload={beforeUpload}
-              onChange={handleChange}
-            >
-              {imageUrl ? (
-                <img
-                  src={imageUrl}
-                  alt="avatar"
-                  style={{
-                    width: "100%",
-                  }}
-                />
-              ) : (
-                <img
-                  src={employee.employee.image}
-                  alt="avatar"
-                  style={{
-                    width: "100%",
-                  }}
-                />
-              )}
-            </Upload>
-          </Form.Item>
-
-          <Form.Item
-            label="Full Name"
-            name="name"
-            rules={[
-              {
-                required: true,
-                message: "Enter employee name",
-              },
-              {
-                validator: validateName,
-              },
-            ]}
+          width: "90%",
+          marginBottom: "10px",
+          border: "1px solid #8a8a8a"
+        }}>
+          <Form
+            form={form}
+            name="add employee"
+            layout="vertical"
+            initialValues={{
+              remember: true,
+              name: employee.employee.name,
+              code: employee.employee.code,
+              phone: actualNumber,
+              email: employee.employee.email,
+              identity: employee.employee.identity,
+            }}
+            onFinish={onFinish}
+            onFinishFailed={onFinishFailed}
+            autoComplete="off"
+            disabled={!isEditing}
+            style={{
+              width: "85%"
+            }}
           >
-            <TextInput />
-          </Form.Item>
-
-          <Form.Item
-            label="Employee code"
-            name="code"
-            rules={[
-              {
-                required: true,
-                message: "Enter employee code",
-              },
-            ]}
-          >
-            <TextInput />
-          </Form.Item>
-
-          <Form.Item
-            label="Phone number"
-            name="phone"
-            rules={[
-              {
-                required: true,
-                message: "Enter phone number",
-              },
-            ]}
-          >
-            <TextInput addonBefore={selectPhone} prefix={dialCode} />
-          </Form.Item>
-
-          <Form.Item
-            label="Email"
-            name="email"
-            rules={[
-              {
-                required: true,
-                message: "Enter email",
-              },
-            ]}
-          >
-            <TextInput />
-          </Form.Item>
-
-          <Form.Item
-            label="Identity code"
-            name="identity"
-            rules={[
-              {
-                required: true,
-                message: "Enter identity code",
-              },
-            ]}
-          >
-            <TextInput />
-          </Form.Item>
-
-          <Row>
-            <Col span={12}>
-              <Form.Item label="Technicals" name="technicals">
-                <Popover
-                  content={content}
-                  title="Add technical"
-                  trigger="click"
-                  open={open}
-                  onOpenChange={handleOpenChange}
-                  placement="topLeft"
-                  style={{ width: "100px" }}
-                >
-                  <Button>Add technical</Button>
-                </Popover>
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              {employeeTechnicals.map((tech) => {
-                const technical = technicals.find(
-                  (t) => t._id === tech.technicalId._id
-                );
-                return (
-                  <Tag
-                    color={"blue"}
-                    key={tech.technicalId._id}
-                    closeIcon={isEditing}
-                    onClose={() => removeTechnical(tech.technicalId)}
+            <Row>
+              <Col xs={24} sm={24} md={8} lg={8}>
+                <Form.Item valuePropName="image" getValueFromEvent={imageUrl}>
+                  <Upload
+                    name="image"
+                    listType="picture-card"
+                    className="avatar-uploader"
+                    showUploadList={false}
+                    action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
+                    beforeUpload={beforeUpload}
+                    onChange={handleChange}
                   >
-                    {technical ? `${technical.name} - ${tech.point}` : ""}
-                  </Tag>
-                );
-              })}
-            </Col>
-          </Row>
+                    {imageUrl ? (
+                      <img
+                        src={imageUrl}
+                        alt="avatar"
+                        style={{
+                          width: '100%',
+                        }}
+                      />
+                    ) : (
+                      <img
+                        src={employee.employee.image}
+                        alt="avatar"
+                        style={{
+                          width: '100%',
+                        }}
+                      />
+                    )}
+                  </Upload>
 
-          <Form.Item label="Gender">
-            <RadioButton
-              options={genderOptions}
-              defaultValue={checkedGender}
-              onChange={onGenderChange}
-            />
-          </Form.Item>
-        </Form>
+                </Form.Item>
+              </Col>
+              <Col xs={24} sm={24} md={16} lg={16}>
+                <Form.Item
+                  label="Full Name"
+                  name="name"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Enter employee name',
+                    },
+                    {
+                      validator: validateName,
+                    },
+                  ]}
+                >
+                  <TextInput />
+                </Form.Item>
+              </Col>
+            </Row>
+
+            <Form.Item label="Gender">
+              <RadioButton options={genderOptions} defaultValue={checkedGender} onChange={onGenderChange} />
+            </Form.Item>
+
+            <Row>
+              <Col xs={24} sm={24} md={11} lg={11}>
+                <Form.Item
+                  label="Phone number"
+                  name="phone"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Enter phone number',
+                    },
+                  ]}
+                >
+                  <TextInput addonBefore={selectPhone} prefix={dialCode} />
+                </Form.Item>
+              </Col>
+              <Col span={2}></Col>
+              <Col xs={24} sm={24} md={11} lg={11}>
+                <Form.Item
+                  label="Email"
+                  name="email"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Enter email',
+                    },
+                  ]}
+                >
+                  <TextInput />
+                </Form.Item>
+              </Col>
+            </Row>
+
+            <Row>
+              <Col xs={24} sm={24} md={11} lg={11}>
+                <Form.Item
+                  label="Identity code"
+                  name="identity"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Enter identity code',
+                    },
+                  ]}
+                >
+                  <TextInput />
+                </Form.Item>
+              </Col>
+              <Col span={2}></Col>
+              <Col xs={24} sm={24} md={11} lg={11}>
+                <Form.Item
+                  label="Employee code"
+                  name="code"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Enter employee code',
+                    },
+                  ]}
+                >
+                  <TextInput />
+                </Form.Item>
+              </Col>
+            </Row>
+
+            <Row>
+              <Col xs={24} sm={24} md={10} lg={10}>
+                <Form.Item
+                  label="Technicals"
+                  name="technicals"  >
+                  <Popover
+                    content={content}
+                    title="Add technical"
+                    trigger="click"
+                    open={open}
+                    onOpenChange={handleOpenChange}
+                    placement="topLeft"
+                    style={{ width: "100px" }}
+                  >
+                    <Button>Add technical</Button>
+                  </Popover>
+                </Form.Item>
+              </Col>
+              <Col xs={24} sm={24} md={14} lg={14}>
+                {employeeTechnicals.map((tech) => {
+                  const technical = technicals.find((t) => t._id === tech.technicalId._id);
+                  return (
+                    <Tag style={{ marginBottom: "5px" }} color={'blue'} key={tech.technicalId._id} closeIcon={isEditing} onClose={() => removeTechnical(tech.technicalId)}>
+                      {technical ? `${technical.name} - ${tech.point}` : ''}
+                    </Tag>
+                  );
+                })}
+              </Col>
+            </Row>
+          </Form>
+        </div>
       </div>
     </>
   );

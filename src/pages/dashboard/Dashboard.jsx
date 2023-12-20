@@ -4,6 +4,7 @@ import moment from "moment";
 import { Bar, Pie } from "react-chartjs-2";
 import "chart.js/auto";
 import Alert from "../../components/alerts/alertCommon";
+import { Col, Row } from 'antd';
 
 import { EmployeeContext } from "../../contexts/employeeContext";
 import { ProjectContext } from "../../contexts/projectContext";
@@ -115,7 +116,7 @@ const Dashboard = () => {
         backgroundColor: "rgba(75,85,192,0.6)",
         borderColor: "rgba(75,85,192,1)",
         borderWidth: 1,
-        barThickness: 30, // Adjust this value to add space between bars
+        barThickness: 30,
       },
     ],
   };
@@ -147,27 +148,22 @@ const Dashboard = () => {
     ],
   };
 
-  const squareContainerStyle = {
-    display: "flex",
-    marginBottom: "20px",
-  };
-
   const squareStyle = {
     flex: 1,
     backgroundColor: "white",
-    padding: "20px",
+    padding: "10px",
     borderRadius: "8px",
-    margin: "13px",
     position: "relative",
     overflow: "hidden",
+    width: '100%',
+    height: '15vh',
+    marginBottom: '10px'
   };
 
   const chartBlockStyle = {
     ...squareStyle,
-    marginRight: "10px",
-    marginBottom: "20px",
-    height: "500px",
-    width: "calc(50% - 10px)",
+    height: '70vh',
+    width: '100%',
   };
 
   const chartContainerStyle = {
@@ -187,89 +183,70 @@ const Dashboard = () => {
 
   return (
     <>
-      <div style={{ padding: "20px" }}>
-        <div style={{ display: "flex", marginBottom: "20px" }}>
-          <div style={squareStyle} className="squareBlock">
-            <img
-              src="https://res.cloudinary.com/dokzmffiv/image/upload/v1702871920/OJT/multiple-users-silhouette_gs6cob.png"
-              alt="Employee"
-              style={imageStyle}
-            />
-            <div style={{ marginTop: "1.5vh", marginBottom: "1vh" }}>
-              <div style={{ fontSize: "20px" }}>
+      <div style={{ padding: '20px' }}>
+        <Row gutter={{ xs: 8, sm: 12, md: 24, lg: 24, }} style={{ marginBottom: "20px" }}>
+          <Col xs={24} sm={12} md={6} lg={6}>
+            <div style={squareStyle} className='squareBlock'>
+              <img src="https://res.cloudinary.com/dokzmffiv/image/upload/v1702871920/OJT/multiple-users-silhouette_gs6cob.png" alt="Employee" style={imageStyle} />
+              <div>
                 <b>{totalEmployees}</b>
+                <p>Total Employees</p>
               </div>
-              <div>Total Employees</div>
             </div>
-          </div>
+          </Col>
 
-          <div style={squareStyle} className="squareBlock">
-            <img
-              src="https://res.cloudinary.com/dokzmffiv/image/upload/v1702872434/OJT/to-do-list_odrvuq.png"
-              alt="Project"
-              style={imageStyle}
-            />
-            <div style={{ marginTop: "1.5vh", marginBottom: "1vh" }}>
-              <div style={{ fontSize: "20px" }}>
+          <Col xs={24} sm={12} md={6} lg={6}>
+            <div style={squareStyle} className='squareBlock'>
+              <img src="https://res.cloudinary.com/dokzmffiv/image/upload/v1702872434/OJT/to-do-list_odrvuq.png" alt="Project" style={imageStyle} />
+              <div>
                 <b>{totalProjects}</b>
+                <p>Total Projects</p>
               </div>
-              <div>Total Projects</div>
             </div>
-          </div>
+          </Col>
 
-          <div style={squareStyle} className="squareBlock">
-            <img
-              src="https://res.cloudinary.com/dokzmffiv/image/upload/v1702873301/OJT/team_1_uplln0.png"
-              alt="Client"
-              style={imageStyle}
-            />
-            <div style={{ marginTop: "1.5vh", marginBottom: "1vh" }}>
-              <div style={{ fontSize: "20px" }}>
+          <Col xs={24} sm={12} md={6} lg={6}>
+            <div style={squareStyle} className='squareBlock'>
+              <img src="https://res.cloudinary.com/dokzmffiv/image/upload/v1702873301/OJT/team_1_uplln0.png" alt="Client" style={imageStyle} />
+              <div>
                 <b>{totalCLient}</b>
+                <p>Total Clients</p>
               </div>
-              <div>Total Clients</div>
             </div>
-          </div>
+          </Col>
 
-          <div style={squareStyle} className="squareBlock">
-            <img
-              src="https://res.cloudinary.com/dokzmffiv/image/upload/v1702873059/OJT/collaboration_uxughb.png"
-              alt="Team"
-              style={imageStyle}
-            />
-            <div style={{ marginTop: "1.5vh", marginBottom: "1vh" }}>
-              <div style={{ fontSize: "20px" }}>
+          <Col xs={24} sm={12} md={6} lg={6}>
+            <div style={squareStyle} className='squareBlock'>
+              <img src="https://res.cloudinary.com/dokzmffiv/image/upload/v1702873059/OJT/collaboration_uxughb.png" alt="Team" style={imageStyle} />
+              <div>
                 <b>{totalTeams}</b>
+                <p>Total Teams</p>
               </div>
-              <div>Total Teams</div>
             </div>
-          </div>
-        </div>
+          </Col>
+        </Row>
 
-        <div style={squareContainerStyle}>
-          <div style={chartBlockStyle}>
-            <h2 key="bar-chart-title">Projects Per Month</h2>
-            <Bar
-              key={`bar-chart-${totalEmployees}`}
-              data={barChartData}
-              options={barChartOptions}
-              style={{ marginTop: "8vh" }}
-            />
-          </div>
-
-          <div style={chartBlockStyle}>
-            <div style={chartContainerStyle}>
-              <h2 key="pie-chart-title">Employee Technical Skills</h2>
-              <Pie
-                key={`pie-chart-${totalEmployees}`}
-                data={pieChartData}
-                style={{ marginLeft: "11vh" }}
-              />
+        <Row gutter={{ xs: 8, sm: 12, md: 24, lg: 32, }}>
+          <Col xs={24} sm={24} md={12} lg={12}>
+            <div style={chartBlockStyle}>
+              <h2 key="bar-chart-title">Projects Per Month</h2>
+              <Bar key={`bar-chart-${totalEmployees}`} data={barChartData} options={barChartOptions} style={{ marginTop: '8vh' }} />
             </div>
-          </div>
-        </div>
+          </Col>
+
+          <Col xs={24} sm={24} md={12} lg={12}>
+            <div style={chartBlockStyle}>
+              <div style={chartContainerStyle}>
+                <h2 key="pie-chart-title">Employee Technical Skills</h2>
+                <Pie key={`pie-chart-${totalEmployees}`} data={pieChartData} style={{ marginLeft: '11vh' }} />
+              </div>
+            </div>
+          </Col>
+        </Row>
       </div>
-      {alert && <Alert />}
+      {alert && (
+        <Alert />
+      )}
     </>
   );
 };
