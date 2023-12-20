@@ -3,11 +3,11 @@ import { projectReducer } from "../reducers/projectReducer"
 import { apiUrl } from "./constants";
 import axios from "axios";
 
-import {ComponentsContext} from "./componentsContext";
+import { ComponentsContext } from "./componentsContext";
 
 export const ProjectContext = createContext();
 
-const ProjectContextProvider = ({ children }) => { 
+const ProjectContextProvider = ({ children }) => {
     const [projectState, dispatch] = useReducer(projectReducer, {
         project: null,
         projects: [],
@@ -40,29 +40,30 @@ const ProjectContextProvider = ({ children }) => {
     }
 
     const findProject = projectId => {
-		const project = projectState.projects.find(pro => pro._id === projectId)
-		dispatch({ type: 'FIND_PRO', payload: project })
-	}
+        const project = projectState.projects.find(pro => pro._id === projectId)
+        dispatch({ type: 'FIND_PRO', payload: project })
+    }
 
     const createProject = async newProject => {
         try {
             const response = await axios.post(`${apiUrl}/projects/create`, newProject)
             if (response.data.success) {
-                dispatch({type: 'PRO_CREATED_SUCCESS', payload: response.data.projects})
+                dispatch({ type: 'PRO_CREATED_SUCCESS', payload: response.data.projects })
                 setTimeout(() => {
                     setProcessing(false);
                     setAlert(true);
                     setAlertMessage(response.data.message);
                     setAlertType("success");
-                }, 2000);  
-                return response.data
+                }, 2000);
+            } else {
+                setTimeout(() => {
+                    setProcessing(false);
+                    setAlert(true);
+                    setAlertMessage(response.data.message);
+                    setAlertType("error");
+                }, 2000);
             }
-            setTimeout(() => {
-                setProcessing(false);
-                setAlert(true);
-                setAlertMessage(response.data.message);
-                setAlertType("error");
-            }, 2000); 
+            return response.data
         } catch (error) {
             setTimeout(() => {
                 setProcessing(false);
@@ -77,59 +78,61 @@ const ProjectContextProvider = ({ children }) => {
     }
 
     const closeProject = async projectId => {
-		try {
-			const response = await axios.patch(`${apiUrl}/projects/close/${projectId}`)
-			if (response.data.success){
-				dispatch({ type: 'CLOSE_PROJECT' });
+        try {
+            const response = await axios.patch(`${apiUrl}/projects/close/${projectId}`)
+            if (response.data.success) {
+                dispatch({ type: 'CLOSE_PROJECT' });
                 setAlert(true);
                 setAlertMessage(response.data.message);
                 setAlertType("success");
+            } else {
+                setTimeout(() => {
+                    setProcessing(false);
+                    setAlert(true);
+                    setAlertMessage(response.data.message);
+                    setAlertType("error");
+                }, 2000);
             }
-            setTimeout(() => {
-                setProcessing(false);
-                setAlert(true);
-                setAlertMessage(response.data.message);
-                setAlertType("error");
-            }, 2000);
-		} catch (error) {
-			console.log(error);
+        } catch (error) {
+            console.log(error);
             setAlert(true);
             setAlertMessage(error.response.data.message);
             setAlertType("error");
-		}
-	}
+        }
+    }
 
-	const updateProject = async (updatedProject, projectId) => {
-		try {
-			const response = await axios.patch(`${apiUrl}/projects/update/${projectId}`, updatedProject)
-			if (response.data.success) {
-				dispatch({ type: 'UPDATE_PRO', payload: response.data.project })
-				setTimeout(() => {
+    const updateProject = async (updatedProject, projectId) => {
+        try {
+            const response = await axios.patch(`${apiUrl}/projects/update/${projectId}`, updatedProject)
+            if (response.data.success) {
+                dispatch({ type: 'UPDATE_PRO', payload: response.data.project })
+                setTimeout(() => {
                     setProcessing(false);
                     setAlert(true);
                     setAlertMessage(response.data.message);
                     setAlertType("success");
                 }, 2000);
-                return response.data
-			}
-            setTimeout(() => {
-                setProcessing(false);
-                setAlert(true);
-                setAlertMessage(response.data.message);
-                setAlertType("error");
-            }, 2000);
-		} catch (error) {
+            } else {
+                setTimeout(() => {
+                    setProcessing(false);
+                    setAlert(true);
+                    setAlertMessage(response.data.message);
+                    setAlertType("error");
+                }, 2000);
+            }
+            return response.data
+        } catch (error) {
             setTimeout(() => {
                 setProcessing(false);
                 setAlert(true);
                 setAlertMessage(error.response.data.message);
                 setAlertType("error");
             }, 2000);
-			return error.response.data
-				? error.response.data
-				: { success: false, message: 'Server error' }
-		}
-	}
+            return error.response.data
+                ? error.response.data
+                : { success: false, message: 'Server error' }
+        }
+    }
 
     const getProjectById = async (projectId) => {
         try {
@@ -149,7 +152,7 @@ const ProjectContextProvider = ({ children }) => {
             if (response.status === 200) {
                 dispatch({ type: 'EMPINPRO_LOADED_SUCCESS', payload: response.data.employees });
             }
-        }catch (error) {
+        } catch (error) {
             console.log(error);
             dispatch({ type: 'EMPINPRO_LOADED_FAIL' });
         }
@@ -171,27 +174,28 @@ const ProjectContextProvider = ({ children }) => {
         try {
             const response = await axios.post(`${apiUrl}/projects/addemp`, employee);
             if (response.data.success) {
-                dispatch({type: 'EMP_ADDED_SUCCESS', payload: response.data.employees})
+                dispatch({ type: 'EMP_ADDED_SUCCESS', payload: response.data.employees })
                 setTimeout(() => {
                     setProcessing(false);
                     setAlert(true);
                     setAlertMessage(response.data.message);
                     setAlertType("success");
                 }, 2000);
-                return response.data
+            } else {
+                setTimeout(() => {
+                    setProcessing(false);
+                    setAlert(true);
+                    setAlertMessage(response.data.message);
+                    setAlertType("error");
+                }, 2000);
             }
-            setTimeout(() => {
-                setProcessing(false);
-                setAlert(true);
-                setAlertMessage(response.data.message);
-                setAlertType("error");
-            }, 2000);
+            return response.data
         } catch (error) {
             setTimeout(() => {
                 setProcessing(false);
                 setAlert(true);
                 setAlertMessage(error.response.data.message);
-                setAlertType("success");
+                setAlertType("error");
             }, 2000);
             return error.response.data
                 ? error.response.data
@@ -210,23 +214,24 @@ const ProjectContextProvider = ({ children }) => {
                     setAlertMessage(response.data.message);
                     setAlertType("success");
                 }, 2000);
+            } else {
+                setTimeout(() => {
+                    setProcessing(false);
+                    setAlert(true);
+                    setAlertMessage(response.data.message);
+                    setAlertType("error");
+                }, 2000);
             }
-            setTimeout(() => {
-                setProcessing(false);
-                setAlert(true);
-                setAlertMessage(response.data.message);
-                setAlertType("error");
-            }, 2000);
         } catch (error) {
             console.log(error);
             setTimeout(() => {
                 setProcessing(false);
                 setAlert(true);
                 setAlertMessage(error.response.data.message);
-                setAlertType("success");
+                setAlertType("error");
             }, 2000);
-		}
-	}
+        }
+    }
 
     const searchProjectByName = (query) => {
         const filteredProjects = projectState.projects.filter(project =>
@@ -256,11 +261,11 @@ const ProjectContextProvider = ({ children }) => {
         searchProjectByName
     }
 
-   return (
-      <ProjectContext.Provider value={projectContextData}>
-        {children}
-    </ProjectContext.Provider>
-   );
+    return (
+        <ProjectContext.Provider value={projectContextData}>
+            {children}
+        </ProjectContext.Provider>
+    );
 };
 
 export default ProjectContextProvider;

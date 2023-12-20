@@ -37,9 +37,9 @@ import UserProviderContext from "./contexts/userContext/userProvider";
 
 function App() {
   return (
-    <AuthContextProvider>
-      <LayoutContextProvider>
-        <ComponentsContextProvider>
+    <ComponentsContextProvider>
+      <AuthContextProvider>
+        <LayoutContextProvider>
           <EmployeeContextProvider>
             <TechnicalContextProvider>
               <RecordContextProvider>
@@ -53,9 +53,9 @@ function App() {
               </RecordContextProvider>
             </TechnicalContextProvider>
           </EmployeeContextProvider>
-        </ComponentsContextProvider>
-      </LayoutContextProvider>
-    </AuthContextProvider>
+        </LayoutContextProvider>
+      </AuthContextProvider>
+    </ComponentsContextProvider>
   );
 }
 

@@ -1,8 +1,9 @@
-import {createContext, useReducer, useEffect} from 'react'
+import {createContext, useReducer, useEffect, useContext} from 'react'
 import axios from 'axios'
 import {authReducer} from '../reducers/authReducer'
 import {apiUrl, LOCAL_STORAGE_TOKEN_NAME} from './constants'
 import setAuthToken from '../utils/setAuthToken'
+import { ComponentsContext } from './componentsContext'
 
 export const AuthContext = createContext()
 
@@ -12,6 +13,12 @@ const AuthContextProvider = ({ children }) => {
 		isAuthenticated: false,
 		user: null
 	})
+
+	const {
+        setAlert,
+        setAlertMessage,
+        setAlertType,
+    } = useContext(ComponentsContext);
 
 	const loadUser = async () => {
 		if (localStorage[LOCAL_STORAGE_TOKEN_NAME]) {
@@ -41,16 +48,28 @@ const AuthContextProvider = ({ children }) => {
 	const loginUser = async (userForm) => {
     try {
       const response = await axios.post(`${apiUrl}/auth/login`, userForm);
-      if (response.data.success)
-        localStorage.setItem(
-          LOCAL_STORAGE_TOKEN_NAME,
-          response.data.accessToken
-        );
+      if (response.data.success){
+		  localStorage.setItem(
+			  LOCAL_STORAGE_TOKEN_NAME,
+			  response.data.accessToken
+		  );
 
-      await loadUser();
+		  await loadUser();
 
-      return response.data;
+		  setAlert(true);
+		  setAlertMessage(response.data.message);
+		  setAlertType("success");
+
+	  } else {
+		  setAlert(true);
+		  setAlertMessage(response.data.message);
+		  setAlertType("error");
+	  }
+	  return response.data;
     } catch (error) {
+		setAlert(true);
+		setAlertMessage(error.response.data.message);
+		setAlertType("error");
       if (error.response.data) return error.response.data;
       else return { success: false, message: error.message };
     }

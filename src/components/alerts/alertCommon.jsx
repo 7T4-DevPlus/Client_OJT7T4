@@ -27,10 +27,10 @@ const AlertCommon = () => {
                 onClose={onCloseAlert}
                 style={{
                     position: 'fixed',
-                    bottom: 20,
-                    left: 16,
-                    width: 310,
-                    height: 90,
+                    top: 20,
+                    right: 16,
+                    width: 250,
+                    height: 50,
                     zIndex: 1000,
                 }}
             />

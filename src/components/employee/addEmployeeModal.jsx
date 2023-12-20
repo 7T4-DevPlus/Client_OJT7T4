@@ -133,16 +133,12 @@ const AddEmployeePage = () => {
 
     const content = (
         <div>
-            <NumberInput addonBefore={selectTech} min={0} max={10} onChange={handlePointChange} defaultValue={0} />
+            <NumberInput addonBefore={<div style={{ width: "60px" }}>{selectTech}</div>} min={0} max={10} onChange={handlePointChange} defaultValue={0} />
             <br />
-            <Row>
-                <Col>
-                    <ButtonCommon buttonType={"cancel"} handleOnClick={() => hide()} />
-                </Col>
-                <Col>
-                    <ButtonCommon buttonType={"save"} handleOnClick={() => addTech()} />
-                </Col>
-            </Row>
+            <div style={{ marginTop: "10px", display: "flex", justifyContent: "space-between" }}>
+                <ButtonCommon buttonType={"cancel"} handleOnClick={() => hide()} />
+                <ButtonCommon buttonType={"save"} handleOnClick={() => addTech()} />
+            </div>
         </div>
     );
 

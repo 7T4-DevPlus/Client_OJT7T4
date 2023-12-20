@@ -2,10 +2,11 @@ import React, { useContext, useEffect, useState } from 'react';
 import moment from 'moment';
 import { Bar, Pie } from 'react-chartjs-2';
 import 'chart.js/auto';
-import { format } from 'date-fns';
+import Alert from '../../components/alerts/alertCommon';
 
 import { EmployeeContext } from '../../contexts/employeeContext';
 import { ProjectContext } from '../../contexts/projectContext';
+import { ComponentsContext } from '../../contexts/componentsContext';
 
 const Dashboard = () => {
 
@@ -16,15 +17,19 @@ const Dashboard = () => {
   const [projectsByMonth, setProjectsByMonth] = useState({});
   const [employeeTechnicalData, setEmployeeTechnicalData] = useState({});
 
-  const { 
-    employeeState: {employees},
-    getEmployee 
+  const {
+    employeeState: { employees },
+    getEmployee
   } = useContext(EmployeeContext);
-  
-  const { 
-    projectState: {projects},
-    getProjects 
+
+  const {
+    projectState: { projects },
+    getProjects
   } = useContext(ProjectContext);
+
+  const {
+    alert
+  } = useContext(ComponentsContext);
 
   useEffect(() => {
     getEmployee();
@@ -164,7 +169,7 @@ const Dashboard = () => {
 
   const chartContainerStyle = {
     position: 'absolute',
-    top: '45%', 
+    top: '45%',
     left: '43%',
     transform: 'translate(-50%, -50%)',
     width: '80%',
@@ -176,57 +181,62 @@ const Dashboard = () => {
     height: '70px',
     marginRight: '20px',
   };
-  
+
   return (
-    <div style={{ padding: '20px' }}>
-      <div style={{ display: 'flex', marginBottom: '20px' }}>
-        <div style={squareStyle} className='squareBlock'>
-          <img src="https://res.cloudinary.com/dokzmffiv/image/upload/v1702871920/OJT/multiple-users-silhouette_gs6cob.png" alt="Employee" style={imageStyle} />
-          <div style={{ marginTop:'1.5vh', marginBottom: '1vh' }}>
-            <div style={{ fontSize: '20px' }}><b>{totalEmployees}</b></div>
-            <div>Total Employees</div>
+    <>
+      <div style={{ padding: '20px' }}>
+        <div style={{ display: 'flex', marginBottom: '20px' }}>
+          <div style={squareStyle} className='squareBlock'>
+            <img src="https://res.cloudinary.com/dokzmffiv/image/upload/v1702871920/OJT/multiple-users-silhouette_gs6cob.png" alt="Employee" style={imageStyle} />
+            <div style={{ marginTop: '1.5vh', marginBottom: '1vh' }}>
+              <div style={{ fontSize: '20px' }}><b>{totalEmployees}</b></div>
+              <div>Total Employees</div>
+            </div>
+          </div>
+
+          <div style={squareStyle} className='squareBlock'>
+            <img src="https://res.cloudinary.com/dokzmffiv/image/upload/v1702872434/OJT/to-do-list_odrvuq.png" alt="Project" style={imageStyle} />
+            <div style={{ marginTop: '1.5vh', marginBottom: '1vh' }}>
+              <div style={{ fontSize: '20px' }}><b>{totalProjects}</b></div>
+              <div>Total Projects</div>
+            </div>
+          </div>
+
+          <div style={squareStyle} className='squareBlock'>
+            <img src="https://res.cloudinary.com/dokzmffiv/image/upload/v1702873301/OJT/team_1_uplln0.png" alt="Client" style={imageStyle} />
+            <div style={{ marginTop: '1.5vh', marginBottom: '1vh' }}>
+              <div style={{ fontSize: '20px' }}><b>{totalCLient}</b></div>
+              <div>Total Clients</div>
+            </div>
+          </div>
+
+          <div style={squareStyle} className='squareBlock'>
+            <img src="https://res.cloudinary.com/dokzmffiv/image/upload/v1702873059/OJT/collaboration_uxughb.png" alt="Team" style={imageStyle} />
+            <div style={{ marginTop: '1.5vh', marginBottom: '1vh' }}>
+              <div style={{ fontSize: '20px' }}><b>{totalTeams}</b></div>
+              <div>Total Teams</div>
+            </div>
           </div>
         </div>
 
-        <div style={squareStyle} className='squareBlock'>
-          <img src="https://res.cloudinary.com/dokzmffiv/image/upload/v1702872434/OJT/to-do-list_odrvuq.png" alt="Project" style={imageStyle} />
-          <div style={{ marginTop:'1.5vh', marginBottom: '1vh' }}>
-            <div style={{ fontSize: '20px' }}><b>{totalProjects}</b></div>
-            <div>Total Projects</div>
+        <div style={squareContainerStyle}>
+          <div style={chartBlockStyle}>
+            <h2 key="bar-chart-title">Projects Per Month</h2>
+            <Bar key={`bar-chart-${totalEmployees}`} data={barChartData} options={barChartOptions} style={{ marginTop: '8vh' }} />
           </div>
-        </div>
 
-        <div style={squareStyle} className='squareBlock'>
-          <img src="https://res.cloudinary.com/dokzmffiv/image/upload/v1702873301/OJT/team_1_uplln0.png" alt="Client" style={imageStyle} />
-          <div style={{ marginTop:'1.5vh', marginBottom: '1vh' }}>
-            <div style={{ fontSize: '20px' }}><b>{totalCLient}</b></div>
-            <div>Total Clients</div>
-          </div>
-        </div>
-
-        <div style={squareStyle} className='squareBlock'>
-          <img src="https://res.cloudinary.com/dokzmffiv/image/upload/v1702873059/OJT/collaboration_uxughb.png" alt="Team" style={imageStyle} />
-          <div style={{ marginTop:'1.5vh', marginBottom: '1vh' }}>
-            <div style={{ fontSize: '20px' }}><b>{totalTeams}</b></div>
-            <div>Total Teams</div>
+          <div style={chartBlockStyle}>
+            <div style={chartContainerStyle}>
+              <h2 key="pie-chart-title">Employee Technical Skills</h2>
+              <Pie key={`pie-chart-${totalEmployees}`} data={pieChartData} style={{ marginLeft: '11vh' }} />
+            </div>
           </div>
         </div>
       </div>
-
-      <div style={squareContainerStyle}>
-        <div style={chartBlockStyle}>
-          <h2 key="bar-chart-title">Projects Per Month</h2>
-          <Bar key={`bar-chart-${totalEmployees}`} data={barChartData} options={barChartOptions} style={{marginTop: '8vh'}} />
-        </div>
-
-        <div style={chartBlockStyle}>
-          <div style={chartContainerStyle}>
-            <h2 key="pie-chart-title">Employee Technical Skills</h2>
-            <Pie key={`pie-chart-${totalEmployees}`} data={pieChartData} style={{marginLeft: '11vh'}} />
-          </div>
-        </div>
-      </div>
-    </div>
+      {alert && (
+        <Alert />
+      )}
+    </>
   );
 };
 

@@ -54,8 +54,15 @@ const EmployeeContextProvider = ({ children }) => {
                     setAlertMessage(response.data.message);
                     setAlertType("success");
                 }, 2000);
-                return response.data
+            } else {
+                setTimeout(() => {
+                    setProcessing(false);
+                    setAlert(true);
+                    setAlertMessage(response.data.message);
+                    setAlertType("error");
+                }, 2000);
             }
+            return response.data
         } catch (error) {
             setTimeout(() => {
                 setProcessing(false);
@@ -77,13 +84,14 @@ const EmployeeContextProvider = ({ children }) => {
                 setAlert(true);
                 setAlertMessage(response.data.message);
                 setAlertType("success");
+            } else {
+                setTimeout(() => {
+                    setProcessing(false);
+                    setAlert(true);
+                    setAlertMessage(response.data.message);
+                    setAlertType("error");
+                }, 2000);
             }
-            setTimeout(() => {
-                setProcessing(false);
-                setAlert(true);
-                setAlertMessage(response.data.message);
-                setAlertType("error");
-            }, 2000);
         } catch (error) {
             console.log(error);
             setAlert(true);
@@ -103,14 +111,15 @@ const EmployeeContextProvider = ({ children }) => {
                     setAlertMessage(response.data.message);
                     setAlertType("success");
                 }, 2000);
-                return response.data
+            } else {
+                setTimeout(() => {
+                    setProcessing(false);
+                    setAlert(true);
+                    setAlertMessage(response.data.message);
+                    setAlertType("error");
+                }, 2000);
             }
-            setTimeout(() => {
-                setProcessing(false);
-                setAlert(true);
-                setAlertMessage(response.data.message);
-                setAlertType("error");
-            }, 2000);
+            return response.data
         } catch (error) {
             setTimeout(() => {
                 setProcessing(false);

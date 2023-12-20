@@ -47,7 +47,7 @@ const ButtonCommon = ({ buttonType, size = "large", handleOnClick, ...props }) =
                 </Button>
             )}
             {buttonType === "cancel" && (
-                <Button size={size} onClick={handleOnClick}>
+                <Button className="cancel-button" size={size} onClick={handleOnClick}>
                     Cancel
                 </Button>
             )}

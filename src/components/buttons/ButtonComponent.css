@@ -63,3 +63,7 @@
     border-color: #3459eb !important;
     color: #3459eb !important;
 }
+
+.cancel-button {
+    width: 120px;
+}
