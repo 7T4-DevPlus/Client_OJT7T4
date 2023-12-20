@@ -1,27 +1,24 @@
-import React, { useContext, useEffect } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useContext, useEffect } from "react";
 
-import { Col, Row, Spin } from 'antd';
+import { Col, Row, Spin } from "antd";
 
-import { ProjectContext } from '../../contexts/projectContext';
-import { ComponentsContext } from '../../contexts/componentsContext';
+import { ProjectContext } from "../../contexts/projectContext";
+import { ComponentsContext } from "../../contexts/componentsContext";
 
-import ProjectCard from '../../components/project/projectCard';
-import Alert from '../../components/alerts/alertCommon';
+import ProjectCard from "../../components/project/projectCard";
+import Alert from "../../components/alerts/alertCommon";
 
 const Projects = () => {
-
   const {
     getProjects,
     projectState: { projects, isLoading },
     getAllEmployees,
     searchProject,
-    searchProjectByName
+    searchProjectByName,
   } = useContext(ProjectContext);
 
-  const {
-    alert,
-    setSearchType
-  } = useContext(ComponentsContext);
+  const { alert, setSearchType } = useContext(ComponentsContext);
 
   useEffect(() => {
     setSearchType("project");
@@ -39,27 +36,33 @@ const Projects = () => {
       <div className="spinner">
         <Spin size="large" />
       </div>
-    )
+    );
   } else {
     projectCards = (
-      <Row gutter={{ xs: 8, sm: 12, md: 24, lg: 32, }}>
-        {projects && projects.map(project => (
-          <Col xs={24} sm={12} md={12} lg={8} key={project._id} style={{ marginBottom: "20px", paddingRight: 0 }}>
-            <ProjectCard project={project} />
-          </Col>
-        ))}
+      <Row gutter={{ xs: 8, sm: 12, md: 24, lg: 32 }}>
+        {projects &&
+          projects.map((project) => (
+            <Col
+              xs={24}
+              sm={12}
+              md={12}
+              lg={8}
+              key={project._id}
+              style={{ marginBottom: "20px", paddingRight: 0 }}
+            >
+              <ProjectCard project={project} />
+            </Col>
+          ))}
       </Row>
-    )
+    );
   }
 
   return (
     <>
       {projectCards}
-      {alert && (
-        <Alert />
-      )}
+      {alert && <Alert />}
     </>
   );
 };
 
-export default Projects
+export default Projects;

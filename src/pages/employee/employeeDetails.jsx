@@ -1,20 +1,20 @@
-import { useContext, useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
-import { EmployeeContext } from '../../contexts/employeeContext';
-import { ComponentsContext } from '../../contexts/componentsContext';
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useContext, useEffect, useState } from "react";
+import { useParams, Link } from "react-router-dom";
+import { EmployeeContext } from "../../contexts/employeeContext";
+import { ComponentsContext } from "../../contexts/componentsContext";
 
-import EmployeeForm from '../../components/employee/employeeForm';
-import EmployeeHistory from '../../components/employee/employeeHistory'
+import EmployeeForm from "../../components/employee/employeeForm";
+import EmployeeHistory from "../../components/employee/employeeHistory";
 
-import Alert from '../../components/alerts/alertCommon';
-import Button from '../../components/buttons/ButtonCommon';
-import { Tabs } from 'antd';
+import Alert from "../../components/alerts/alertCommon";
+import { Tabs } from "antd";
 
 const EmployeeDetails = () => {
   const {
     employeeState: { employee, histories },
     getEmployeeById,
-    getEmployeeHistories
+    getEmployeeHistories,
   } = useContext(EmployeeContext);
   const { employeeId } = useParams();
 
@@ -23,40 +23,38 @@ const EmployeeDetails = () => {
     getEmployeeHistories(employeeId);
   }, []);
 
-  const [content, setContent] = useState('details')
+  const [content, setContent] = useState("details");
 
-  const {
-    alert
-  } = useContext(ComponentsContext);
+  const { alert } = useContext(ComponentsContext);
 
   const onChange = (key) => {
-    setContent(key)
+    setContent(key);
   };
 
   const items = [
     {
-      key: 'details',
-      label: 'Information'
+      key: "details",
+      label: "Information",
     },
     {
-      key: 'history',
-      label: 'History'
-    }
+      key: "history",
+      label: "History",
+    },
   ];
 
   let contentItem = null;
-  if (content === 'details') {
+  if (content === "details") {
     contentItem = (
       <>
-        {employee !== null && <EmployeeForm employee={employee} employeeId={employeeId} />}
+        {employee !== null && (
+          <EmployeeForm employee={employee} employeeId={employeeId} />
+        )}
       </>
-    )
+    );
   } else {
     contentItem = (
-      <>
-        {histories !== null && <EmployeeHistory histories={histories} />}
-      </>
-    )
+      <>{histories !== null && <EmployeeHistory histories={histories} />}</>
+    );
   }
 
   return (
@@ -68,9 +66,7 @@ const EmployeeDetails = () => {
         <Tabs defaultActiveKey="1" items={items} onChange={onChange} />
         {contentItem}
       </div>
-      {alert && (
-        <Alert />
-      )}
+      {alert && <Alert />}
     </>
   );
 };
