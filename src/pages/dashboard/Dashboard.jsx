@@ -159,12 +159,14 @@ const Dashboard = () => {
     overflow: "hidden",
     width: '100%',
     height: '15vh',
-    marginBottom: '10px'
+    marginBottom: '10px',
+    paddingTop: '3vh',
+    paddingLeft: '1.3vw'
   };
 
   const chartBlockStyle = {
     ...squareStyle,
-    height: '70vh',
+    height: '65vh',
     width: '100%',
   };
 
@@ -190,8 +192,8 @@ const Dashboard = () => {
           <Col xs={24} sm={12} md={8} lg={6}>
             <div style={squareStyle} className='squareBlock'>
               <img src="https://res.cloudinary.com/dokzmffiv/image/upload/v1702871920/OJT/multiple-users-silhouette_gs6cob.png" alt="Employee" style={imageStyle} />
-              <div>
-                <b>{totalEmployees}</b>
+              <div style={{ paddingTop: '1vh' }}>
+                <b style={{ fontSize: '18px' }}>{totalEmployees}</b>
                 <p>Total Employees</p>
               </div>
             </div>
@@ -200,8 +202,8 @@ const Dashboard = () => {
           <Col xs={24} sm={12} md={8} lg={6}>
             <div style={squareStyle} className='squareBlock'>
               <img src="https://res.cloudinary.com/dokzmffiv/image/upload/v1702872434/OJT/to-do-list_odrvuq.png" alt="Project" style={imageStyle} />
-              <div>
-                <b>{totalProjects}</b>
+              <div style={{ paddingTop: '1vh' }}>
+                <b style={{ fontSize: '18px' }}>{totalProjects}</b>
                 <p>Total Projects</p>
               </div>
             </div>
@@ -210,8 +212,8 @@ const Dashboard = () => {
           <Col xs={24} sm={12} md={8} lg={6}>
             <div style={squareStyle} className='squareBlock'>
               <img src="https://res.cloudinary.com/dokzmffiv/image/upload/v1702873301/OJT/team_1_uplln0.png" alt="Client" style={imageStyle} />
-              <div>
-                <b>{totalCLient}</b>
+              <div style={{ paddingTop: '1vh' }}>
+                <b style={{ fontSize: '18px' }}>{totalCLient}</b>
                 <p>Total Clients</p>
               </div>
             </div>
@@ -220,8 +222,8 @@ const Dashboard = () => {
           <Col xs={24} sm={12} md={8} lg={6}>
             <div style={squareStyle} className='squareBlock'>
               <img src="https://res.cloudinary.com/dokzmffiv/image/upload/v1702873059/OJT/collaboration_uxughb.png" alt="Team" style={imageStyle} />
-              <div>
-                <b>{totalTeams}</b>
+              <div style={{ paddingTop: '1vh' }}>
+                <b style={{ fontSize: '18px' }}>{totalTeams}</b>
                 <p>Total Teams</p>
               </div>
             </div>
@@ -231,15 +233,15 @@ const Dashboard = () => {
         <Row gutter={{ xs: 8, sm: 12, md: 24, lg: 32, }}>
           <Col xs={24} sm={24} md={12} lg={12}>
             <div style={chartBlockStyle}>
-              <h2 key="bar-chart-title">Projects Per Month</h2>
-              <Bar key={`bar-chart-${totalEmployees}`} data={barChartData} options={barChartOptions} style={{ marginTop: '8vh' }} />
+              <h3 key="bar-chart-title">Projects In Recent 5 Month</h3>
+              <Bar key={`bar-chart-${totalEmployees}`} data={barChartData} options={barChartOptions} style={{ marginTop: '7vh' }} />
             </div>
           </Col>
 
           <Col xs={24} sm={24} md={12} lg={12}>
             <div style={chartBlockStyle}>
               <div style={chartContainerStyle}>
-                <h2 key="pie-chart-title">Employee Technical Skills</h2>
+                <h3 key="pie-chart-title">Employees Per Technical Skill</h3>
                 <Pie key={`pie-chart-${totalEmployees}`} data={pieChartData} style={{ marginLeft: '11vh' }} />
               </div>
             </div>
