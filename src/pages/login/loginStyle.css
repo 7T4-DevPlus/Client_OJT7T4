@@ -1,0 +1,80 @@
+body {
+    margin: 0;
+    height: 100vh;
+    overflow: hidden;
+}
+
+
+.sign-in-text {
+    font-size: 24px; 
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.h-custom {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f4f4f4;
+    overflow: hidden;
+}
+
+.error-message {
+    color: red;
+    font-size: 14px;
+    margin-top: 4px;
+}
+
+.form-container {
+    height: 100%;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.MDBInput {
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-size: 16px;
+    }
+
+
+.MDBBtn {
+    border-radius: 8px;
+    background-color: #007bff;
+    color: white;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    padding: 12px 24px;
+    font-size: 16px;
+    border: none;
+}
+
+.MDBBtn:hover {
+    background-color: #0056b3;
+}
+
+
+.MDBCheckbox label::before {
+    border-radius: 4px;
+}
+
+
+.link-danger {
+    color: #dc3545;
+}
+
+.link-danger:hover {
+    text-decoration: underline;
+}
+
+.img-fluid {
+    width: 1000px;
+    height: 1000px;
+}

@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  font-weight: bold;
 }
 
 .App-logo {
@@ -35,4 +36,83 @@
   to {
     transform: rotate(360deg);
   }
+}
+.Nav {
+  display: flex;
+  
+}
+.container-left {
+  margin-top: 5vh;
+}
+
+.sideE {
+  margin-top: 20px;
+}
+.nav-container{
+  display: inline-flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+.Avatar {
+  margin-top: 5vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 3vh;
+}
+.AvatarDescription{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.nav-role{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.items {
+  font-weight: 600;
+}
+.ant-menu {
+  font-weight: 600;
+  font-size:initial;
+}
+.zoom-in{
+
+}
+.zoom-out{
+  
+}
+
+.spinner {
+  margin: 20px 0;
+  margin-bottom: 20px;
+  padding: 30px 50px;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 4px;
+}
+
+.divider:after,
+.divider:before {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: #eee;
+}
+.h-custom {
+  height: calc(100% - 73px);
+}
+@media (max-width: 450px) {
+  .h-custom {
+  height: 100%;
+  }
+}
+
+.ant-popover-inner {
+  width: 300px;
+}
+
+.squareBlock {
+  display: inline-flex;
 }
