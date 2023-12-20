@@ -37,6 +37,12 @@ const Employees = () => {
   };
 
   useEffect(() => {
+    document.title = 'All Employees';
+    
+    getTechnicals();
+  }, []);
+
+  useEffect(() => {
     setSearchType("employee");
     if (searchString === "") {
       getEmployee();
@@ -44,10 +50,6 @@ const Employees = () => {
       searchEmployee(searchString);
     }
   }, [searchString]);
-
-  useEffect(() => {
-    getTechnicals();
-  }, []);
 
   const techFilters = technicals.map(({ _id, name }) => ({
     text: name,
@@ -122,7 +124,7 @@ const Employees = () => {
               let techName = tech.technicalId.name;
               let techPoint = tech.point;
               return (
-                <Tag color={"blue"} key={techName}>
+                <Tag style={{ marginBottom: "5px" }} color={"blue"} key={techName}>
                   {techName}-{techPoint}
                 </Tag>
               );

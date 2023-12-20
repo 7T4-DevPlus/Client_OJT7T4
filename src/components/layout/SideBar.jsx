@@ -33,7 +33,7 @@ export const Sidebar = () => {
       "Project Management",
       "projectsManagement",
       <AppstoreOutlined style={{ fontSize: "18px" }} />,
-      [getItem("All Project", "project"), getItem("Add Project", "project/add")]
+      [getItem("All Projects", "project"), getItem("Add Project", "project/add")]
     ),
     getItem(
       "Employees Management",

@@ -35,6 +35,10 @@ const LogPage = () => {
     };
 
     useEffect(() => {
+        document.title = 'Log';
+    }, []);
+
+    useEffect(() => {
         const filterRecords = async () => {
             await getRecords();
 

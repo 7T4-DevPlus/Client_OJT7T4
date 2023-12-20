@@ -21,6 +21,10 @@ const Projects = () => {
   const { alert, setSearchType } = useContext(ComponentsContext);
 
   useEffect(() => {
+    document.title = 'All Projects';
+  }, []);
+
+  useEffect(() => {
     setSearchType("project");
     getAllEmployees();
     if (searchProject === "") {

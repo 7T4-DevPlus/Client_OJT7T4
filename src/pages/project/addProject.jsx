@@ -31,6 +31,8 @@ const AddProject = () => {
   const [disable, setDisable] = useState(false);
 
   useEffect(() => {
+    document.title = 'Add Project';
+
     getTechnicals();
   }, []);
 
@@ -50,7 +52,6 @@ const AddProject = () => {
     { value: "Planning", label: "Planning" },
     { value: "Running", label: "Running" },
     { value: "Completed", label: "Completed" },
-    { value: "Closed", label: "Closed" },
   ];
 
   const handleStatusChange = (value) => {

@@ -1,7 +1,11 @@
-import React from "react";
+import React, { useEffect } from 'react';
 import "./404NotFoundStyle.css";
 
 const PageNotFound = () => {
+  useEffect(() => {
+    document.title = 'Not Found';
+  }, []);
+  
   return (
     <>
       <div className="cont-404">

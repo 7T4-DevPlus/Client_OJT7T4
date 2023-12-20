@@ -42,7 +42,7 @@ const ProjectForm = (project) => {
 
   useEffect(() => {
     getTechnicals();
-  }, []);
+  }, [project]);
 
   const techOptions = technicals.map(({ _id, name }) => ({
     label: name,
@@ -65,7 +65,6 @@ const ProjectForm = (project) => {
     { value: "Planning", label: "Planning" },
     { value: "Running", label: "Running" },
     { value: "Completed", label: "Completed" },
-    { value: "Closed", label: "Closed" },
   ];
 
   const handleStatusChange = (value) => {

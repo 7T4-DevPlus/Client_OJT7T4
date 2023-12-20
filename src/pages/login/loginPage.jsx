@@ -1,5 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable jsx-a11y/img-redundant-alt */
 import React, { useContext, useEffect, useState } from "react";
 import "mdbreact/dist/css/mdb.css";
 import { useNavigate } from "react-router-dom";
@@ -70,7 +68,10 @@ const LoginPage = () => {
     }
   };
 
+  
   useEffect(() => {
+    document.title = 'Login';
+
     if (localStorage.getItem(LOCAL_STORAGE_TOKEN_NAME)) {
       navigate(`/`);
     }
