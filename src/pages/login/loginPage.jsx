@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable jsx-a11y/img-redundant-alt */
 import React, { useContext, useEffect, useState } from "react";
 import "mdbreact/dist/css/mdb.css";
 import { useNavigate } from "react-router-dom";
@@ -18,20 +20,16 @@ import { apiUrl, LOCAL_STORAGE_TOKEN_NAME } from "../../contexts/constants";
 import axios from "axios";
 import setAuthToken from "../../utils/setAuthToken";
 import { UserContext } from "../../contexts/userContext/userProvider";
-import { ComponentsContext } from '../../contexts/componentsContext';
-import Alert from '../../components/alerts/alertCommon';
+import { ComponentsContext } from "../../contexts/componentsContext";
+import Alert from "../../components/alerts/alertCommon";
 
 const LoginPage = () => {
   const navigate = useNavigate();
-  const { store, dispatch } = useContext(UserContext);
+  const { dispatch } = useContext(UserContext);
   const [loading, setLoading] = useState(false);
 
-  const {
-    alert,
-    setAlert,
-    setAlertMessage,
-    setAlertType,
-  } = useContext(ComponentsContext);
+  const { alert, setAlert, setAlertMessage, setAlertType } =
+    useContext(ComponentsContext);
 
   const schema = yup
     .object({
@@ -64,7 +62,6 @@ const LoginPage = () => {
       setAlert(true);
       setAlertMessage(response.data.message);
       setAlertType("success");
-
     } catch ({ response }) {
       setLoading(false);
       setAlert(true);
@@ -180,9 +177,7 @@ const LoginPage = () => {
           </MDBCol>
         </MDBRow>
       </MDBContainer>
-      {alert && (
-        <Alert />
-      )}
+      {alert && <Alert />}
     </>
   );
 };

@@ -1,16 +1,17 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
-import { Spin, Row, Col } from 'antd';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useContext, useEffect, useState } from "react";
+import { useParams, Link } from "react-router-dom";
+import { Spin, Row, Col } from "antd";
 
-import { ProjectContext } from '../../contexts/projectContext';
-import { ComponentsContext } from '../../contexts/componentsContext';
+import { ProjectContext } from "../../contexts/projectContext";
+import { ComponentsContext } from "../../contexts/componentsContext";
 
-import Alert from '../../components/alerts/alertCommon';
+import Alert from "../../components/alerts/alertCommon";
 
-import EmployeeInProject from '../../components/project/employeeInProject';
-import AssignEmployeeModal from '../../components/project/assignEmployeeModal';
-import ProjectForm from '../../components/project/projectForm';
-import ProjectTimeline from '../../components/project/projectTimeline';
+import EmployeeInProject from "../../components/project/employeeInProject";
+import AssignEmployeeModal from "../../components/project/assignEmployeeModal";
+import ProjectForm from "../../components/project/projectForm";
+import ProjectTimeline from "../../components/project/projectTimeline";
 
 const ProjectDetails = () => {
   const { projectId } = useParams();
@@ -18,12 +19,10 @@ const ProjectDetails = () => {
   const {
     projectState: { employeesInProject, isLoading, project },
     getEmployeesInProject,
-    findProject
+    findProject,
   } = useContext(ProjectContext);
 
-  const {
-    alert
-  } = useContext(ComponentsContext);
+  const { alert } = useContext(ComponentsContext);
 
   const [loading, setLoading] = useState(true);
 
@@ -47,21 +46,35 @@ const ProjectDetails = () => {
   } else {
     body = (
       <>
-        <div style={{ display: "flex", width: "100%", justifyContent: "space-between" }}>
-          <Row gutter={{ xs: 8, sm: 12, md: 24, lg: 32, }}>
+        <div
+          style={{
+            display: "flex",
+            width: "100%",
+            justifyContent: "space-between",
+          }}
+        >
+          <Row gutter={{ xs: 8, sm: 12, md: 24, lg: 32 }}>
             <Col xs={24} sm={24} md={12} lg={12}>
-                {project && <ProjectForm project={project} />}
+              {project && <ProjectForm project={project} />}
             </Col>
             <Col xs={24} sm={24} md={12} lg={12}>
-                {employeesInProject !== null && isLoading ? <p>Đang tải...</p> : <EmployeeInProject employeesInProject={employeesInProject} />}
+              {employeesInProject !== null && isLoading ? (
+                <p>Đang tải...</p>
+              ) : (
+                <EmployeeInProject employeesInProject={employeesInProject} />
+              )}
             </Col>
           </Row>
         </div>
         <div>
-          {employeesInProject !== null && isLoading ? <p>Đang tải...</p> : <ProjectTimeline employeesInProject={employeesInProject} />}
+          {employeesInProject !== null && isLoading ? (
+            <p>Đang tải...</p>
+          ) : (
+            <ProjectTimeline employeesInProject={employeesInProject} />
+          )}
         </div>
       </>
-    )
+    );
   }
 
   return (
@@ -69,11 +82,9 @@ const ProjectDetails = () => {
       <Link to="/project">Back</Link>
       {body}
       {project && <AssignEmployeeModal project={project} />}
-      {alert && (
-        <Alert />
-      )}
+      {alert && <Alert />}
     </>
   );
-}
+};
 
 export default ProjectDetails;
