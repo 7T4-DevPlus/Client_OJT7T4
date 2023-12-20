@@ -219,12 +219,13 @@ const AddEmployeePage = () => {
     setProcessing(true);
     createEmployee(formData);
 
-    if (processing === false) {
+    setTimeout(() => {
       setShowModal(false);
       form.resetFields();
       form.resetFields(["gender"]);
       setEmployeeTechnicals([]);
-    }
+      setImageUrl(null);
+    }, 3000);
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -233,6 +234,7 @@ const AddEmployeePage = () => {
     form.resetFields();
     form.resetFields(["gender"]);
     setEmployeeTechnicals([]);
+    setImageUrl(null);
   };
 
   const [loading, setLoading] = useState(false);
@@ -283,6 +285,7 @@ const AddEmployeePage = () => {
     form.resetFields();
     form.resetFields(["gender"]);
     setEmployeeTechnicals([]);
+    setImageUrl(null);
   };
 
   const [form] = Form.useForm();
@@ -308,8 +311,8 @@ const AddEmployeePage = () => {
         onFinishFailed={onFinishFailed}
         autoComplete="off"
       >
-        <Row>
-          <Col span={12}>
+        <Row gutter={{ xs: 8, sm: 12, md: 24, lg: 32, }}>
+                    <Col xs={24} sm={24} md={12} lg={12}>
             <Form.Item valuePropName="image" getValueFromEvent={imageUrl}>
               <Upload
                 name="image"
@@ -334,7 +337,7 @@ const AddEmployeePage = () => {
               </Upload>
             </Form.Item>
           </Col>
-          <Col span={12}>
+          <Col xs={24} sm={24} md={12} lg={12}>
             <Form.Item label="Gender" name="gender">
               <RadioButton options={genderOptions} onChange={onGenderChange} />
             </Form.Item>
@@ -342,7 +345,7 @@ const AddEmployeePage = () => {
         </Row>
 
         <Row>
-          <Col span={11}>
+        <Col xs={24} sm={24} md={11} lg={11}>
             <Form.Item
               label="Full Name"
               name="name"
@@ -360,7 +363,7 @@ const AddEmployeePage = () => {
             </Form.Item>
           </Col>
           <Col span={2}></Col>
-          <Col span={11}>
+          <Col xs={24} sm={24} md={11} lg={11}>
             <Form.Item
               label="Identity code"
               name="identity"
@@ -377,7 +380,7 @@ const AddEmployeePage = () => {
         </Row>
 
         <Row>
-          <Col span={11}>
+        <Col xs={24} sm={24} md={11} lg={11}>
             <Form.Item
               label="Employee code"
               name="code"
@@ -392,7 +395,7 @@ const AddEmployeePage = () => {
             </Form.Item>
           </Col>
           <Col span={2}></Col>
-          <Col span={11}>
+          <Col xs={24} sm={24} md={11} lg={11}>
             <Form.Item
               label="Email"
               name="email"
@@ -409,7 +412,7 @@ const AddEmployeePage = () => {
         </Row>
 
         <Row>
-          <Col span={14}>
+        <Col xs={24} sm={24} md={14} lg={14}>
             <Form.Item
               label="Phone number"
               name="phone"
@@ -426,7 +429,7 @@ const AddEmployeePage = () => {
         </Row>
 
         <Row>
-          <Col span={12}>
+        <Col span={8}>
             <Form.Item label="Technicals" name="technicals">
               <Popover
                 content={content}
@@ -441,7 +444,7 @@ const AddEmployeePage = () => {
               </Popover>
             </Form.Item>
           </Col>
-          <Col span={12}>
+          <Col span={16}>
             {employeeTechnicals.map((tech) => {
               const technical = technicals.find(
                 (t) => t._id === tech.technicalId
@@ -452,6 +455,7 @@ const AddEmployeePage = () => {
                   key={tech.technicalId}
                   closeIcon={true}
                   onClose={() => removeTechnical(tech.technicalId)}
+                  style={{ marginBottom: "5px" }}
                 >
                   {technical ? `${technical.name} - ${tech.point}` : ""}
                 </Tag>
