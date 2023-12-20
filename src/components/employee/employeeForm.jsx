@@ -326,40 +326,38 @@ const EmployeeForm = (employee) => {
               width: "85%"
             }}
           >
+            <Form.Item valuePropName="image" getValueFromEvent={imageUrl}>
+              <Upload
+                name="image"
+                listType="picture-card"
+                className="avatar-uploader"
+                showUploadList={false}
+                action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
+                beforeUpload={beforeUpload}
+                onChange={handleChange}
+              >
+                {imageUrl ? (
+                  <img
+                    src={imageUrl}
+                    alt="avatar"
+                    style={{
+                      width: '100%',
+                    }}
+                  />
+                ) : (
+                  <img
+                    src={employee.employee.image}
+                    alt="avatar"
+                    style={{
+                      width: '100%',
+                    }}
+                  />
+                )}
+              </Upload>
+            </Form.Item>
             <Row>
-              <Col xs={24} sm={24} md={8} lg={8}>
-                <Form.Item valuePropName="image" getValueFromEvent={imageUrl}>
-                  <Upload
-                    name="image"
-                    listType="picture-card"
-                    className="avatar-uploader"
-                    showUploadList={false}
-                    action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
-                    beforeUpload={beforeUpload}
-                    onChange={handleChange}
-                  >
-                    {imageUrl ? (
-                      <img
-                        src={imageUrl}
-                        alt="avatar"
-                        style={{
-                          width: '100%',
-                        }}
-                      />
-                    ) : (
-                      <img
-                        src={employee.employee.image}
-                        alt="avatar"
-                        style={{
-                          width: '100%',
-                        }}
-                      />
-                    )}
-                  </Upload>
 
-                </Form.Item>
-              </Col>
-              <Col xs={24} sm={24} md={16} lg={16}>
+              <Col xs={24} sm={24} md={11} lg={11}>
                 <Form.Item
                   label="Full Name"
                   name="name"
@@ -376,11 +374,13 @@ const EmployeeForm = (employee) => {
                   <TextInput />
                 </Form.Item>
               </Col>
+              <Col span={2}></Col>
+              <Col xs={24} sm={24} md={11} lg={11}>
+                <Form.Item label="Gender">
+                  <RadioButton options={genderOptions} defaultValue={checkedGender} onChange={onGenderChange} />
+                </Form.Item>
+              </Col>
             </Row>
-
-            <Form.Item label="Gender">
-              <RadioButton options={genderOptions} defaultValue={checkedGender} onChange={onGenderChange} />
-            </Form.Item>
 
             <Row>
               <Col xs={24} sm={24} md={11} lg={11}>

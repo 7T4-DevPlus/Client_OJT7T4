@@ -124,7 +124,7 @@ const Employees = () => {
               let techName = tech.technicalId.name;
               let techPoint = tech.point;
               return (
-                <Tag color={"blue"} key={techName}>
+                <Tag style={{ marginBottom: "5px" }} color={"blue"} key={techName}>
                   {techName}-{techPoint}
                 </Tag>
               );

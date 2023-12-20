@@ -187,7 +187,7 @@ const Dashboard = () => {
     <>
       <div style={{ padding: '20px' }}>
         <Row gutter={{ xs: 8, sm: 12, md: 24, lg: 24, }} style={{ marginBottom: "20px" }}>
-          <Col xs={24} sm={12} md={6} lg={6}>
+          <Col xs={24} sm={12} md={8} lg={6}>
             <div style={squareStyle} className='squareBlock'>
               <img src="https://res.cloudinary.com/dokzmffiv/image/upload/v1702871920/OJT/multiple-users-silhouette_gs6cob.png" alt="Employee" style={imageStyle} />
               <div>
@@ -197,7 +197,7 @@ const Dashboard = () => {
             </div>
           </Col>
 
-          <Col xs={24} sm={12} md={6} lg={6}>
+          <Col xs={24} sm={12} md={8} lg={6}>
             <div style={squareStyle} className='squareBlock'>
               <img src="https://res.cloudinary.com/dokzmffiv/image/upload/v1702872434/OJT/to-do-list_odrvuq.png" alt="Project" style={imageStyle} />
               <div>
@@ -207,7 +207,7 @@ const Dashboard = () => {
             </div>
           </Col>
 
-          <Col xs={24} sm={12} md={6} lg={6}>
+          <Col xs={24} sm={12} md={8} lg={6}>
             <div style={squareStyle} className='squareBlock'>
               <img src="https://res.cloudinary.com/dokzmffiv/image/upload/v1702873301/OJT/team_1_uplln0.png" alt="Client" style={imageStyle} />
               <div>
@@ -217,7 +217,7 @@ const Dashboard = () => {
             </div>
           </Col>
 
-          <Col xs={24} sm={12} md={6} lg={6}>
+          <Col xs={24} sm={12} md={8} lg={6}>
             <div style={squareStyle} className='squareBlock'>
               <img src="https://res.cloudinary.com/dokzmffiv/image/upload/v1702873059/OJT/collaboration_uxughb.png" alt="Team" style={imageStyle} />
               <div>

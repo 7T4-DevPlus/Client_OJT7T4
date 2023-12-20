@@ -28,7 +28,7 @@ const ProjectDetails = () => {
 
   useEffect(() => {
     document.title = 'Project Details';
-  }, []);
+  }, [project]);
 
   useEffect(() => {
     findProject(projectId);
@@ -50,26 +50,18 @@ const ProjectDetails = () => {
   } else {
     body = (
       <>
-        <div
-          style={{
-            display: "flex",
-            width: "100%",
-            justifyContent: "space-between",
-          }}
-        >
-          <Row gutter={{ xs: 8, sm: 12, md: 24, lg: 32 }}>
-            <Col xs={24} sm={24} md={12} lg={12}>
-              {project && <ProjectForm project={project} />}
-            </Col>
-            <Col xs={24} sm={24} md={12} lg={12}>
-              {employeesInProject !== null && isLoading ? (
-                <p>Đang tải...</p>
-              ) : (
-                <EmployeeInProject employeesInProject={employeesInProject} />
-              )}
-            </Col>
-          </Row>
-        </div>
+        <Row gutter={{ xs: 8, sm: 12, md: 24, lg: 32 }}>
+          <Col xs={24} sm={24} md={12} lg={12}>
+            {project && <ProjectForm project={project} />}
+          </Col>
+          <Col xs={24} sm={24} md={12} lg={12}>
+            {employeesInProject !== null && isLoading ? (
+              <p>Đang tải...</p>
+            ) : (
+              <EmployeeInProject employeesInProject={employeesInProject} />
+            )}
+          </Col>
+        </Row>
         <div>
           {employeesInProject !== null && isLoading ? (
             <p>Đang tải...</p>
