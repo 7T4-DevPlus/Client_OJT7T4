@@ -1,5 +1,5 @@
 .save-button {
-    background: #34eb3d;
+    background: #28A745;
     border-color: white;
     color: white;
     width: 120px;
@@ -7,8 +7,8 @@
 
 .save-button:hover {
     background: white;
-    border-color: #34eb3d !important;
-    color: #34eb3d !important;
+    border-color: #28A745 !important;
+    color: #28A745 !important;
 }
 
 .edit-button {

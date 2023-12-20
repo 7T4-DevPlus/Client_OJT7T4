@@ -434,7 +434,7 @@ const AddEmployeePage = () => {
                         {employeeTechnicals.map((tech) => {
                             const technical = technicals.find((t) => t._id === tech.technicalId);
                             return (
-                                <Tag color={'blue'} key={tech.technicalId} closeIcon={true} onClose={() => removeTechnical(tech.technicalId)}>
+                                <Tag style={{ marginBottom: "5px" }} color={'blue'} key={tech.technicalId} closeIcon={true} onClose={() => removeTechnical(tech.technicalId)}>
                                     {technical ? `${technical.name} - ${tech.point}` : ''}
                                 </Tag>
                             );

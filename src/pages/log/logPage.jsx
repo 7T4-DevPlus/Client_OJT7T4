@@ -73,7 +73,7 @@ const LogPage = () => {
 
     if (isLoading || loading) {
         body = (
-            <div className="spinner">
+            <div style={{  }}>
                 <Spin size="large" />
             </div>
         );

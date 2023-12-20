@@ -79,7 +79,7 @@ const Employees = () => {
             key: 'name',
             render: (text, record) => (
                 <Link to={`/employee/${record._id}`} onClick={() => handleDetails(record)}>
-                    {text}
+                    <b>{text}</b>
                 </Link>
             ),
         },
