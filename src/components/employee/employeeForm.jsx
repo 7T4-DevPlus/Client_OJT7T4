@@ -4,6 +4,7 @@ import { Form, Upload, message, Row, Col, Tag, Popover, Button } from 'antd';
 import { EmployeeContext } from '../../contexts/employeeContext';
 import { TechnicalContext } from '../../contexts/technicalContext';
 import { ComponentsContext } from '../../contexts/componentsContext';
+import { apiUrl } from '../../contexts/constants';
 
 import TextInput from '../../components/inputs/InputTextCommon';
 import RadioButton from '../inputs/RadioCommon';
@@ -255,6 +256,10 @@ const EmployeeForm = (employee) => {
         }
     };
 
+    const exportEmployee = async (empId) => {
+        window.location.href = `${apiUrl}/employees/export/${empId}`;
+    }
+
     return (
         <>
             <div style={{ display: "flex", justifyContent: "flex-end" }}>
@@ -264,7 +269,10 @@ const EmployeeForm = (employee) => {
                             <ButtonCommon buttonType={"loading"} /> :
                             <ButtonCommon buttonType={"save"} handleOnClick={() => form.submit()} />
                     ) :
-                    <ButtonCommon buttonType={"edit-text"} handleOnClick={() => handleEdit()} />
+                    <div style={{ width: "250px", display: "flex", justifyContent: "space-between" }}>
+                        <ButtonCommon buttonType={"edit-text"} handleOnClick={() => handleEdit()} />
+                        <ButtonCommon buttonType={"export"} handleOnClick={() => exportEmployee(employee.employee._id)} />
+                    </div>
                 )}
             </div>
             <div style={{ width: "100%", textAlign: "center" }}>

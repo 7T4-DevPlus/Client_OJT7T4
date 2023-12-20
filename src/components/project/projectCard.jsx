@@ -39,7 +39,7 @@ const ProjectCard = (project) => {
                         }>
                             {projectInfo.status}
                         </Tag>
-                        <h4 style={{ marginTop: "10px" }}>{projectInfo.name}</h4>
+                        <p style={{ marginTop: "5px", fontSize: "20px" }}><b>{projectInfo.name}</b></p>
                         <div style={{ marginTop: "10px", display: "flex" }}>
                             {empInPro.length > 0 ? (
                                 empInPro.slice(0, 3).map(emp => (

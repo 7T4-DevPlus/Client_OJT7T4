@@ -27,15 +27,6 @@ body {
     margin-top: 4px;
 }
 
-
-.checkbox-login-spacing {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 20px;
-}
-
-
 .form-container {
     height: 100%;
     background-color: white;
@@ -46,7 +37,6 @@ body {
     flex-direction: column;
     justify-content: center;
 }
-
 
 .MDBInput {
     border-radius: 6px;

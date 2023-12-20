@@ -198,12 +198,13 @@ const AddEmployeePage = () => {
         setProcessing(true);
         createEmployee(formData);
 
-        if (processing === false) {
+        setTimeout(() => {
             setShowModal(false);
             form.resetFields();
             form.resetFields(['gender']);
             setEmployeeTechnicals([]);
-        }
+            setImageUrl(null);
+        }, 3000);
     };
 
     const onFinishFailed = (errorInfo) => {
@@ -212,6 +213,7 @@ const AddEmployeePage = () => {
         form.resetFields();
         form.resetFields(['gender']);
         setEmployeeTechnicals([]);
+        setImageUrl(null);
     };
 
     const [loading, setLoading] = useState(false);
@@ -264,6 +266,7 @@ const AddEmployeePage = () => {
         form.resetFields();
         form.resetFields(['gender']);
         setEmployeeTechnicals([]);
+        setImageUrl(null);
     };
 
     const [form] = Form.useForm();
