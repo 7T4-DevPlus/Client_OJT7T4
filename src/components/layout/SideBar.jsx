@@ -176,7 +176,6 @@ const userPanelStyle={
                             </div>
                         </div>
                         <div className="profile-usertitle">
-                            <div className="sidebar-userpic-name" style={profileUsertitleStyle}>7T4</div>
                             {user && <div className="profile-usertitle-job" style={profileUsertitleJobStyle}>{user.username}</div>}
                         </div>
                     </div>

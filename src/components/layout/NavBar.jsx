@@ -1,11 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Avatar } from "antd";
 import {
-  AntDesignOutlined,
-  DownOutlined,
   LogoutOutlined,
   HistoryOutlined,
-  BellOutlined,
   MenuOutlined,
 } from "@ant-design/icons";
 import { Dropdown, Space } from "antd";
