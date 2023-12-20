@@ -292,8 +292,8 @@ const AddEmployeePage = () => {
                 onFinishFailed={onFinishFailed}
                 autoComplete="off"
             >
-                <Row>
-                    <Col span={12}>
+                <Row gutter={{ xs: 8, sm: 12, md: 24, lg: 32, }}>
+                    <Col xs={24} sm={24} md={12} lg={12}>
                         <Form.Item valuePropName="image" getValueFromEvent={imageUrl}>
                             <Upload
                                 name="image"
@@ -319,7 +319,7 @@ const AddEmployeePage = () => {
 
                         </Form.Item>
                     </Col>
-                    <Col span={12}>
+                    <Col xs={24} sm={24} md={12} lg={12}>
                         <Form.Item label="Gender" name="gender">
                             <RadioButton options={genderOptions} onChange={onGenderChange} />
                         </Form.Item>
@@ -328,7 +328,7 @@ const AddEmployeePage = () => {
 
 
                 <Row>
-                    <Col span={11}>
+                    <Col xs={24} sm={24} md={12} lg={12}>
                         <Form.Item
                             label="Full Name"
                             name="name"
@@ -345,8 +345,8 @@ const AddEmployeePage = () => {
                             <TextInput />
                         </Form.Item>
                     </Col>
-                    <Col span={2}></Col>
-                    <Col span={11}>
+                    <Col xs={0} sm={0} md={2} lg={2}></Col>
+                    <Col xs={24} sm={24} md={11} lg={11}>
                         <Form.Item
                             label="Identity code"
                             name="identity"
@@ -363,7 +363,7 @@ const AddEmployeePage = () => {
                 </Row>
 
                 <Row>
-                    <Col span={11}>
+                    <Col xs={24} sm={24} md={11} lg={11}>
                         <Form.Item
                             label="Employee code"
                             name="code"
@@ -378,7 +378,7 @@ const AddEmployeePage = () => {
                         </Form.Item>
                     </Col>
                     <Col span={2}></Col>
-                    <Col span={11}>
+                    <Col xs={24} sm={24} md={11} lg={11}>
                         <Form.Item
                             label="Email"
                             name="email"
@@ -395,7 +395,7 @@ const AddEmployeePage = () => {
                 </Row>
 
                 <Row>
-                    <Col span={14}>
+                    <Col xs={24} sm={24} md={14} lg={14}>
                         <Form.Item
                             label="Phone number"
                             name="phone"
@@ -412,7 +412,7 @@ const AddEmployeePage = () => {
                 </Row>
 
                 <Row>
-                    <Col span={12}>
+                    <Col xs={24} sm={24} md={10} lg={10}>
                         <Form.Item
                             label="Technicals"
                             name="technicals"
@@ -430,7 +430,7 @@ const AddEmployeePage = () => {
                             </Popover>
                         </Form.Item>
                     </Col>
-                    <Col span={12}>
+                    <Col xs={24} sm={24} md={14} lg={14}>
                         {employeeTechnicals.map((tech) => {
                             const technical = technicals.find((t) => t._id === tech.technicalId);
                             return (

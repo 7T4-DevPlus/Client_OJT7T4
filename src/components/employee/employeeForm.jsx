@@ -269,7 +269,7 @@ const EmployeeForm = (employee) => {
                             <ButtonCommon buttonType={"loading"} /> :
                             <ButtonCommon buttonType={"save"} handleOnClick={() => form.submit()} />
                     ) :
-                    <div style={{ width: "250px", display: "flex", justifyContent: "space-between" }}>
+                    <div style={{ width: "210px", display: "flex", justifyContent: "space-between" }}>
                         <ButtonCommon buttonType={"edit-text"} handleOnClick={() => handleEdit()} />
                         <ButtonCommon buttonType={"export"} handleOnClick={() => exportEmployee(employee.employee._id)} />
                     </div>
@@ -285,7 +285,7 @@ const EmployeeForm = (employee) => {
                     backgroundColor: "white",
                     padding: "10px",
                     borderRadius: "10px",
-                    width: "80%",
+                    width: "90%",
                     marginBottom: "10px",
                     border: "1px solid #8a8a8a"
                 }}
@@ -311,7 +311,7 @@ const EmployeeForm = (employee) => {
                         }}
                     >
                         <Row>
-                            <Col span={8}>
+                            <Col xs={24} sm={24} md={8} lg={8}>
                                 <Form.Item valuePropName="image" getValueFromEvent={imageUrl}>
                                     <Upload
                                         name="image"
@@ -344,7 +344,7 @@ const EmployeeForm = (employee) => {
 
                                 </Form.Item>
                             </Col>
-                            <Col span={16}>
+                            <Col xs={24} sm={24} md={16} lg={16}>
                                 <Form.Item
                                     label="Full Name"
                                     name="name"
@@ -363,8 +363,12 @@ const EmployeeForm = (employee) => {
                             </Col>
                         </Row>
 
+                        <Form.Item label="Gender">
+                            <RadioButton options={genderOptions} defaultValue={checkedGender} onChange={onGenderChange} />
+                        </Form.Item>
+
                         <Row>
-                            <Col span={11}>
+                            <Col xs={24} sm={24} md={11} lg={11}>
                                 <Form.Item
                                     label="Phone number"
                                     name="phone"
@@ -379,7 +383,7 @@ const EmployeeForm = (employee) => {
                                 </Form.Item>
                             </Col>
                             <Col span={2}></Col>
-                            <Col span={11}>
+                            <Col xs={24} sm={24} md={11} lg={11}>
                                 <Form.Item
                                     label="Email"
                                     name="email"
@@ -396,7 +400,7 @@ const EmployeeForm = (employee) => {
                         </Row>
 
                         <Row>
-                            <Col span={11}>
+                            <Col xs={24} sm={24} md={11} lg={11}>
                                 <Form.Item
                                     label="Identity code"
                                     name="identity"
@@ -411,7 +415,7 @@ const EmployeeForm = (employee) => {
                                 </Form.Item>
                             </Col>
                             <Col span={2}></Col>
-                            <Col span={11}>
+                            <Col xs={24} sm={24} md={11} lg={11}>
                                 <Form.Item
                                     label="Employee code"
                                     name="code"
@@ -428,7 +432,7 @@ const EmployeeForm = (employee) => {
                         </Row>
 
                         <Row>
-                            <Col span={12}>
+                            <Col xs={24} sm={24} md={10} lg={10}>
                                 <Form.Item
                                     label="Technicals"
                                     name="technicals"
@@ -446,7 +450,7 @@ const EmployeeForm = (employee) => {
                                     </Popover>
                                 </Form.Item>
                             </Col>
-                            <Col span={12}>
+                            <Col xs={24} sm={24} md={14} lg={14}>
                                 {employeeTechnicals.map((tech) => {
                                     const technical = technicals.find((t) => t._id === tech.technicalId._id);
                                     return (
@@ -457,10 +461,6 @@ const EmployeeForm = (employee) => {
                                 })}
                             </Col>
                         </Row>
-
-                        <Form.Item label="Gender">
-                            <RadioButton options={genderOptions} defaultValue={checkedGender} onChange={onGenderChange} />
-                        </Form.Item>
                     </Form>
                 </div>
             </div>
