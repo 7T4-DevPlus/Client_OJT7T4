@@ -1,24 +1,21 @@
-import React, { useContext, useEffect, useState } from 'react';
-import moment from 'moment';
-import { format } from 'date-fns';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useContext, useEffect, useState } from "react";
+import moment from "moment";
 
-import { ProjectContext } from '../../contexts/projectContext';
-import { RoleContext } from '../../contexts/roleContext';
-import { EmployeeContext } from '../../contexts/employeeContext';
+import { ProjectContext } from "../../contexts/projectContext";
+import { RoleContext } from "../../contexts/roleContext";
+import { EmployeeContext } from "../../contexts/employeeContext";
 
-import { Modal, Form, message } from 'antd';
+import { Modal, Form, message } from "antd";
 
-import Button from '../buttons/ButtonCommon';
-import TextArea from '../inputs/InputTextArea';
-import DatePicker from '../inputs/DateCommon';
-import Select from '../inputs/SelectCommon';
+import Button from "../buttons/ButtonCommon";
+import TextArea from "../inputs/InputTextArea";
+import DatePicker from "../inputs/DateCommon";
+import Select from "../inputs/SelectCommon";
 
 const AssignEmployeeModal = (project) => {
-  const {
-    addEmployeeModal,
-    setAddEmployeeModal,
-    addEmployeeToProject
-  } = useContext(ProjectContext);
+  const { addEmployeeModal, setAddEmployeeModal, addEmployeeToProject } =
+    useContext(ProjectContext);
 
   const {
     employeeState: { employees },
@@ -53,28 +50,30 @@ const AssignEmployeeModal = (project) => {
   }));
 
   const [date, setDate] = useState([]);
-  const currentDate = format(new Date(), 'yyyy-MM-dd ');
 
   const handleChangeDate = (date, dateString) => {
-    const formattedDate = moment(dateString, 'YYYY-MM-DDTHH:mm:ss.SSSZ').toISOString();
+    const formattedDate = moment(
+      dateString,
+      "YYYY-MM-DDTHH:mm:ss.SSSZ"
+    ).toISOString();
 
-    if ( moment(projectInfo.startDate).isAfter(moment(formattedDate)) === true ){
-      message.error('Join date must not be sooner than project start date');
+    if (moment(projectInfo.startDate).isAfter(moment(formattedDate)) === true) {
+      message.error("Join date must not be sooner than project start date");
       return;
     }
 
     setDate(formattedDate);
-  }
+  };
 
   const [form] = Form.useForm();
 
   const onFinishFailed = (errorInfo) => {
-    console.error('Failed:', errorInfo);
+    console.error("Failed:", errorInfo);
     form.resetFields();
   };
 
   const onFinish = (values) => {
-    const formData = new FormData()
+    const formData = new FormData();
     formData.append("employeeId", values.employeeId);
     formData.append("projectId", projectId);
     formData.append("role", values.role);
@@ -84,10 +83,9 @@ const AssignEmployeeModal = (project) => {
     addEmployeeToProject(formData);
     setAddEmployeeModal(false);
     form.resetFields();
-  }
+  };
 
   return (
-
     <Modal
       title={`Add employee to project`}
       open={addEmployeeModal}
@@ -111,7 +109,7 @@ const AssignEmployeeModal = (project) => {
           rules={[
             {
               required: true,
-              message: 'Enter select employee',
+              message: "Enter select employee",
             },
           ]}
         >
@@ -122,9 +120,13 @@ const AssignEmployeeModal = (project) => {
             }}
             placeholder="Search to Select"
             optionFilterProp="children"
-            filterOption={(input, option) => (option?.label ?? '').includes(input)}
+            filterOption={(input, option) =>
+              (option?.label ?? "").includes(input)
+            }
             filterSort={(optionA, optionB) =>
-              (optionA?.label ?? '').toLowerCase().localeCompare((optionB?.label ?? '').toLowerCase())
+              (optionA?.label ?? "")
+                .toLowerCase()
+                .localeCompare((optionB?.label ?? "").toLowerCase())
             }
             options={employeeOptions}
           />
@@ -136,7 +138,7 @@ const AssignEmployeeModal = (project) => {
           rules={[
             {
               required: true,
-              message: 'Enter select role for employee',
+              message: "Enter select role for employee",
             },
           ]}
         >
@@ -147,9 +149,13 @@ const AssignEmployeeModal = (project) => {
             }}
             placeholder="Search to Select"
             optionFilterProp="children"
-            filterOption={(input, option) => (option?.label ?? '').includes(input)}
+            filterOption={(input, option) =>
+              (option?.label ?? "").includes(input)
+            }
             filterSort={(optionA, optionB) =>
-              (optionA?.label ?? '').toLowerCase().localeCompare((optionB?.label ?? '').toLowerCase())
+              (optionA?.label ?? "")
+                .toLowerCase()
+                .localeCompare((optionB?.label ?? "").toLowerCase())
             }
             options={roleOptions}
           />
@@ -161,23 +167,20 @@ const AssignEmployeeModal = (project) => {
           rules={[
             {
               required: true,
-              message: 'Please select join date',
-            }
+              message: "Please select join date",
+            },
           ]}
         >
           <DatePicker onChange={handleChangeDate} />
         </Form.Item>
 
-        <Form.Item
-          label="Description"
-          name="description"
-        >
+        <Form.Item label="Description" name="description">
           <TextArea />
         </Form.Item>
       </Form>
       <Button buttonType={"save"} handleOnClick={() => form.submit()} />
     </Modal>
-  )
-}
+  );
+};
 
-export default AssignEmployeeModal
+export default AssignEmployeeModal;
