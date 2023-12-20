@@ -233,7 +233,7 @@ const Dashboard = () => {
         <Row gutter={{ xs: 8, sm: 12, md: 24, lg: 32, }}>
           <Col xs={24} sm={24} md={12} lg={12}>
             <div style={chartBlockStyle}>
-              <h3 key="bar-chart-title">Projects In Recent 5 Month</h3>
+              <h3 key="bar-chart-title">Employees Per Technical Skill</h3>
               <Bar key={`bar-chart-${totalEmployees}`} data={barChartData} options={barChartOptions} style={{ marginTop: '7vh' }} />
             </div>
           </Col>
@@ -241,7 +241,7 @@ const Dashboard = () => {
           <Col xs={24} sm={24} md={12} lg={12}>
             <div style={chartBlockStyle}>
               <div style={chartContainerStyle}>
-                <h3 key="pie-chart-title">Employees Per Technical Skill</h3>
+                <h3 key="pie-chart-title">Projects In Recent 5 Month </h3>
                 <Pie key={`pie-chart-${totalEmployees}`} data={pieChartData} style={{ marginLeft: '11vh' }} />
               </div>
             </div>
