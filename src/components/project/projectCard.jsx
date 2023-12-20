@@ -28,8 +28,8 @@ const ProjectCard = (project) => {
     const body = (
         <>
             <div style={{ width: "100%", minWidth: "200px" }}>
-                <Card key={projectInfo._id} style={{ border: '1.25px solid #c7c5c5', height: '300px' }}>
-                    <div style={{ height: "220px" }}>
+                <Card key={projectInfo._id} style={{ border: '1.25px solid #c7c5c5', height: '400px' }}>
+                    <div style={{ height: "320px" }}>
                         <Tag color={
                             projectInfo.status === 'Planning' ? 'blue' :
                                 projectInfo.status === 'Completed' ? 'green' :
@@ -39,7 +39,7 @@ const ProjectCard = (project) => {
                         }>
                             {projectInfo.status}
                         </Tag>
-                        <p style={{ marginTop: "5px", fontSize: "20px" }}><b>{projectInfo.name}</b></p>
+                        <p style={{ marginTop: "5px", fontSize: "20px", height: "60px" }}><b>{projectInfo.name}</b></p>
                         <div style={{ marginTop: "10px", display: "flex" }}>
                             {empInPro.length > 0 ? (
                                 empInPro.slice(0, 3).map(emp => (
@@ -52,7 +52,7 @@ const ProjectCard = (project) => {
                                     </div>
                                 ))
                             ) : (
-                                <div style={{ width: "30px", height: "30px" }}></div>
+                                <div style={{ height: "30px" }}><p>No employee</p></div>
                             )}
                             {empInPro.length > 3 && (
                                 <div style={{ display: "flex", justifyContent: "center" ,alignItems: "center", borderRadius: "50%", width: "30px", overflow: "hidden", backgroundColor: "#e3e3e3", fontSize: "9px" }}>
