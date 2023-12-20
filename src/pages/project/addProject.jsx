@@ -31,6 +31,8 @@ const AddProject = () => {
   const [disable, setDisable] = useState(false);
 
   useEffect(() => {
+    document.title = 'Add Project';
+
     getTechnicals();
   }, []);
 

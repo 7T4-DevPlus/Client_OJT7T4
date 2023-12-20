@@ -9,6 +9,7 @@ import EmployeeHistory from "../../components/employee/employeeHistory";
 
 import Alert from "../../components/alerts/alertCommon";
 import { Tabs } from "antd";
+import { zhCN } from "date-fns/locale";
 
 const EmployeeDetails = () => {
   const {
@@ -19,6 +20,8 @@ const EmployeeDetails = () => {
   const { employeeId } = useParams();
 
   useEffect(() => {
+    document.title = 'Employee Details';
+    
     getEmployeeById(employeeId);
     getEmployeeHistories(employeeId);
   }, []);

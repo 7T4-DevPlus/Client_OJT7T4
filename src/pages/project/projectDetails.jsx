@@ -27,6 +27,10 @@ const ProjectDetails = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    document.title = 'Project Details';
+  }, []);
+
+  useEffect(() => {
     findProject(projectId);
     getEmployeesInProject(projectId);
 

@@ -31,6 +31,8 @@ const Dashboard = () => {
   const { alert } = useContext(ComponentsContext);
 
   useEffect(() => {
+    document.title = 'Dashboard';
+    
     getEmployee();
     getProjects();
   }, []);
