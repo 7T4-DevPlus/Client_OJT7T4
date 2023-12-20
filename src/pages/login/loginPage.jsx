@@ -99,81 +99,83 @@ const LoginPage = () => {
             className="form-container"
             style={{ padding: "20px" }}
           >
-            <div className="d-flex flex-row align-items-center justify-content-center">
-              <p className="sign-in-text">Login</p>
-            </div>
-
-            <form onSubmit={handleSubmit(onLogin)}>
-              <Controller
-                name="username"
-                control={control}
-                rules={{ required: true }}
-                render={({ field }) => (
-                  <div>
-                    <MDBInput
-                      wrapperClass="mb-4"
-                      label="Username"
-                      id="formControlLg"
-                      type="text"
-                      size="lg"
-                      {...field}
-                    />
-                    {errors.username && (
-                      <p className="error-message">
-                        Username is a required field
-                      </p>
-                    )}
-                  </div>
-                )}
-              />
-              <Controller
-                name="password"
-                control={control}
-                rules={{ required: true }}
-                render={({ field }) => (
-                  <div>
-                    <MDBInput
-                      wrapperClass="mb-4"
-                      label="Password"
-                      id="formControlLg"
-                      type="password"
-                      size="lg"
-                      {...field}
-                    />
-                    {errors.password && (
-                      <p className="error-message">
-                        Password is a required field
-                      </p>
-                    )}
-                  </div>
-                )}
-              />
-              <div className="checkbox-login-spacing">
-                <MDBBtn
-                  className="mb-0 px-5"
-                  size="lg"
-                  type="submit"
-                  disabled={loading}
-                  style={{
-                    width: 140,
-                    height: 50,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    marginRight: 0,
-                  }}
-                >
-                  {!loading ? (
-                    "login"
-                  ) : (
-                    <div
-                      className="spinner-border"
-                      style={{ width: 25, height: 25 }}
-                    ></div>
+            <div style={{ textAlign: "center" }}>
+            <h1>LOGIN</h1>
+            <div style={{ height: "40vh", alignItems: "center", display: "flex", padding: "50px", justifyContent: "center" }}>
+              <form style={{ width: "80%" }} onSubmit={handleSubmit(onLogin)}>
+                <Controller
+                  name="username"
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field }) => (
+                    <div>
+                      <MDBInput
+                        wrapperClass="mb-4"
+                        label="Username"
+                        id="formControlLg"
+                        type="text"
+                        size="lg"
+                        {...field}
+                      />
+                      {errors.username && (
+                        <p className="error-message">
+                          Username is a required field
+                        </p>
+                      )}
+                    </div>
                   )}
-                </MDBBtn>
-              </div>
-            </form>
+                />
+                <Controller
+                  name="password"
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field }) => (
+                    <div>
+                      <MDBInput
+                        wrapperClass="mb-4"
+                        label="Password"
+                        id="formControlLg"
+                        type="password"
+                        size="lg"
+                        {...field}
+                      />
+                      {errors.password && (
+                        <p className="error-message">
+                          Password is a required field
+                        </p>
+                      )}
+                    </div>
+                  )}
+                />
+                <div style={{ display: "flex", justifyContent: "flex-end" }}>
+                  <MDBBtn
+                    className="mb-0 px-5"
+                    size="lg"
+                    type="submit"
+                    disabled={loading}
+                    style={{
+                      width: 140,
+                      height: 50,
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      marginRight: 0,
+                    }}
+                  >
+                    {!loading ? (
+                      "login"
+                    ) : (
+                      <div
+                        className="spinner-border"
+                        style={{ width: 25, height: 25 }}
+                      ></div>
+                    )}
+                  </MDBBtn>
+                </div>
+              </form>
+            </div>
+            </div>
+            
           </MDBCol>
         </MDBRow>
       </MDBContainer>

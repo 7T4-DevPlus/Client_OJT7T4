@@ -162,7 +162,7 @@ const ProjectForm = (project) => {
   return (
     <>
       <div>
-        <h1>Project details</h1>
+        <h2>Project details</h2>
         {btn}
       </div>
       <Form

@@ -68,7 +68,7 @@ const EmployeeInProject = (employeesInProject) => {
     return (
         <>
             <div style={{ marginBottom: "20px" }}>
-                <h1>Employees in project</h1>
+                <h2>Employees in project</h2>
                 <ButtonCommon buttonType="add-button" handleOnClick={() => setAddEmployeeModal(true)} />
             </div>
             <Table dataSource={filteredEmpInPro} columns={columns} />

@@ -14,9 +14,9 @@ const SearchBox = () => {
     return (
         <>
             {searchType === "employee" ? (
-                <Input placeholder="Input employee search text" size="large" onPressEnter={(e) => { setSearchString(e.target.value) }} />
+                <Input placeholder="Input employee search text" size="large" onChange={(e) => { setSearchString(e.target.value) }} />
             ) : (
-                <Input placeholder="Input project search text" size="large" onPressEnter={(e) => { setSearchProject(e.target.value) }} />
+                <Input placeholder="Input project search text" size="large" onChange={(e) => { setSearchProject(e.target.value) }} />
             )}
         </>
     )
